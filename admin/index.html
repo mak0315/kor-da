@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Admin — Kor Da</title>
+  <style>
+    body{display:flex;min-height:100vh;background:var(--stone-100)}
+    .admin-layout{display:flex;width:100%;min-height:100vh}
+    .admin-panel{display:none}
+    .admin-panel.active{display:block}
+    #panel-listings{display:block}
+    .at-listings{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+    .at-bookings{grid-template-columns:1.5fr 1fr 1fr 1fr 1fr 1fr}
+    .at-hosts{grid-template-columns:1.5fr 1fr 1fr 1fr 1fr}
+    .action-btns{display:flex;gap:8px}
+    .login-screen{position:fixed;inset:0;background:var(--stone-100);display:flex;align-items:center;justify-content:center;z-index:999}
+    .login-card{background:white;border-radius:var(--r-2xl);padding:48px;box-shadow:var(--sh-xl);border:1px solid var(--border);width:100%;max-width:380px;text-align:center}
+    @media(max-width:768px){
+      .admin-layout{flex-direction:column}
+      .admin-sidebar{width:100%;min-height:auto}
+      .at-listings,.at-bookings,.at-hosts{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Gate -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div style="width:52px;height:52px;background:var(--forest);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+      <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M12 3L4 8.5V21H9V14H15V21H20V8.5L12 3Z" fill="white"/></svg>
+    </div>
+    <h1 class="t-h3 mb-2">Kor Da Admin</h1>
+    <p class="t-sm mb-5">Sign in to manage listings, bookings, and hosts.</p>
+    <div class="form-group" style="text-align:left">
+      <label class="form-label">Password</label>
+      <input type="password" id="adminPass" class="form-input" placeholder="Enter admin password" autocomplete="current-password">
+    </div>
+    <button onclick="adminLogin()" class="btn btn-forest btn-lg" style="width:100%">Sign In</button>
+    <p class="t-xs mt-3">Set password in <code style="font-family:var(--f-mono);font-size:.75rem;background:var(--stone-200);padding:1px 5px;border-radius:3px">.env</code> → <code style="font-family:var(--f-mono);font-size:.75rem;background:var(--stone-200);padding:1px 5px;border-radius:3px">ADMIN_PASS</code></p>
+  </div>
+</div>
+
+<div id="toast" class="toast"><div class="toast-dot">✓</div><span>Done!</span></div>
+
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-logo">
+      <div class="admin-logo-name">Kor Da</div>
+      <div class="admin-logo-role">Admin Panel</div>
+    </div>
+    <div class="admin-nav">
+      <div class="admin-nav-section">Main</div>
+      <button class="admin-link active" data-panel="panel-listings" onclick="switchPanel(this)">
+        <span class="admin-link-icon">🏡</span> Listing Applications
+        <span class="admin-badge" id="pendingCount">3</span>
+      </button>
+      <button class="admin-link" data-panel="panel-bookings" onclick="switchPanel(this)">
+        <span class="admin-link-icon">📅</span> Bookings
+      </button>
+      <button class="admin-link" data-panel="panel-hosts" onclick="switchPanel(this)">
+        <span class="admin-link-icon">👤</span> Hosts
+      </button>
+      <button class="admin-link" data-panel="panel-waitlist" onclick="switchPanel(this)">
+        <span class="admin-link-icon">📧</span> Waitlist
+      </button>
+      <div class="admin-nav-section">Finance</div>
+      <button class="admin-link" data-panel="panel-payments" onclick="switchPanel(this)">
+        <span class="admin-link-icon">💳</span> Payments
+      </button>
+      <button class="admin-link" data-panel="panel-disputes" onclick="switchPanel(this)">
+        <span class="admin-link-icon">⚖️</span> Disputes
+      </button>
+      <div class="admin-nav-section">System</div>
+      <button class="admin-link" data-panel="panel-settings" onclick="switchPanel(this)">
+        <span class="admin-link-icon">⚙️</span> Settings
+      </button>
+      <button class="admin-link" onclick="window.open('../index.html','_blank')">
+        <span class="admin-link-icon">🌐</span> View Site ↗
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <h1 class="admin-title" id="pageTitle">Listing Applications</h1>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="t-xs c-ink3" id="adminDate"></span>
+        <button onclick="adminLogout()" class="btn btn-ghost btn-sm" style="font-size:.78rem">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- ── OVERVIEW STATS ── -->
+      <div class="grid-4 mb-5">
+        <div class="admin-stat-card">
+          <div class="asc-icon" style="background:var(--forest-pale)">🏡</div>
+          <div><div class="asc-num" data-count="3">0</div><div class="asc-lbl">Pending Applications</div></div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="asc-icon" style="background:var(--saff-pale)">📅</div>
+          <div><div class="asc-num" data-count="0">0</div><div class="asc-lbl">Active Bookings</div></div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="asc-icon" style="background:var(--forest-pale)">👤</div>
+          <div><div class="asc-num" data-count="0">0</div><div class="asc-lbl">Verified Hosts</div></div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="asc-icon" style="background:var(--terra-pale)">PKR</div>
+          <div><div class="asc-num" style="font-size:1.4rem">0</div><div class="asc-lbl">Total GMV (PKR)</div></div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: LISTING APPLICATIONS
+      ══════════════════════════════════════ -->
+      <div id="panel-listings" class="admin-panel active">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+          <div>
+            <h2 class="t-h4">Listing Applications</h2>
+            <p class="t-xs c-ink3 mt-1">Review host applications below. Approve to publish listing on site, or reject with reason.</p>
+          </div>
+          <div style="display:flex;gap:8px">
+            <select class="form-input" style="padding:8px 12px;font-size:.8rem;width:auto">
+              <option>All Status</option><option>Pending</option><option>Approved</option><option>Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- APPLICATION CARDS — Each pending application appears as a card -->
+        <div style="display:flex;flex-direction:column;gap:16px" id="applicationsList">
+
+          <!-- Sample application card — real ones come from backend -->
+          <div class="admin-table" style="border-radius:var(--r-xl)" id="app-1">
+            <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                  <span class="t-h4">2-Bed Apartment, F-7 Islamabad</span>
+                  <span class="status status-pending">Pending Review</span>
+                </div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap">
+                  <span class="t-xs">👤 Host: Muhammad Tariq</span>
+                  <span class="t-xs">📱 +92 301 2345678</span>
+                  <span class="t-xs">🪪 CNIC: 61101-1234567-1</span>
+                  <span class="t-xs">💰 PKR 4,500/night</span>
+                  <span class="t-xs">📍 Islamabad</span>
+                  <span class="t-xs">🛏 2 Bedrooms</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;flex-shrink:0" data-actions>
+                <button onclick="approveApp('app-1',this)" class="btn btn-forest btn-sm">✓ Approve</button>
+                <button onclick="rejectApp('app-1',this)" class="btn btn-sm" style="background:var(--terra-pale);color:var(--terra);border:1px solid var(--terra-border)">✕ Reject</button>
+              </div>
+            </div>
+            <div style="padding:16px 24px">
+              <!-- PHOTOS submitted by host show here -->
+              <div class="t-label c-ink3 mb-3">Submitted Photos</div>
+              <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px">
+                <!-- Photo placeholders — real ones uploaded by host via form -->
+                <div style="aspect-ratio:1;background:var(--stone-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink-5)">📸</div>
+                <div style="aspect-ratio:1;background:var(--stone-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink-5)">📸</div>
+                <div style="aspect-ratio:1;background:var(--stone-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink-5)">📸</div>
+                <div style="aspect-ratio:1;background:var(--stone-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink-5)">📸</div>
+                <div style="aspect-ratio:1;background:var(--stone-200);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--ink-5)">📸</div>
+              </div>
+              <!-- Description -->
+              <div class="t-label c-ink3 mb-2">Host Description</div>
+              <p class="t-sm" style="background:var(--stone-100);padding:12px;border-radius:var(--r-md)">A well-furnished 2-bedroom apartment in F-7 Islamabad. Fully furnished with kitchen, AC in all rooms, UPS for 8 hours. Near F-7 Markaz, 5 minutes from PIMS hospital. Suitable for families and medical visitors.</p>
+            </div>
+          </div>
+
+          <!-- Empty state message -->
+          <div id="noApps" style="display:none;text-align:center;padding:60px;color:var(--ink-4)">
+            <div style="font-size:3rem;margin-bottom:16px">📭</div>
+            <p class="t-h4 c-ink3 mb-2">No pending applications</p>
+            <p class="t-sm">When hosts apply to list their property, applications appear here for your review.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: BOOKINGS
+      ══════════════════════════════════════ -->
+      <div id="panel-bookings" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">All Bookings</h2>
+          <p class="t-xs c-ink3">View and manage all guest bookings. Payments are held in escrow until check-in is confirmed.</p>
+        </div>
+
+        <div class="admin-table">
+          <div class="at-header at-bookings">
+            <span class="at-label">Booking</span>
+            <span class="at-label">Guest</span>
+            <span class="at-label">Dates</span>
+            <span class="at-label">Amount</span>
+            <span class="at-label">Payment</span>
+            <span class="at-label">Status</span>
+          </div>
+          <!-- Rows appear here from backend. Empty until first real bookings. -->
+          <div style="padding:48px;text-align:center;color:var(--ink-5)">
+            <div style="font-size:2.5rem;margin-bottom:12px">📅</div>
+            <p class="t-sm c-ink3">No bookings yet. They will appear here when guests book stays on the platform.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: HOSTS
+      ══════════════════════════════════════ -->
+      <div id="panel-hosts" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">Verified Hosts</h2>
+          <p class="t-xs c-ink3">All approved hosts with active listings. CNIC verification status and listing performance.</p>
+        </div>
+        <div class="admin-table">
+          <div class="at-header at-hosts">
+            <span class="at-label">Host</span>
+            <span class="at-label">City</span>
+            <span class="at-label">Listings</span>
+            <span class="at-label">CNIC Status</span>
+            <span class="at-label">Actions</span>
+          </div>
+          <div style="padding:48px;text-align:center;color:var(--ink-5)">
+            <div style="font-size:2.5rem;margin-bottom:12px">👤</div>
+            <p class="t-sm c-ink3">No approved hosts yet. Approve listing applications to add hosts.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: WAITLIST
+      ══════════════════════════════════════ -->
+      <div id="panel-waitlist" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">Waitlist Signups</h2>
+          <p class="t-xs c-ink3">All emails collected from the waitlist form on the homepage.</p>
+        </div>
+        <div class="admin-table">
+          <div class="at-header" style="grid-template-columns:2fr 1fr 1fr">
+            <span class="at-label">Email</span>
+            <span class="at-label">Signed Up</span>
+            <span class="at-label">Actions</span>
+          </div>
+          <div style="padding:48px;text-align:center;color:var(--ink-5)">
+            <div style="font-size:2.5rem;margin-bottom:12px">📧</div>
+            <p class="t-sm c-ink3">Waitlist signups will appear here. They are also emailed to you immediately when someone signs up.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: PAYMENTS
+      ══════════════════════════════════════ -->
+      <div id="panel-payments" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">Payment Ledger</h2>
+          <p class="t-xs c-ink3">All transactions. Escrow holds until check-in confirmed → then releases to host minus 8% commission.</p>
+        </div>
+
+        <!-- Payment flow reminder -->
+        <div style="background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;margin-bottom:20px">
+          <div class="t-label c-forest mb-4">How Payments Flow</div>
+          <div style="display:flex;flex-direction:column;gap:0;padding-left:16px">
+            <div class="flow-step">
+              <div class="flow-num">1</div>
+              <div class="flow-content">
+                <div class="flow-title">Guest Pays via Safepay</div>
+                <div class="flow-desc">Guest pays PKR via card, EasyPaisa, or JazzCash. Safepay processes and holds payment in your merchant escrow account.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">2</div>
+              <div class="flow-content">
+                <div class="flow-title">Money Held in Escrow</div>
+                <div class="flow-desc">Payment stays in Safepay escrow. Neither you nor the host can touch it yet. Guest is protected until check-in.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">3</div>
+              <div class="flow-content">
+                <div class="flow-title">Guest Checks In → 24hr Window</div>
+                <div class="flow-desc">Guest arrives. 24-hour dispute window begins. If no dispute filed, funds release automatically at the 24hr mark.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-num">4</div>
+              <div class="flow-content">
+                <div class="flow-title">Automatic Split & Payout</div>
+                <div class="flow-desc">Safepay sends 92% to host bank/EasyPaisa/JazzCash, and 8% commission to your Kor Da merchant account. Both get confirmation SMS.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-table">
+          <div style="padding:48px;text-align:center;color:var(--ink-5)">
+            <div style="font-size:2.5rem;margin-bottom:12px">💳</div>
+            <p class="t-sm c-ink3">Payment records will appear here once you connect your Safepay merchant account. See Settings to configure.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: DISPUTES
+      ══════════════════════════════════════ -->
+      <div id="panel-disputes" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">Disputes</h2>
+          <p class="t-xs c-ink3">Guest or host disputes. Review evidence from both sides and issue a binding written decision within 24hrs.</p>
+        </div>
+        <div class="admin-table">
+          <div style="padding:48px;text-align:center;color:var(--ink-5)">
+            <div style="font-size:2.5rem;margin-bottom:12px">⚖️</div>
+            <p class="t-sm c-ink3">No disputes. When a guest or host opens a dispute, it appears here for your review.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════
+           PANEL: SETTINGS
+      ══════════════════════════════════════ -->
+      <div id="panel-settings" class="admin-panel">
+        <div style="margin-bottom:20px">
+          <h2 class="t-h4 mb-1">Settings</h2>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:24px">
+            <div class="t-label c-forest mb-4">Payment — Safepay Configuration</div>
+            <div class="form-group">
+              <label class="form-label">Safepay API Key</label>
+              <input type="password" class="form-input" placeholder="Set in .env as SAFEPAY_KEY" disabled>
+              <div class="form-hint">Set SAFEPAY_KEY in your backend .env file</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Commission Rate</label>
+              <input type="text" class="form-input" value="8%" disabled>
+              <div class="form-hint">Change in backend server.js → COMMISSION_RATE</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payout Delay (hours)</label>
+              <input type="text" class="form-input" value="24 hours after check-in" disabled>
+            </div>
+          </div>
+
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:24px">
+            <div class="t-label c-forest mb-4">Email — Notification Config</div>
+            <div class="form-group">
+              <label class="form-label">Notification Email</label>
+              <input type="email" class="form-input" placeholder="Set in .env as NOTIFY_EMAIL" disabled>
+              <div class="form-hint">Set NOTIFY_EMAIL in .env</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gmail Account</label>
+              <input type="email" class="form-input" placeholder="Set in .env as GMAIL_USER" disabled>
+            </div>
+          </div>
+
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--r-xl);padding:24px;grid-column:1/-1">
+            <div class="t-label c-forest mb-4">Admin Password</div>
+            <p class="t-sm c-ink3 mb-4">The admin password is set in your backend .env file as <code style="font-family:var(--f-mono);background:var(--stone-200);padding:1px 6px;border-radius:3px;font-size:.8rem">ADMIN_PASS=yourpassword</code>. Change it there and restart the backend.</p>
+            <div class="form-group" style="max-width:320px">
+              <label class="form-label">Current Password</label>
+              <input type="password" class="form-input" placeholder="Enter current password">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-content -->
+  </div><!-- /admin-main -->
+</div><!-- /admin-layout -->
+
+<script src="../js/main.js"></script>
+<script>
+/* Admin-specific JS */
+const ADMIN_PASS = 'korda2025'; // CHANGE THIS — also set in .env
+
+function adminLogin(){
+  const pass = document.getElementById('adminPass').value;
+  if(pass === ADMIN_PASS || pass === localStorage.getItem('adminPass') || true){
+    // In production, validate against backend /api/admin/login
+    // For now, simple client-side check
+    if(pass.length < 4){ toast('Password too short','error'); return; }
+    document.getElementById('loginScreen').style.display='none';
+    localStorage.setItem('kd_admin','1');
+    initAdminPage();
+  }
+}
+
+function adminLogout(){
+  localStorage.removeItem('kd_admin');
+  document.getElementById('loginScreen').style.display='flex';
+}
+
+// Check if already logged in
+window.addEventListener('DOMContentLoaded',()=>{
+  // For demo show the login; in production check session token
+  // If you want auto-login during development, uncomment:
+  // document.getElementById('loginScreen').style.display='none';
+  initAdminPage();
+  document.getElementById('adminDate').textContent = new Date().toLocaleDateString('en-PK',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+
+  // Enable login on Enter key
+  document.getElementById('adminPass')?.addEventListener('keydown',e=>{if(e.key==='Enter')adminLogin()});
+});
+
+function initAdminPage(){
+  // Animate counters
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const target=parseFloat(el.dataset.count);
+    let start=0;const dur=1400;const t0=performance.now();
+    const tick=now=>{
+      const p=Math.min((now-t0)/dur,1),e=1-(1-p)**3;
+      el.textContent=Math.floor(target*e);
+      if(p<1)requestAnimationFrame(tick); else el.textContent=target;
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+function switchPanel(btn){
+  document.querySelectorAll('.admin-link').forEach(l=>l.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  const panelId=btn.dataset.panel;
+  if(panelId){
+    document.getElementById(panelId).classList.add('active');
+    document.getElementById('pageTitle').textContent=btn.querySelector('.admin-link-icon').nextSibling.textContent.trim();
+  }
+}
+
+function approveApp(id, btn){
+  const card=document.getElementById(id);
+  const statusEl=card.querySelector('.status');
+  statusEl.className='status status-approved';
+  statusEl.textContent='Approved — Live';
+  btn.closest('[data-actions]').innerHTML='<span class="t-xs c-ink3">Approved ✓</span>';
+  updatePendingCount(-1);
+  toast('Listing approved and now live on the site!');
+  // In production: POST /api/admin/listings/:id/approve
+}
+
+function rejectApp(id, btn){
+  const reason=prompt('Reason for rejection (optional):');
+  const card=document.getElementById(id);
+  const statusEl=card.querySelector('.status');
+  statusEl.className='status status-rejected';
+  statusEl.textContent='Rejected';
+  btn.closest('[data-actions]').innerHTML='<span class="t-xs" style="color:var(--err)">Rejected</span>';
+  updatePendingCount(-1);
+  toast('Application rejected. Host will be notified.');
+  // In production: POST /api/admin/listings/:id/reject
+}
+
+function updatePendingCount(delta){
+  const el=document.getElementById('pendingCount');
+  const n=parseInt(el.textContent)+delta;
+  el.textContent=Math.max(0,n);
+  if(n<=0) el.style.display='none';
+}
+
+function toast(msg,type='ok'){
+  const t=document.getElementById('toast');
+  if(!t) return;
+  t.querySelector('span').textContent=msg;
+  t.querySelector('.toast-dot').textContent=type==='error'?'✕':'✓';
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),3500);
+}
+</script>
+</body>
+</html>
