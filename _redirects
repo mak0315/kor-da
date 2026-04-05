@@ -1,3 +1,0 @@
-# Kor Da — Netlify Redirects
-/admin/*  /admin/index.html  200
-/*        /404.html          404
