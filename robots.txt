@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /backend/
-Disallow: /api/
-
-Sitemap: https://korda.pk/sitemap.xml
