@@ -28,7 +28,7 @@ const app  = express();
 const PORT = process.env.PORT || 3001;
 
 // ── Config ────────────────────────────────────────────────
-const ADMIN_PASS     = process.env.ADMIN_PASS     || 'korda_admin_change_me_2025';
+const ADMIN_PASS     = process.env.ADMIN_PASS     || 03155881733
 const JWT_SECRET     = process.env.JWT_SECRET     || crypto.randomBytes(64).toString('hex');
 const NOTIFY_EMAIL   = process.env.NOTIFY_EMAIL   || process.env.GMAIL_USER;
 const COMMISSION     = parseFloat(process.env.COMMISSION_RATE) || 0.08;
