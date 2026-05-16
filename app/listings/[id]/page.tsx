@@ -6,11 +6,12 @@ import PropertyGallery from '@/components/PropertyGallery';
 import BookingForm from '@/components/BookingForm';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
   const { data: listing } = await supabase
     .from('listings')
     .select('city, category, description')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (!listing) return { title: 'Listing Not Found | Kor Da' };
@@ -21,11 +22,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default async function PropertyPage({ params }: { params: { id: string } }) {
+export default async function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const { data: listing, error } = await supabase
     .from('listings')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !listing) {

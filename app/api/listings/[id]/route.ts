@@ -3,12 +3,13 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const { data, error } = await supabase
     .from('listings')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('status', 'approved')
     .single();
 

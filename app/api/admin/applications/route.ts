@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@korda.pk';
 
 async function isAdmin(supabase: any) {
