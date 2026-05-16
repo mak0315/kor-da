@@ -640,6 +640,54 @@ img,video{max-width:100%;height:auto;display:block}
   .nacts{gap:5px;}
   .btn{padding:0.7rem 1.2rem;font-size:0.85rem;}
 }
+/* COMPREHENSIVE MOBILE RESPONSIVE FIXES */
+@media (max-width: 1100px) {
+  .hcon {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    justify-content: center !important;
+  }
+  .hscard {
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    height: auto !important;
+    min-height: 100svh !important;
+    display: flex !important;
+    align-items: center !important;
+    overflow-x: hidden !important;
+  }
+  
+  .hscard {
+    max-width: 100% !important;
+  }
+  
+  /* Standardize Mobile Grids */
+  .cgrid, .tgrid, .sg, .hsteps, .isb-grid, .astats, .agrid, .cgrd, .fgrd, .f2 {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 16px !important;
+  }
+  
+  .cgrid > *, .tgrid > *, .sg > *, .hsteps > *, .isb-grid > *, .astats > *, .agrid > *, .cgrd > *, .fgrd > *, .f2 > * {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Prevent horizontal overflow globally */
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+}
 </style>
 
 </head>
@@ -1019,7 +1067,7 @@ img,video{max-width:100%;height:auto;display:block}
       <div class="rv d1">
         <div class="sh-eye" style="margin-bottom:13px"><div class="sh-rule"></div><span class="lbl sh-lbl">Founder &amp; CEO</span></div>
         <h2 class="t-h1" style="color:var(--ink);margin-bottom:16px">Muhammad<br><em class="teal">Ayan Khan</em></h2>
-        <p class="lg-t" style="margin-bottom:13px">Born and raised in Havelian, Hazara.I built Kor Da because i think  there is need for decent short-stay accommodation near hospitals in Islamabad. A platform that actually works for Pakistani families didn&#39;t exist. So I built it.</p>
+        <p class="lg-t" style="margin-bottom:13px">I built Kor Da because Most existing accommodation platforms were built for foreign markets, not for how people in Pakistan actually travel. Payments happen in dollars, hosts receive payouts in dollars after heavy deductions, service fees keep increasing, and customer support rarely understands local problems or culture. As a Pakistani, I saw how frustrating this system is for both guests and hosts. Families traveling for medical treatment, business, studies, or tourism have different needs, expectations, and ways of living and global platforms often fail to understand that. Kor Da was built to make the experience local, simple, and fair. A platform designed around Pakistani people, Pakistani hospitality, and the realities of our market.</p>
         <p class="body" style="margin-bottom:clamp(16px,2.5vw,24px)">My journey spans continents and crafts from serving as a Former Security Officer at Golden Eagle Security in Qatar, to the literary world as a published author , to the lens of a photographer   (@stupid._soul,)  Founder of two Pakistani startups. Kor Da is my most personal project built from lived experience, not a whiteboard.</p>
         <div class="astats">
           <div class="astat"><div class="astat-n">15K+</div><div class="astat-l">Instagram Followers</div></div>
