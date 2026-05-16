@@ -1,12 +1,40 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Playfair_Display, Plus_Jakarta_Sans, Noto_Nastaliq_Urdu } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  weight: ['500', '600', '700', '800'],
+});
+
+const jakarta = Plus_Jakarta_Sans({ 
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+const urdu = Noto_Nastaliq_Urdu({
+  subsets: ['arabic'],
+  variable: '--font-urdu',
+  weight: ['400', '600'],
+});
 
 export const metadata: Metadata = {
-  title: 'Kor Da',
-  description: 'Find a Stay with Kor Da',
+  title: 'Kor Da | Verified Short Stays in Pakistan | Book in PKR | EasyPaisa Accepted',
+  description: "Kor Da — Pakistan's verified home rental platform. Book verified short stays in Islamabad and all sectors. Pay in PKR via EasyPaisa. CNIC-verified hosts, Safepay escrow protection.",
+  keywords: "short stay Pakistan, daily rental islamabad, furnished flat islamabad, rent by day islamabad, f-7 short stay, bahria town short stay, dha islamabad rental, verified home rental islamabad, korda, kor da, easypais rental islamabad",
+  openGraph: {
+    title: 'Kor Da — Verified Short Stays in Islamabad | Pay in PKR',
+    description: "CNIC-verified hosts · EasyPaisa & JazzCash · Safepay escrow · All Islamabad areas. Pakistan's trusted home rental platform.",
+    type: 'website',
+    url: 'https://korda.pk',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  themeColor: '#1C4D40',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
 };
 
 export default function RootLayout({
@@ -15,8 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={`${playfair.variable} ${jakarta.variable} ${urdu.variable}`}>
+      <body className="font-sans antialiased text-ink bg-s">
+        {children}
+        <div id="modal-root"></div>
+      </body>
     </html>
   );
 }

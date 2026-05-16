@@ -4,18 +4,17 @@
  * For rich text, consider using DOMPurify on the server, but for plain text forms,
  * this covers the core HTML entities.
  */
-export function sanitizeInput(input: any): string {
+export function sanitizeInput(input: any, max: number = 2000): string {
   if (typeof input !== 'string') {
-    return input;
+    return String(input || '');
   }
   
   return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .trim();
+    .trim()
+    .replace(/<[^>]*>/g, '') // Strip HTML tags
+    .replace(/javascript:/gi, '') // Strip javascript: protocol
+    .replace(/on\w+\s*=/gi, '') // Strip event handlers
+    .slice(0, max);
 }
 
 /**
