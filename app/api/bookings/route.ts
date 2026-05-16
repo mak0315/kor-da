@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
+
+export const dynamic = 'force-dynamic';
+import * as crypto from 'crypto';
 
 const COMMISSION_RATE = 0.08;
 

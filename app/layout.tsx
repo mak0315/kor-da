@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { Playfair_Display, Plus_Jakarta_Sans, Noto_Nastaliq_Urdu } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Noto_Nastaliq_Urdu } from 'next/font/google';
 import './globals.css';
 
 const playfair = Playfair_Display({ 
@@ -17,7 +19,7 @@ const jakarta = Plus_Jakarta_Sans({
 const urdu = Noto_Nastaliq_Urdu({
   subsets: ['arabic'],
   variable: '--font-urdu',
-  weight: ['400', '600'],
+  weight: ['400'],
 });
 
 export const metadata: Metadata = {
@@ -33,8 +35,13 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+};
+
+export const viewport = {
   themeColor: '#1C4D40',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({

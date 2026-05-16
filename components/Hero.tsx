@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -17,7 +18,7 @@ export default function Hero() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % BACKGROUND_IMAGES.length);
+      setCurrentSlide((prev: number) => (prev + 1) % BACKGROUND_IMAGES.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
