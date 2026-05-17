@@ -1,27 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Playfair_Display } from 'next/font/google';
-import { Plus_Jakarta_Sans } from 'next/font/google';
-import { Noto_Nastaliq_Urdu } from 'next/font/google';
 import './globals.css';
-
-const playfair = Playfair_Display({ 
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  weight: ['500', '600', '700', '800'],
-});
-
-const jakarta = Plus_Jakarta_Sans({ 
-  subsets: ['latin'],
-  variable: '--font-jakarta',
-  weight: ['300', '400', '500', '600', '700'],
-});
-
-const urdu = Noto_Nastaliq_Urdu({
-  subsets: ['arabic'],
-  variable: '--font-urdu',
-  weight: ['400', '700'],
-});
 
 export const metadata: Metadata = {
   title: 'Kor Da | Verified Short Stays in Pakistan | Book in PKR | EasyPaisa Accepted',
@@ -45,13 +24,12 @@ export const viewport = {
   maximumScale: 5,
 };
 
-export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  }: Readonly<{
+    children: React.ReactNode;
+  }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${jakarta.variable} ${urdu.variable}`}>
+    <html lang="en">
       <body className="font-sans antialiased text-ink bg-s">
         {children}
         <div id="modal-root"></div>
