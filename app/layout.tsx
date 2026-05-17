@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import { Playfair_Display } from 'next/font/google';
 import { Plus_Jakarta_Sans } from 'next/font/google';
@@ -19,7 +20,7 @@ const jakarta = Plus_Jakarta_Sans({
 const urdu = Noto_Nastaliq_Urdu({
   subsets: ['arabic'],
   variable: '--font-urdu',
-  weight: ['400'],
+  weight: ['400', '700'],
 });
 
 export const metadata: Metadata = {
