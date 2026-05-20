@@ -9,7 +9,7 @@ async function isAdmin(supabase: any) {
 }
 
 export async function GET() {
-  const supabase = createClient();
+  const supabase = await createClient();
   if (!(await isAdmin(supabase))) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
