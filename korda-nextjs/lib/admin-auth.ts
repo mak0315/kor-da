@@ -1,69 +1,35 @@
-import jwt from 'jsonwebtoken';
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
-
-function getSupabase() {
-  return createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_KEY!
-  );
-}
+import jwt from "jsonwebtoken";
+import { createClient } from "@supabase/supabase-js";
+import { NextResponse } from "next/server";
 
 export async function verifyAdmin(req: Request): Promise<{ ok: true; user: any } | { ok: false; response: Response }> {
-  const authHeader = req.headers.get('authorization') || '';
-  const token = authHeader.replace('Bearer ', '').trim();
-
-  if (!token) {
-    return { ok: false, response: NextResponse.json({ ok: false, error: 'Authentication required' }, { status: 401 }) };
-  }
-
+  const token = (req.headers.get("authorization") || "").replace("Bearer ", "").trim();
+  if (!token) return { ok: false, response: NextResponse.json({ ok: false, error: "Auth required" }, { status: 401 }) };
   const jwtSecret = process.env.JWT_SECRET;
-  const adminEmail = process.env.ADMIN_EMAIL;
-
-  // Try legacy JWT first (role=admin)
   if (jwtSecret) {
     try {
-      const payload = jwt.verify(token, jwtSecret) as any;
-      if (payload?.role === 'admin') {
-        return { ok: true, user: payload };
-      }
-    } catch (_) {
-      // not a valid JWT, try Supabase
-    }
+      const p = jwt.verify(token, jwtSecret) as any;
+      if (p?.role === "admin") return { ok: true, user: p };
+    } catch (_) {}
   }
-
-  // Try Supabase token
-  const supabase = getSupabase();
+  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
   const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (!error && user && user.email === adminEmail) {
-    return { ok: true, user };
-  }
-
-  return { ok: false, response: NextResponse.json({ ok: false, error: 'Admin access required' }, { status: 403 }) };
+  if (!error && user && user.email === process.env.ADMIN_EMAIL) return { ok: true, user };
+  return { ok: false, response: NextResponse.json({ ok: false, error: "Admin access required" }, { status: 403 }) };
 }
 
 export async function verifyUser(req: Request): Promise<{ ok: true; user: any } | { ok: false; response: Response }> {
-  const authHeader = req.headers.get('authorization') || '';
-  const token = authHeader.replace('Bearer ', '').trim();
-
-  if (!token) {
-    return { ok: false, response: NextResponse.json({ ok: false, error: 'Authentication required' }, { status: 401 }) };
-  }
-
-  const supabase = getSupabase();
+  const token = (req.headers.get("authorization") || "").replace("Bearer ", "").trim();
+  if (!token) return { ok: false, response: NextResponse.json({ ok: false, error: "Auth required" }, { status: 401 }) };
+  const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!);
   const { data: { user }, error } = await supabase.auth.getUser(token);
-  if (!error && user) {
-    return { ok: true, user: { id: user.id, email: user.email, role: 'user' } };
-  }
-
-  // Fallback: legacy JWT
+  if (!error && user) return { ok: true, user: { id: user.id, email: user.email } };
   const jwtSecret = process.env.JWT_SECRET;
   if (jwtSecret) {
     try {
-      const payload = jwt.verify(token, jwtSecret) as any;
-      if (payload) return { ok: true, user: payload };
+      const p = jwt.verify(token, jwtSecret) as any;
+      if (p) return { ok: true, user: p };
     } catch (_) {}
   }
-
-  return { ok: false, response: NextResponse.json({ ok: false, error: 'Token invalid or expired' }, { status: 401 }) };
+  return { ok: false, response: NextResponse.json({ ok: false, error: "Invalid token" }, { status: 401 }) };
 }
