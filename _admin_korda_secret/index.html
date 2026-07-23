@@ -22,11 +22,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--s);color:va
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#062830,var(--t))}
 .login-box{background:var(--cream);border-radius:22px;padding:40px;width:min(380px,90vw);box-shadow:var(--xl)}
 .login-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
-.login-icon{width:44px;height:44px;background:var(--t);border-radius:10px;display:flex;align-items:center;justify-content:center}
 .login-brand{font-family:Georgia,serif;font-size:1.5rem;font-weight:700;color:var(--t)}
 .lbl{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--i2);margin-bottom:5px}
-.inp{width:100%;padding:11px 13px;background:var(--s);border:1.5px solid rgba(28,77,64,.15);border-radius:10px;font-size:.9rem;margin-bottom:14px;outline:none;font-family:inherit}
-.inp:focus{border-color:var(--t)}
+.inp,.sel,.txt{width:100%;padding:11px 13px;background:var(--s);border:1.5px solid rgba(28,77,64,.15);border-radius:10px;font-size:.9rem;margin-bottom:14px;outline:none;font-family:inherit}
+.inp:focus,.sel:focus,.txt:focus{border-color:var(--t)}
+.txt{min-height:80px;resize:vertical}
+.sel{appearance:auto}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
 .lbtn{width:100%;padding:12px;background:linear-gradient(135deg,var(--t),var(--t0));color:#fff;border:none;border-radius:10px;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit}
 .lbtn:hover{opacity:.9}
 .lerr{font-size:.8rem;color:var(--err);text-align:center;margin-top:10px}
@@ -41,7 +43,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:var(--s);color:va
 .tb-logout:hover{background:rgba(255,255,255,.1);color:#fff}
 
 .body-wrap{display:flex;flex:1;overflow:hidden}
-
 .sidebar{width:220px;background:var(--cream);border-right:1px solid rgba(28,77,64,.09);padding:16px 12px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;flex-shrink:0}
 .sb-btn{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:12px;font-size:.88rem;font-weight:500;color:var(--i3);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;transition:all .15s}
 .sb-btn:hover{background:var(--tbg);color:var(--t)}
@@ -79,6 +80,7 @@ tr:hover td{background:rgba(230,245,240,.4)}
 .badge-pending{background:var(--gbg);color:var(--warn)}
 .badge-approved{background:#ECF7F0;color:var(--ok)}
 .badge-rejected{background:#FEF0F0;color:var(--err)}
+.badge-featured{background:#EDE7FA;color:#6B3FA0}
 
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
 .btn-sm{padding:5px 10px;font-size:.74rem}
@@ -86,6 +88,7 @@ tr:hover td{background:rgba(230,245,240,.4)}
 .btn-ok{background:var(--ok);color:#fff}.btn-ok:hover{opacity:.9}
 .btn-err{background:var(--err);color:#fff}.btn-err:hover{opacity:.9}
 .btn-outline{background:transparent;color:var(--t);border:1.5px solid rgba(28,77,64,.2)}.btn-outline:hover{background:var(--tbg)}
+.btn-warn{background:var(--warn);color:#fff}.btn-warn:hover{opacity:.9}
 
 .qa-box{background:var(--cream);border-radius:16px;padding:18px;border:1px solid rgba(28,77,64,.08)}
 .qa-title{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:12px}
@@ -97,11 +100,19 @@ tr:hover td{background:rgba(230,245,240,.4)}
 #toast.err{background:var(--err)}
 #toast.warn{background:var(--warn)}
 
+.modal-bg{position:fixed;inset:0;background:rgba(15,48,40,.5);backdrop-filter:blur(4px);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.show{display:flex}
+.modal{background:var(--cream);border-radius:18px;padding:28px;width:min(560px,95vw);max-height:90vh;overflow-y:auto;box-shadow:var(--xl)}
+.modal-title{font-family:Georgia,serif;font-size:1.15rem;font-weight:700;margin-bottom:16px}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--i4)}
+.modal-close:hover{color:var(--ink)}
+
 @media(max-width:768px){
   .sidebar{width:52px;padding:12px 6px}
   .sb-btn .sb-label{display:none}
   .sb-cnt{display:none}
   .content-area{padding:14px}
+  .frow{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -139,8 +150,9 @@ tr:hover td{background:rgba(230,245,240,.4)}
   <div class="body-wrap">
     <div class="sidebar">
       <button class="sb-btn active" data-panel="dashboard" onclick="showPanel(this)">&#128202; <span class="sb-label">Dashboard</span></button>
+      <button class="sb-btn" data-panel="myproperties" onclick="showPanel(this)">&#127968; <span class="sb-label">My Properties</span> <span class="sb-cnt" id="mpCnt">0</span></button>
       <button class="sb-btn" data-panel="applications" onclick="showPanel(this)">&#128203; <span class="sb-label">Applications</span> <span class="sb-cnt" id="appCnt">0</span></button>
-      <button class="sb-btn" data-panel="listings" onclick="showPanel(this)">&#127968; <span class="sb-label">Listings</span> <span class="sb-cnt" id="lstCnt">0</span></button>
+      <button class="sb-btn" data-panel="listings" onclick="showPanel(this)">&#128196; <span class="sb-label">All Listings</span> <span class="sb-cnt" id="lstCnt">0</span></button>
       <button class="sb-btn" data-panel="bookings" onclick="showPanel(this)">&#128197; <span class="sb-label">Bookings</span> <span class="sb-cnt" id="bkCnt">0</span></button>
       <div class="sb-div"></div>
       <button class="sb-btn" data-panel="waitlist" onclick="showPanel(this)">&#128236; <span class="sb-label">Waitlist</span> <span class="sb-cnt" id="wlCnt">0</span></button>
@@ -154,18 +166,41 @@ tr:hover td{background:rgba(230,245,240,.4)}
         <div class="panel-title">Dashboard</div>
         <div class="panel-sub" id="lastRefresh">Loading stats...</div>
         <div class="stat-grid">
+          <div class="stat-card"><div class="stat-n" id="s-mp">0</div><div class="stat-l">My Properties</div></div>
           <div class="stat-card"><div class="stat-n" id="s-apps">0</div><div class="stat-l">Applications Pending</div></div>
           <div class="stat-card"><div class="stat-n" id="s-lists">0</div><div class="stat-l">Live Listings</div></div>
           <div class="stat-card"><div class="stat-n" id="s-bks">0</div><div class="stat-l">Total Bookings</div></div>
           <div class="stat-card"><div class="stat-n" id="s-wl">0</div><div class="stat-l">Waitlist Signups</div></div>
-          <div class="stat-card"><div class="stat-n" id="s-rev">0</div><div class="stat-l">Commission Earned (PKR)</div></div>
         </div>
         <div class="qa-box">
           <div class="qa-title">Quick Actions</div>
           <div class="qa-btns">
-            <button class="btn btn-primary" onclick="showPanel(document.querySelector('[data-panel=applications]'))">&#128203; Review Applications</button>
-            <button class="btn btn-outline" onclick="exportWaitlist()">&#128229; Export Waitlist CSV</button>
+            <button class="btn btn-primary" onclick="openAddProperty()">&#10010; Add New Property</button>
+            <button class="btn btn-outline" onclick="showPanel(document.querySelector('[data-panel=applications]'))">&#128203; Review Applications</button>
             <button class="btn btn-outline" onclick="loadAll()">&#8635; Refresh All Data</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-myproperties" class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="panel-title">My Properties</div>
+            <div class="panel-sub" style="margin-bottom:0">Add, edit, change plans, or remove your properties.</div>
+          </div>
+          <button class="btn btn-primary" onclick="openAddProperty()">&#10010; Add New Property</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-head">
+            <div class="table-head-title">Properties</div>
+            <input type="text" class="table-search" placeholder="Search..." oninput="filterTable('mpTable', this.value)">
+            <span class="table-count" id="mpTotalLabel">0 total</span>
+          </div>
+          <div class="tscroll">
+            <table id="mpTable">
+              <thead><tr><th>Image</th><th>Name</th><th>Area</th><th>Type</th><th>Plan</th><th>Price/Night</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="mpBody"><tr><td colspan="8" style="text-align:center;color:var(--i4);padding:32px">No properties yet. Click "Add New Property" to get started.</td></tr></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -178,7 +213,6 @@ tr:hover td{background:rgba(230,245,240,.4)}
             <div class="table-head-title">Applications</div>
             <input type="text" class="table-search" placeholder="Search..." oninput="filterTable('appsTable', this.value)">
             <span class="table-count" id="appsTotalLabel">0 total</span>
-            <button class="refresh-btn" onclick="loadApplications()">&#8635; Refresh</button>
           </div>
           <div class="tscroll">
             <table id="appsTable">
@@ -190,18 +224,17 @@ tr:hover td{background:rgba(230,245,240,.4)}
       </div>
 
       <div id="panel-listings" class="panel">
-        <div class="panel-title">Live Listings</div>
+        <div class="panel-title">All Listings</div>
         <div class="panel-sub">All approved listings currently visible on the site.</div>
         <div class="table-wrap">
           <div class="table-head">
             <div class="table-head-title">Listings</div>
             <input type="text" class="table-search" placeholder="Search..." oninput="filterTable('listsTable', this.value)">
-            <button class="refresh-btn" onclick="loadListings()">&#8635; Refresh</button>
           </div>
           <div class="tscroll">
             <table id="listsTable">
-              <thead><tr><th>ID</th><th>Title</th><th>City</th><th>Type</th><th>Price/Night</th><th>Featured</th><th>Actions</th></tr></thead>
-              <tbody id="listsBody"><tr><td colspan="7" style="text-align:center;color:var(--i4);padding:32px">Loading...</td></tr></tbody>
+              <thead><tr><th>ID</th><th>Title</th><th>City</th><th>Type</th><th>Price/Night</th><th>Featured</th></tr></thead>
+              <tbody id="listsBody"><tr><td colspan="6" style="text-align:center;color:var(--i4);padding:32px">Loading...</td></tr></tbody>
             </table>
           </div>
         </div>
@@ -264,7 +297,91 @@ tr:hover td{background:rgba(230,245,240,.4)}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
+<div class="modal-bg" id="propModal">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closePropModal()">&times;</button>
+    <div class="modal-title" id="propModalTitle">Add New Property</div>
+
+    <input type="hidden" id="fPropId">
+
+    <label class="lbl">Property Name *</label>
+    <input type="text" class="inp" id="fPropName" placeholder="e.g. Cozy Apartment in F-8">
+
+    <div class="frow">
+      <div>
+        <label class="lbl">City *</label>
+        <select class="sel" id="fPropCity">
+          <option value="Islamabad">Islamabad</option>
+          <option value="Lahore">Lahore</option>
+          <option value="Karachi">Karachi</option>
+          <option value="Peshawar">Peshawar</option>
+          <option value="Quetta">Quetta</option>
+          <option value="Murree">Murree</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="lbl">Area / Sector</label>
+        <input type="text" class="inp" id="fPropArea" placeholder="e.g. F-8, DHA, Gulberg">
+      </div>
+    </div>
+
+    <div class="frow">
+      <div>
+        <label class="lbl">Property Type *</label>
+        <select class="sel" id="fPropType">
+          <option value="Apartment">Apartment</option>
+          <option value="House">House</option>
+          <option value="Guest House">Guest House</option>
+          <option value="Room">Room</option>
+          <option value="Studio">Studio</option>
+          <option value="Villa">Villa</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="lbl">Plan / Tier *</label>
+        <select class="sel" id="fPropPlan">
+          <option value="Basic">Basic (Free)</option>
+          <option value="Standard">Standard (PKR 2,000/mo)</option>
+          <option value="Premium">Premium (PKR 5,000/mo)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="frow">
+      <div>
+        <label class="lbl">Price per Night (PKR) *</label>
+        <input type="number" class="inp" id="fPropPrice" placeholder="e.g. 5000">
+      </div>
+      <div>
+        <label class="lbl">Max Guests</label>
+        <input type="number" class="inp" id="fPropGuests" placeholder="e.g. 4" min="1">
+      </div>
+    </div>
+
+    <label class="lbl">Bedrooms / Bathrooms</label>
+    <div class="frow">
+      <input type="number" class="inp" id="fPropBeds" placeholder="Bedrooms" min="0">
+      <input type="number" class="inp" id="fPropBaths" placeholder="Bathrooms" min="0">
+    </div>
+
+    <label class="lbl">Image URL</label>
+    <input type="url" class="inp" id="fPropImg" placeholder="https://... (or leave empty)">
+
+    <label class="lbl">Description</label>
+    <textarea class="txt" id="fPropDesc" placeholder="Describe your property, amenities, nearby landmarks..."></textarea>
+
+    <label class="lbl">WhatsApp (for bookings)</label>
+    <input type="text" class="inp" id="fPropWa" placeholder="923XXXXXXXXX">
+
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="lbtn" onclick="saveProperty()" style="flex:1">Save Property</button>
+      <button class="btn btn-outline" onclick="closePropModal()" style="padding:12px 20px">Cancel</button>
     </div>
   </div>
 </div>
@@ -272,8 +389,7 @@ tr:hover td{background:rgba(230,245,240,.4)}
 <script>
 var ADMIN_EMAIL = 'admin@korda.pk';
 var ADMIN_PASS  = 'kordadmin2026';
-
-var LISTINGS_DATA = [];
+var SITE_LISTINGS = [];
 
 function showToast(msg, type) {
   var el = document.getElementById('toast');
@@ -296,22 +412,18 @@ function esc(s) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c];
   });
 }
-
 function fmtDate(d) {
   if (!d) return '—';
   try { return new Date(d).toLocaleDateString('en-PK', { day: 'numeric', month: 'short', year: 'numeric' }); }
   catch(e) { return String(d); }
 }
-
 function fmtPKR(n) { return 'PKR ' + (parseInt(n) || 0).toLocaleString('en-PK'); }
-
 function genId() { return 'kd-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 4); }
 
 function storeGet(key) {
   try { return JSON.parse(localStorage.getItem('kd_admin_' + key)) || []; }
   catch(e) { return []; }
 }
-
 function storeSet(key, data) {
   localStorage.setItem('kd_admin_' + key, JSON.stringify(data));
 }
@@ -332,13 +444,11 @@ function doLogin() {
 function checkAuth() {
   if (sessionStorage.getItem('kd_admin_authed') === '1') showApp();
 }
-
 function showApp() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('appScreen').classList.add('show');
   loadAll();
 }
-
 function doLogout() {
   sessionStorage.removeItem('kd_admin_authed');
   location.reload();
@@ -347,31 +457,196 @@ function doLogout() {
 function loadAll() {
   document.getElementById('lastRefresh').textContent = 'Last updated: ' + new Date().toLocaleTimeString();
   loadStats();
+  loadMyProperties();
   loadApplications();
-  loadListings();
+  loadSiteListings();
   loadBookings();
   loadWaitlist();
   loadContacts();
 }
 
 function loadStats() {
+  var mp = storeGet('myproperties');
   var apps = storeGet('applications');
   var pending = apps.filter(function(a) { return a.status === 'pending'; }).length;
   var bks = storeGet('bookings');
   var wl = storeGet('waitlist');
-  var rev = bks.reduce(function(s, b) { return s + (parseInt(b.commission) || 0); }, 0);
-
+  document.getElementById('s-mp').textContent = mp.length;
   document.getElementById('s-apps').textContent = pending;
-  document.getElementById('s-lists').textContent = LISTINGS_DATA.length;
+  document.getElementById('s-lists').textContent = SITE_LISTINGS.length;
   document.getElementById('s-bks').textContent = bks.length;
   document.getElementById('s-wl').textContent = wl.length;
-  document.getElementById('s-rev').textContent = rev.toLocaleString('en-PK');
+  document.getElementById('mpCnt').textContent = mp.length;
   document.getElementById('appCnt').textContent = pending;
-  document.getElementById('lstCnt').textContent = LISTINGS_DATA.length;
+  document.getElementById('lstCnt').textContent = SITE_LISTINGS.length;
   document.getElementById('bkCnt').textContent = bks.length;
   document.getElementById('wlCnt').textContent = wl.length;
 }
 
+function filterTable(tableId, q) {
+  var rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+  var lower = q.toLowerCase();
+  rows.forEach(function(r) { r.style.display = r.textContent.toLowerCase().indexOf(lower) >= 0 ? '' : 'none'; });
+}
+
+/* ── MY PROPERTIES ─────────────────────────── */
+function openAddProperty() {
+  document.getElementById('propModalTitle').textContent = 'Add New Property';
+  document.getElementById('fPropId').value = '';
+  ['fPropName','fPropArea','fPropPrice','fPropGuests','fPropBeds','fPropBaths','fPropImg','fPropDesc','fPropWa'].forEach(function(id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('fPropCity').value = 'Islamabad';
+  document.getElementById('fPropType').value = 'Apartment';
+  document.getElementById('fPropPlan').value = 'Basic';
+  document.getElementById('propModal').classList.add('show');
+}
+
+function openEditProperty(id) {
+  var list = storeGet('myproperties');
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  document.getElementById('propModalTitle').textContent = 'Edit Property';
+  document.getElementById('fPropId').value = p.id;
+  document.getElementById('fPropName').value = p.name || '';
+  document.getElementById('fPropCity').value = p.city || 'Islamabad';
+  document.getElementById('fPropArea').value = p.area || '';
+  document.getElementById('fPropType').value = p.type || 'Apartment';
+  document.getElementById('fPropPlan').value = p.plan || 'Basic';
+  document.getElementById('fPropPrice').value = p.price || '';
+  document.getElementById('fPropGuests').value = p.guests || '';
+  document.getElementById('fPropBeds').value = p.bedrooms || '';
+  document.getElementById('fPropBaths').value = p.bathrooms || '';
+  document.getElementById('fPropImg').value = p.image || '';
+  document.getElementById('fPropDesc').value = p.description || '';
+  document.getElementById('fPropWa').value = p.whatsapp || '';
+  document.getElementById('propModal').classList.add('show');
+}
+
+function closePropModal() {
+  document.getElementById('propModal').classList.remove('show');
+}
+
+function saveProperty() {
+  var name = document.getElementById('fPropName').value.trim();
+  var city = document.getElementById('fPropCity').value;
+  var type = document.getElementById('fPropType').value;
+  var price = document.getElementById('fPropPrice').value;
+  if (!name) { showToast('Property name is required', 'err'); return; }
+  if (!price) { showToast('Price per night is required', 'err'); return; }
+
+  var data = {
+    id: document.getElementById('fPropId').value || genId(),
+    name: name,
+    city: city,
+    area: document.getElementById('fPropArea').value.trim(),
+    type: type,
+    plan: document.getElementById('fPropPlan').value,
+    price: parseInt(price),
+    guests: parseInt(document.getElementById('fPropGuests').value) || 2,
+    bedrooms: parseInt(document.getElementById('fPropBeds').value) || 1,
+    bathrooms: parseInt(document.getElementById('fPropBaths').value) || 1,
+    image: document.getElementById('fPropImg').value.trim(),
+    description: document.getElementById('fPropDesc').value.trim(),
+    whatsapp: document.getElementById('fPropWa').value.trim(),
+    status: 'active',
+    featured: false,
+    createdAt: new Date().toISOString()
+  };
+
+  var list = storeGet('myproperties');
+  var idx = list.findIndex(function(x) { return x.id === data.id; });
+  if (idx >= 0) {
+    data.createdAt = list[idx].createdAt;
+    data.featured = list[idx].featured;
+    list[idx] = data;
+    showToast('Property updated!', 'ok');
+  } else {
+    list.unshift(data);
+    showToast('Property added!', 'ok');
+  }
+  storeSet('myproperties', list);
+  closePropModal();
+  loadMyProperties();
+  loadStats();
+}
+
+function deleteProperty(id) {
+  if (!confirm('Delete this property? This cannot be undone.')) return;
+  var list = storeGet('myproperties').filter(function(x) { return x.id !== id; });
+  storeSet('myproperties', list);
+  showToast('Property deleted', 'warn');
+  loadMyProperties();
+  loadStats();
+}
+
+function togglePropertyFeature(id) {
+  var list = storeGet('myproperties');
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  p.featured = !p.featured;
+  storeSet('myproperties', list);
+  showToast(p.featured ? 'Property featured' : 'Property unfeatured', 'ok');
+  loadMyProperties();
+}
+
+function changePlan(id) {
+  var list = storeGet('myproperties');
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  var plans = ['Basic', 'Standard', 'Premium'];
+  var current = plans.indexOf(p.plan);
+  var next = plans[(current + 1) % plans.length];
+  p.plan = next;
+  storeSet('myproperties', list);
+  showToast('Plan changed to ' + next, 'ok');
+  loadMyProperties();
+}
+
+function togglePropertyStatus(id) {
+  var list = storeGet('myproperties');
+  var p = list.find(function(x) { return x.id === id; });
+  if (!p) return;
+  p.status = p.status === 'active' ? 'inactive' : 'active';
+  storeSet('myproperties', list);
+  showToast('Property ' + p.status, p.status === 'active' ? 'ok' : 'warn');
+  loadMyProperties();
+}
+
+function loadMyProperties() {
+  var list = storeGet('myproperties');
+  list.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+  document.getElementById('mpTotalLabel').textContent = list.length + ' total';
+  var tbody = document.getElementById('mpBody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--i4);padding:32px">No properties yet. Click "Add New Property" to get started.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(function(p) {
+    var planClass = p.plan === 'Premium' ? 'badge-featured' : p.plan === 'Standard' ? 'badge-approved' : 'badge-pending';
+    var statusClass = p.status === 'active' ? 'approved' : 'rejected';
+    var imgHtml = p.image
+      ? '<img src="' + esc(p.image) + '" alt="" style="width:56px;height:42px;object-fit:cover;border-radius:6px">'
+      : '<div style="width:56px;height:42px;background:var(--s2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--i4)">No img</div>';
+    return '<tr>'
+      + '<td>' + imgHtml + '</td>'
+      + '<td><strong>' + esc(p.name) + '</strong><br><span style="font-size:.72rem;color:var(--i4)">' + esc(p.city) + (p.area ? ', ' + esc(p.area) : '') + '</span></td>'
+      + '<td>' + esc(p.area || '—') + '</td>'
+      + '<td>' + esc(p.type) + '</td>'
+      + '<td><span class="badge ' + planClass + '" style="cursor:pointer" onclick="changePlan(\'' + p.id + '\')" title="Click to change plan">' + esc(p.plan) + ' &#8635;</span></td>'
+      + '<td><strong>' + fmtPKR(p.price) + '</strong></td>'
+      + '<td><span class="badge badge-' + statusClass + '" style="cursor:pointer" onclick="togglePropertyStatus(\'' + p.id + '\')">' + esc(p.status) + '</span></td>'
+      + '<td>'
+      + '<div style="display:flex;gap:4px;flex-wrap:wrap">'
+      + '<button class="btn btn-sm btn-outline" onclick="openEditProperty(\'' + p.id + '\')">&#9998; Edit</button>'
+      + '<button class="btn btn-sm btn-outline" onclick="togglePropertyFeature(\'' + p.id + '\')">' + (p.featured ? '&#9733;' : '&#9734;') + '</button>'
+      + '<button class="btn btn-sm btn-err" onclick="deleteProperty(\'' + p.id + '\')">&#128465;</button>'
+      + '</div></td>'
+      + '</tr>';
+  }).join('');
+}
+
+/* ── APPLICATIONS ─────────────────────────── */
 function loadApplications() {
   var list = storeGet('applications');
   list.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
@@ -419,32 +694,24 @@ function rejectApp(id) {
   loadApplications();
 }
 
-function loadListings() {
-  var list = LISTINGS_DATA;
+/* ── SITE LISTINGS ────────────────────────── */
+function loadSiteListings() {
   var tbody = document.getElementById('listsBody');
-  if (!list.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--i4);padding:32px">No listings yet</td></tr>'; return; }
+  var list = SITE_LISTINGS;
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--i4);padding:32px">No listings loaded</td></tr>'; return; }
   tbody.innerHTML = list.map(function(l) {
-    var isFeatured = l.featured ? 'Yes' : 'No';
     return '<tr>'
       + '<td><code style="font-size:.72rem">' + esc(l.id) + '</code></td>'
       + '<td><strong>' + esc(l.name || l.title) + '</strong></td>'
       + '<td>' + esc(l.area || l.city) + '</td>'
       + '<td>' + esc(l.type) + '</td>'
       + '<td><strong>' + fmtPKR(l.price) + '</strong></td>'
-      + '<td><span class="badge badge-' + (l.featured ? 'approved' : 'rejected') + '">' + isFeatured + '</span></td>'
-      + '<td><button class="btn btn-sm btn-outline" onclick="toggleFeature(\'' + esc(l.id) + '\')">' + (l.featured ? '&#9733; Unfeature' : '&#9734; Feature') + '</button></td>'
+      + '<td>' + (l.featured ? '<span class="badge badge-featured">Yes</span>' : 'No') + '</td>'
       + '</tr>';
   }).join('');
 }
 
-function toggleFeature(id) {
-  var idx = LISTINGS_DATA.findIndex(function(l) { return l.id === id; });
-  if (idx < 0) return;
-  LISTINGS_DATA[idx].featured = !LISTINGS_DATA[idx].featured;
-  showToast(LISTINGS_DATA[idx].featured ? 'Listing featured' : 'Listing unfeatured', 'ok');
-  loadListings();
-}
-
+/* ── BOOKINGS ─────────────────────────────── */
 function loadBookings() {
   var list = storeGet('bookings');
   list.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
@@ -454,7 +721,7 @@ function loadBookings() {
     return '<tr>'
       + '<td><code style="font-size:.72rem">' + esc(b.id) + '</code></td>'
       + '<td>' + esc(b.guestPhone || '—') + '</td>'
-      + '<td><code style="font-size:.72rem">' + esc(b.listingName || '—') + '</code></td>'
+      + '<td>' + esc(b.listingName || '—') + '</td>'
       + '<td>' + esc(b.checkIn || '—') + '</td>'
       + '<td>' + esc(b.checkOut || '—') + '</td>'
       + '<td><strong>' + fmtPKR(b.totalAmount) + '</strong></td>'
@@ -466,13 +733,13 @@ function loadBookings() {
 
 function deleteBooking(id) {
   if (!confirm('Delete this booking?')) return;
-  var list = storeGet('bookings').filter(function(b) { return b.id !== id; });
-  storeSet('bookings', list);
+  storeSet('bookings', storeGet('bookings').filter(function(b) { return b.id !== id; }));
   showToast('Booking deleted', 'warn');
   loadBookings();
   loadStats();
 }
 
+/* ── WAITLIST ──────────────────────────────── */
 function loadWaitlist() {
   var list = storeGet('waitlist');
   document.getElementById('wlTotalLabel').textContent = list.length + ' signups';
@@ -484,6 +751,19 @@ function loadWaitlist() {
   }).join('');
 }
 
+function exportWaitlist() {
+  var list = storeGet('waitlist');
+  if (!list.length) { showToast('No waitlist data to export', 'warn'); return; }
+  var csv = 'Email,Date\n';
+  list.forEach(function(w) { csv += '"' + (w.email || '') + '","' + (w.createdAt || '') + '"\n'; });
+  var a = document.createElement('a');
+  a.href = 'data:text/csv,' + encodeURIComponent(csv);
+  a.download = 'korda_waitlist_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  showToast('Waitlist exported!', 'ok');
+}
+
+/* ── CONTACTS ──────────────────────────────── */
 function loadContacts() {
   var list = storeGet('contacts');
   list.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
@@ -519,40 +799,26 @@ function clearSection(section) {
   loadAll();
 }
 
-function exportWaitlist() {
-  var list = storeGet('waitlist');
-  if (!list.length) { showToast('No waitlist data to export', 'warn'); return; }
-  var csv = 'Email,Date\n';
-  list.forEach(function(w) { csv += '"' + (w.email || '') + '","' + (w.createdAt || '') + '"\n'; });
-  var a = document.createElement('a');
-  a.href = 'data:text/csv,' + encodeURIComponent(csv);
-  a.download = 'korda_waitlist_' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click();
-  showToast('Waitlist exported!', 'ok');
-}
-
-function filterTable(tableId, q) {
-  var rows = document.querySelectorAll('#' + tableId + ' tbody tr');
-  var lower = q.toLowerCase();
-  rows.forEach(function(r) { r.style.display = r.textContent.toLowerCase().indexOf(lower) >= 0 ? '' : 'none'; });
-}
-
-function loadListingsData() {
+function loadSiteListingsData() {
   return fetch('../content/compiled/properties.json')
     .then(function(r) { return r.json(); })
     .then(function(d) {
-      LISTINGS_DATA = Array.isArray(d) ? d : (d.listings || d.properties || []);
-      loadListings();
+      SITE_LISTINGS = Array.isArray(d) ? d : (d.listings || d.properties || []);
+      loadSiteListings();
     })
     .catch(function() {
-      LISTINGS_DATA = [];
-      loadListings();
+      SITE_LISTINGS = [];
+      loadSiteListings();
     });
 }
 
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closePropModal();
+});
+
 checkAuth();
 if (sessionStorage.getItem('kd_admin_authed') === '1') {
-  loadListingsData();
+  loadSiteListingsData();
 }
 </script>
 </body>
