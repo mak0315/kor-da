@@ -1,0 +1,11 @@
+/* ============================================================
+   KOR DA — MASTER STYLESHEET (main.css)
+   Modular CSS Architecture — All styles from inline extracted
+   ============================================================ */
+
+/* pages.css contains all styles extracted from index.html inline <style>.
+   It replaces the 663-line inline block.
+   variables.css, base.css, components.css, layout.css are more granular
+   modular splits for future maintainability. */
+
+@import url('pages.css');

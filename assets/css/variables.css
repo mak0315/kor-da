@@ -1,0 +1,22 @@
+/* KOR DA — DESIGN TOKENS & VARIABLES (variables.css) */
+:root {
+  --t0:#0F3028;--t1:#1C4D40;--t2:#276654;--t3:#3A9070;--t4:#78C4A8;--tbg:#E6F5F0;--tbg2:#C8EAE0;
+  --g0:#8C5A10;--g1:#B87420;--g2:#D9921A;--g3:#E9A825;--g4:#F5C85A;--gbg:#FDF4E0;
+  --s:#F7F3EC;--s2:#EDE7DB;--s3:#DED5C5;--cream:#FDFAF5;
+  --ink:#1A1810;--i2:#342E24;--i3:#6A6050;--i4:#9A9080;--i5:#C5BBAE;
+  --ok:#1A7A40;--okbg:#ECF7F0;--err:#BE3535;--errbg:#FEF0F0;--warn:#B07010;--wbg:#FDF4E0;
+  --wa:#19A855;--wabg:rgba(25,168,85,.08);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  --urdu:'Noto Nastaliq Urdu',serif;
+  --xs:0 1px 3px rgba(28,77,64,.08);
+  --sm:0 2px 10px rgba(28,77,64,.10),0 1px 3px rgba(28,77,64,.06);
+  --md:0 5px 20px rgba(28,77,64,.12),0 2px 6px rgba(28,77,64,.07);
+  --lg:0 10px 40px rgba(28,77,64,.15),0 3px 10px rgba(28,77,64,.08);
+  --xl:0 20px 64px rgba(28,77,64,.18),0 5px 18px rgba(28,77,64,.10);
+  --st:0 6px 24px rgba(28,77,64,.38);--sg:0 6px 24px rgba(217,146,26,.38);
+  --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --d1:.12s;--d2:.22s;--d3:.38s;
+  --r1:4px;--r2:8px;--r3:12px;--r4:16px;--r5:22px;--r6:32px;--rf:999px;
+  --mw:1280px;--gx:clamp(16px,5vw,64px);
+}
