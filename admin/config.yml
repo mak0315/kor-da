@@ -2,8 +2,7 @@ backend:
   name: github
   repo: mak0315/kor-da
   branch: main
-  auth_type: pkce
-  client_id: Ov23liQ2pR22of3SdES3
+  base_url: ""
 
 media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"

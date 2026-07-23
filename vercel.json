@@ -17,6 +17,10 @@
       ]
     }
   ],
+  "rewrites": [
+    { "source": "/auth", "destination": "/api/auth.js" },
+    { "source": "/callback", "destination": "/api/callback.js" }
+  ],
   "redirects": [
     { "source": "/admin", "destination": "/admin/index.html", "permanent": false },
     { "source": "/dashboard", "destination": "/_admin_korda_secret/index.html", "permanent": true }
