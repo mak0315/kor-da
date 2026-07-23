@@ -1,132 +1,108 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: mak0315/kor-da
   branch: main
+  base_url: "https://decap-oauth.netlify.app"
+  auth_type: pkce
 
-local_backend: true
-publish_mode: editorial_workflow
-
-media_folder: "images"
-public_folder: "/images"
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
 
 collections:
   - name: "properties"
     label: "Properties"
-    label_singular: "Property"
     folder: "content/properties"
     create: true
-    extension: md
-    format: yaml-frontmatter
     slug: "{{slug}}"
-    editor:
-      preview: false
+    path: "{{slug}}"
+    preview_path: ""
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", hint: "URL-friendly name, e.g. luxury-apartment-f11-islamabad" }
-      - { label: "Property Type", name: "type", widget: "select", options: ["Full Apartment", "Studio / 1-Bed", "House / Bungalow", "Cottage / Farmhouse", "Single Room (private)", "Serviced Apartment"] }
-      - { label: "City", name: "city", widget: "string", default: "Islamabad" }
-      - { label: "Area", name: "area", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Lowercase slug with hyphens only"] }
+      - label: "Type"
+        name: "type"
+        widget: "select"
+        options:
+          - "Studio / 1-Bed"
+          - "Full Apartment"
+          - "Serviced Apartment"
+          - "Guest House"
+          - "Room"
+          - "House"
+          - "Villa"
+      - { label: "City", name: "city", widget: "string", example: "G-8, Islamabad" }
+      - { label: "Area", name: "area", widget: "string", example: "G-8" }
       - { label: "Address", name: "address", widget: "string" }
-      - { label: "Price (PKR/night)", name: "price", widget: "number", value_type: "int", min: 500, max: 500000 }
-      - { label: "Bedrooms", name: "beds", widget: "select", options: ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedrooms"] }
-      - { label: "Bathrooms", name: "baths", widget: "number", value_type: "int", min: 1, max: 10 }
-      - { label: "Max Guests", name: "maxGuests", widget: "number", value_type: "int", min: 1, max: 20 }
-      - { label: "Category", name: "category", widget: "select", options: ["all", "medical", "family", "north", "university", "business", "govt", "budget"], default: "all" }
+      - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
+      - { label: "Bedrooms", name: "beds", widget: "string", example: "2 Bedrooms" }
+      - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
+      - { label: "Max Guests", name: "maxGuests", widget: "number", min: 1 }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Business", value: "business" }
+          - { label: "Family", value: "family" }
+          - { label: "Budget", value: "budget" }
+          - { label: "Medical", value: "medical" }
+          - { label: "University", value: "university" }
+          - { label: "All", value: "all" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Rating", name: "rating", widget: "number", value_type: "float", min: 1, max: 5, default: 4.8 }
-      - { label: "Reviews", name: "reviews", widget: "number", value_type: "int", min: 0, default: 0 }
-      - { label: "Main Image", name: "image", widget: "image", required: false }
-      - { label: "Gallery", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" }, required: false }
-      - { label: "Amenities", name: "amenities", widget: "list", field: { label: "Amenity", name: "amenity", widget: "string" }, default: ["WiFi", "AC", "Kitchen"] }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "WhatsApp Number", name: "waContact", widget: "string", default: "923155881733" }
+      - { label: "Rating", name: "rating", widget: "number", step: 0.1, min: 0, max: 5 }
+      - { label: "Reviews Count", name: "reviews", widget: "number", min: 0 }
+      - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", name: "amenity", widget: "string" } }
+      - { label: "Main Image URL", name: "image", widget: "string", hint: "Paste image URL or upload in Media" }
+      - label: "Gallery URLs"
+        name: "gallery"
+        widget: "list"
+        allow_add: true
+        field: { label: "Image URL", name: "url", widget: "string" }
+      - { label: "WhatsApp Contact", name: "waContact", widget: "string", default: "923155881733" }
       - { label: "Google Maps URL", name: "mapsUrl", widget: "string", required: false }
       - { label: "SEO Title", name: "seoTitle", widget: "string", required: false }
       - { label: "SEO Description", name: "seoDescription", widget: "text", required: false }
+      - { label: "Description (body)", name: "body", widget: "text", required: false }
 
   - name: "blog"
     label: "Blog Posts"
-    label_singular: "Blog Post"
     folder: "content/blog"
     create: true
-    extension: md
-    format: yaml-frontmatter
     slug: "{{slug}}"
-    editor:
-      preview: false
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Slug", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Lowercase slug with hyphens only"] }
+      - { label: "Excerpt", name: "excerpt", widget: "text", rows: 3 }
       - { label: "Author", name: "author", widget: "string", default: "Kor Da Team" }
       - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Category", name: "category", widget: "select", options: ["tips", "guides", "news", "areas"], default: "tips" }
-      - { label: "Tags", name: "tags", widget: "list", field: { label: "Tag", name: "tag", widget: "string" }, required: false }
-
-  - name: "faqs"
-    label: "FAQs"
-    label_singular: "FAQ"
-    folder: "content/faqs"
-    create: true
-    extension: md
-    format: yaml-frontmatter
-    slug: "{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Question", name: "question", widget: "string" }
-      - { label: "Answer", name: "answer", widget: "text" }
-      - { label: "Order", name: "order", widget: "number", value_type: "int", default: 0 }
+      - { label: "Featured Image", name: "image", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Tips", value: "tips" }
+          - { label: "Guide", value: "guide" }
+          - { label: "News", value: "news" }
+          - { label: "Islamabad", value: "islamabad" }
+      - { label: "Tags", name: "tags", widget: "list", allow_add: true, field: { label: "Tag", widget: "string" } }
+      - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "testimonials"
     label: "Testimonials"
-    label_singular: "Testimonial"
     folder: "content/testimonials"
     create: true
-    extension: md
-    format: yaml-frontmatter
     slug: "{{slug}}"
-    editor:
-      preview: false
     fields:
       - { label: "Name", name: "name", widget: "string" }
-      - { label: "Location", name: "location", widget: "string", default: "Islamabad" }
-      - { label: "Content", name: "content", widget: "text" }
-      - { label: "Rating", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Review", name: "content", widget: "text", rows: 4 }
+      - { label: "Rating", name: "rating", widget: "number", min: 1, max: 5 }
 
-  - name: "areas"
-    label: "Areas"
-    label_singular: "Area"
-    folder: "content/areas"
+  - name: "faqs"
+    label: "FAQs"
+    folder: "content/faqs"
     create: true
-    extension: markdown
-    format: yaml-frontmatter
     slug: "{{slug}}"
-    editor:
-      preview: false
     fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Price From (PKR)", name: "priceFrom", widget: "number", value_type: "int", default: 5000 }
-      - { label: "Property Count", name: "propertyCount", widget: "number", value_type: "int", default: 10 }
-      - { label: "Highlight", name: "highlight", widget: "string", required: false }
-
-  - name: "homepage"
-    label: "Homepage"
-    editor:
-      preview: false
-    files:
-      - name: "homepage"
-        label: "Homepage Content"
-        file: "content/homepage.json"
-        fields:
-          - { label: "Hero Title Line 1", name: "heroLine1", widget: "string", default: "Short Stays in" }
-          - { label: "Hero Title Line 2", name: "heroLine2", widget: "string", default: "Pakistan" }
-          - { label: "Hero Title Line 3", name: "heroLine3", widget: "string", default: "You Can Trust" }
-          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "text", default: "CNIC-verified hosts · Pay in PKR · EasyPaisa & JazzCash. Escrow protection." }
-          - { label: "Stats Label 1", name: "statLabel1", widget: "string", default: "20,000+" }
-          - { label: "Stats Desc 1", name: "statDesc1", widget: "string", default: "STR listings across Pakistan" }
-          - { label: "Stats Label 2", name: "statLabel2", widget: "string", default: "9%" }
-          - { label: "Stats Desc 2", name: "statDesc2", widget: "string", default: "Commission — lowest in Pakistan" }
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text", rows: 4 }
+      - { label: "Sort Order", name: "order", widget: "number", min: 0 }

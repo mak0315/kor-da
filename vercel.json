@@ -13,6 +13,7 @@
     }
   ],
   "redirects": [
-    { "source": "/admin", "destination": "/_admin_korda_secret/index.html", "permanent": true }
+    { "source": "/admin", "destination": "/admin/index.html", "permanent": true },
+    { "source": "/dashboard", "destination": "/_admin_korda_secret/index.html", "permanent": true }
   ]
 }
