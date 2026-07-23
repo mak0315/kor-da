@@ -83,7 +83,7 @@ collections:
           - { label: "Guide", value: "guide" }
           - { label: "News", value: "news" }
           - { label: "Islamabad", value: "islamabad" }
-      - { label: "Tags", name: "tags", widget: "list", allow_add: true, field: { label: "Tag", widget: "string" } }
+      - { label: "Tags", name: "tags", widget: "list", allow_add: true, field: { label: "Tag", name: "tag", widget: "string" } }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "testimonials"
