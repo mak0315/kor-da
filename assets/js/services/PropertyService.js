@@ -106,19 +106,57 @@
   window.PropertyService = {
     getAll: async function() {
       if (cache) return cache;
+      var jsonProps = [];
       try {
         var res = await fetch('content/compiled/properties.json');
         if (res.ok) {
           var data = await res.json();
           if (Array.isArray(data) && data.length > 0) {
-            cache = data;
-            return cache;
+            jsonProps = data;
           }
         }
       } catch (err) {
         console.warn('PropertyService: JSON fetch failed, using fallback static data', err);
       }
-      cache = DEFAULT_PROPERTIES;
+
+      var adminProps = [];
+      try {
+        var stored = JSON.parse(localStorage.getItem('kd_admin_myproperties') || '[]');
+        if (Array.isArray(stored)) {
+          adminProps = stored.filter(function(p) { return p.status === 'active'; }).map(function(p) {
+            var photos = p.photos || [];
+            var gallery = photos.map(function(ph) { return ph.dataUrl || ph; });
+            if (p.image && gallery.indexOf(p.image) === -1) gallery.unshift(p.image);
+            return {
+              id: p.id,
+              slug: p.id,
+              title: p.name,
+              name: p.name,
+              type: p.type,
+              city: p.area ? (p.area + ', ' + p.city) : p.city,
+              area: p.area || p.city,
+              address: (p.area ? p.area + ', ' : '') + p.city,
+              price: p.price,
+              beds: (p.bedrooms || 1) + ' Bedroom' + (p.bedrooms > 1 ? 's' : ''),
+              baths: p.bathrooms || 1,
+              maxGuests: p.guests || 2,
+              category: 'all',
+              featured: !!p.featured,
+              rating: 4.8,
+              reviews: 0,
+              amenities: ['WiFi','AC','Kitchen'],
+              description: p.description || '',
+              image: (photos.length > 0 ? photos[0].dataUrl : '') || p.image || '',
+              gallery: gallery,
+              waContact: p.whatsapp || '923155881733',
+              plan: p.plan,
+              source: 'admin'
+            };
+          });
+        }
+      } catch (e) {}
+
+      cache = jsonProps.concat(adminProps);
       return cache;
     },
 
