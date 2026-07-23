@@ -53,6 +53,7 @@
   .hsub{text-align:center;max-width:100%}
   .btn-xl{padding:14px 28px;font-size:.93rem}
   #hero{align-items:flex-start;padding-top:clamp(56px,10vw,72px);padding-bottom:clamp(30px,5vw,50px)}
+  .hov{background:linear-gradient(180deg,rgba(15,48,40,.65) 0%,rgba(15,48,40,.4) 50%,rgba(15,48,40,.55) 100%)}
   .hcon{gap:clamp(16px,3vw,28px)}
   .hleft{text-align:center}
   .prop-gallery{grid-template-columns:1fr;grid-template-rows:auto}

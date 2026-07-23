@@ -48,7 +48,10 @@
 .hss{position:absolute;inset:0;z-index:0}
 .hs{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s var(--ease);will-change:opacity}
 .hs.on{opacity:1}
-.hov{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(15,48,40,.93) 0%,rgba(15,48,40,.72) 44%,rgba(15,48,40,.38) 74%,rgba(15,48,40,.15) 100%),linear-gradient(to top,rgba(15,48,40,.65) 0%,transparent 42%)}
+.hov{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(15,48,40,.78) 0%,rgba(15,48,40,.52) 44%,rgba(15,48,40,.25) 74%,rgba(15,48,40,.08) 100%),linear-gradient(to top,rgba(15,48,40,.5) 0%,transparent 50%)}
+.hdots{position:absolute;bottom:clamp(14px,2.5vw,22px);left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:6px;background:rgba(15,48,40,.28);backdrop-filter:blur(8px);padding:5px 11px;border-radius:var(--rf)}
+.hd{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);border:none;padding:0;transition:background .3s,width .3s;cursor:pointer}
+.hd.on{background:var(--g4);width:20px;border-radius:3px}
 .hcon{position:relative;z-index:2;max-width:var(--mw);margin:0 auto;width:100%;padding:calc(72px + clamp(8px,2vw,16px)) var(--gx) clamp(16px,3vw,32px);display:grid;grid-template-columns:1fr 400px;gap:clamp(22px,4vw,56px);align-items:center}
 .hleft{max-width:640px}
 .htitle{color:#fff;margin-bottom:18px}
@@ -76,9 +79,6 @@
 .hsc-wa{width:100%;padding:10px;background:var(--wabg);border:1.5px solid rgba(25,168,85,.2);border-radius:var(--r3);color:var(--wa);font-size:.87rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px;transition:all var(--d1);font-family:var(--sans)}
 .hsc-wa:hover{background:rgba(25,168,85,.14)}
 .hsc-pay{font-size:.67rem;color:var(--i5);text-align:center;margin-top:8px}
-.hdots{position:absolute;bottom:clamp(14px,2.5vw,22px);left:50%;transform:translateX(-50%);z-index:2;display:flex;gap:6px;background:rgba(15,48,40,.28);backdrop-filter:blur(8px);padding:5px 11px;border-radius:var(--rf)}
-.hd{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);border:none;padding:0;transition:background .3s,width .3s;cursor:pointer}
-.hd.on{background:var(--g4);width:20px;border-radius:3px}
 
 /* STATS */
 .sbar{background:linear-gradient(135deg,var(--t0),var(--t1));position:relative;overflow:hidden}
