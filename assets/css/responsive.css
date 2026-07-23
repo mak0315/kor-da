@@ -52,7 +52,7 @@
   .t-h2{font-size:clamp(1.3rem,3vw,2.2rem)}
   .hsub{text-align:center;max-width:100%}
   .btn-xl{padding:14px 28px;font-size:.93rem}
-  #hero{align-items:flex-start;padding-top:clamp(80px,14vw,110px);padding-bottom:clamp(50px,8vw,70px)}
+  #hero{align-items:flex-start;padding-top:clamp(56px,10vw,72px);padding-bottom:clamp(30px,5vw,50px)}
   .hcon{gap:clamp(16px,3vw,28px)}
   .hleft{text-align:center}
   .prop-gallery{grid-template-columns:1fr;grid-template-rows:auto}
@@ -77,7 +77,7 @@
   .cpanel{right:8px;bottom:72px;width:calc(100vw - 16px)}
   .ccon{gap:16px}
   .hsub{max-width:100%;text-align:center}
-  #hero{padding-top:clamp(72px,16vw,96px);padding-bottom:clamp(40px,6vw,56px);min-height:100svh}
+  #hero{padding-top:clamp(52px,12vw,68px);padding-bottom:clamp(24px,4vw,40px);min-height:100svh}
   .hcon{gap:14px}
   .hscard{padding:clamp(12px,3.5vw,18px);border-radius:var(--r4)}
   .hsc-title{font-size:.88rem;margin-bottom:10px}
@@ -92,7 +92,6 @@
   .hti{gap:3px}
   .hticon{width:24px;height:24px;font-size:.7rem}
   .hti span{font-size:.61rem}
-  .hey span{font-size:.63rem}
   .hurdu{font-size:.82rem}
   .hdots{bottom:10px}
   .t-hero{font-size:clamp(1.5rem,5vw,2.5rem)}
@@ -127,7 +126,7 @@
 
 /* ≤ 360px */
 @media(max-width:360px){
-  #hero{padding-top:68px;padding-bottom:36px;min-height:100svh}
+  #hero{padding-top:48px;padding-bottom:24px;min-height:100svh}
   .hcon{gap:12px}
   .hscard{padding:11px 12px;border-radius:var(--r3)}
   .hsc-title{font-size:.82rem;margin-bottom:8px}

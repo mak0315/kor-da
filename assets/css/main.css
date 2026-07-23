@@ -1,11 +1,14 @@
 /* ============================================================
    KOR DA — MASTER STYLESHEET (main.css)
-   Modular CSS Architecture — All styles from inline extracted
+   Modular CSS Architecture
+   Load order: variables → base → layout → components →
+               pages → animations → responsive
    ============================================================ */
 
-/* pages.css contains all styles extracted from index.html inline <style>.
-   It replaces the 663-line inline block.
-   variables.css, base.css, components.css, layout.css are more granular
-   modular splits for future maintainability. */
-
+@import url('variables.css');
+@import url('base.css');
+@import url('layout.css');
+@import url('components.css');
 @import url('pages.css');
+@import url('animations.css');
+@import url('responsive.css');

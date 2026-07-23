@@ -9,7 +9,7 @@
 
   window.addEventListener('DOMContentLoaded', function(){
     /* Scroll reveal */
-    var rvObs = new IntersectionObserver(function(e){
+    window._rvObs = new IntersectionObserver(function(e){
       for(var i = 0; i < e.length; i++){
         if(e[i].isIntersecting) e[i].target.classList.add('vis');
       }
@@ -17,7 +17,7 @@
 
     var rvEls = document.querySelectorAll('.rv');
     for(var i = 0; i < rvEls.length; i++){
-      rvObs.observe(rvEls[i]);
+      window._rvObs.observe(rvEls[i]);
     }
 
     /* Counter (stats bar) */

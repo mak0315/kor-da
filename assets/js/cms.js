@@ -15,6 +15,14 @@
         return window.PropertyCard(l);
       }).join('');
       if (le) le.style.display = 'none';
+
+      /* Re-observe new .rv cards for scroll reveal */
+      if (window._rvObs) {
+        var newRv = lgrid.querySelectorAll('.rv');
+        for (var i = 0; i < newRv.length; i++) {
+          window._rvObs.observe(newRv[i]);
+        }
+      }
     } else {
       lgrid.innerHTML = '';
       if (le) le.style.display = 'block';
