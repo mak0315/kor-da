@@ -1,5 +1,4 @@
 {
-  "buildCommand": null,
   "headers": [
     {
       "source": "/(.*)",
@@ -13,7 +12,5 @@
   ],
   "redirects": [
     { "source": "/admin", "destination": "/admin/index.html", "permanent": true }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
