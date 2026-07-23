@@ -5,35 +5,33 @@
 (function(){
   'use strict';
 
-  window.doSearch = async function(){
+  window.doSearch = function(){
     var city  = document.getElementById('hCity')  ? document.getElementById('hCity').value  : '';
     var ci    = document.getElementById('hIn')    ? document.getElementById('hIn').value    : '';
     var co    = document.getElementById('hOut')   ? document.getElementById('hOut').value   : '';
     var guests= document.getElementById('hGuests')? document.getElementById('hGuests').value: '';
-    var type  = document.getElementById('hType')  ? document.getElementById('hType').value  : '';
 
-    if(ci && co && ci >= co){ 
-      if (typeof toast === 'function') toast('Check-out must be after check-in', 'warn'); 
-      return; 
+    if(ci && co && ci >= co){
+      if (typeof toast === 'function') toast('Check-out must be after check-in', 'warn');
+      return;
     }
 
-    var filters = {};
+    var msg = 'Hi Kor Da, I need a short stay';
+    if(city) msg += ' in ' + city;
+    msg += '.';
 
-    if (city) filters.keyword = city.split(',')[0].trim();
-    if (guests) filters.maxGuests = parseInt(guests, 10);
-    if (type && type !== 'all') filters.type = type;
+    if(ci) msg += ' Check-in: ' + ci + '.';
+    if(co) msg += ' Check-out: ' + co + '.';
+    if(guests) msg += ' Guests: ' + guests + '.';
 
-    var results = await window.PropertyService.search(filters);
-    window.renderListings(results);
+    msg += ' Please share available properties and details.';
 
-    if (typeof toast === 'function') {
-      toast(city ? 'Searching ' + city + '...' : 'Searching all Islamabad...', 'info');
+    if(typeof openWA === 'function'){
+      openWA(msg);
+    } else {
+      var wa = (window.KORDA_CONFIG && window.KORDA_CONFIG.waNumber) ? window.KORDA_CONFIG.waNumber : '923155881733';
+      window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     }
-
-    setTimeout(function(){
-      var el = document.getElementById('listings');
-      if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-    }, 300);
   };
 
   window.fCat = async function(btn){
