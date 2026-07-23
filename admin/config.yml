@@ -2,7 +2,8 @@ backend:
   name: github
   repo: mak0315/kor-da
   branch: main
-  base_url: "https://decap-oauth.netlify.app"
+  auth_type: pkce
+  client_id: Ov23liQ2pR22of3SdES3
 
 media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"
