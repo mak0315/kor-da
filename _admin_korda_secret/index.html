@@ -106,6 +106,11 @@ tr:hover td{background:rgba(230,245,240,.4)}
 .modal-title{font-family:Georgia,serif;font-size:1.15rem;font-weight:700;margin-bottom:16px}
 .modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--i4)}
 .modal-close:hover{color:var(--ink)}
+.photo-item{position:relative;width:80px;height:64px;border-radius:8px;overflow:hidden;border:2px solid var(--s2);flex-shrink:0}
+.photo-item img{width:100%;height:100%;object-fit:cover}
+.photo-item .photo-rm{position:absolute;top:2px;right:2px;width:18px;height:18px;background:var(--err);color:#fff;border:none;border-radius:50%;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;opacity:0;transition:opacity .15s}
+.photo-item:hover .photo-rm{opacity:1}
+.photo-item .photo-order{position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.55);color:#fff;font-size:.55rem;padding:1px 4px;border-radius:3px}
 
 @media(max-width:768px){
   .sidebar{width:52px;padding:12px 6px}
@@ -370,8 +375,17 @@ tr:hover td{background:rgba(230,245,240,.4)}
       <input type="number" class="inp" id="fPropBaths" placeholder="Bathrooms" min="0">
     </div>
 
-    <label class="lbl">Image URL</label>
-    <input type="url" class="inp" id="fPropImg" placeholder="https://... (or leave empty)">
+    <label class="lbl">Photos</label>
+    <div id="photoDrop" style="border:2px dashed rgba(28,77,64,.2);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s)" onclick="document.getElementById('fPropPhotos').click()" ondragover="event.preventDefault();this.style.borderColor='var(--t)';this.style.background='var(--tbg)'" ondragleave="this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)'" ondrop="event.preventDefault();this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)';handlePhotoFiles(event.dataTransfer.files)">
+      <div style="font-size:1.5rem;margin-bottom:6px">&#128247;</div>
+      <div style="font-size:.85rem;color:var(--i3);font-weight:500">Click or drag photos here</div>
+      <div style="font-size:.72rem;color:var(--i4);margin-top:4px">JPG, PNG, WebP — up to 10 photos</div>
+    </div>
+    <input type="file" id="fPropPhotos" accept="image/*" multiple style="display:none" onchange="handlePhotoFiles(this.files)">
+    <div id="photoPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+
+    <label class="lbl" style="margin-top:14px">Or paste Image URL</label>
+    <input type="url" class="inp" id="fPropImg" placeholder="https://...">
 
     <label class="lbl">Description</label>
     <textarea class="txt" id="fPropDesc" placeholder="Describe your property, amenities, nearby landmarks..."></textarea>
@@ -390,6 +404,7 @@ tr:hover td{background:rgba(230,245,240,.4)}
 var ADMIN_EMAIL = 'admin@korda.pk';
 var ADMIN_PASS  = 'kordadmin2026';
 var SITE_LISTINGS = [];
+var PHOTO_FILES = [];
 
 function showToast(msg, type) {
   var el = document.getElementById('toast');
@@ -499,6 +514,9 @@ function openAddProperty() {
   document.getElementById('fPropCity').value = 'Islamabad';
   document.getElementById('fPropType').value = 'Apartment';
   document.getElementById('fPropPlan').value = 'Basic';
+  PHOTO_FILES = [];
+  renderPhotoPreview();
+  document.getElementById('fPropPhotos').value = '';
   document.getElementById('propModal').classList.add('show');
 }
 
@@ -520,11 +538,79 @@ function openEditProperty(id) {
   document.getElementById('fPropImg').value = p.image || '';
   document.getElementById('fPropDesc').value = p.description || '';
   document.getElementById('fPropWa').value = p.whatsapp || '';
+  PHOTO_FILES = (p.photos || []).slice();
+  renderPhotoPreview();
+  document.getElementById('fPropPhotos').value = '';
   document.getElementById('propModal').classList.add('show');
 }
 
 function closePropModal() {
   document.getElementById('propModal').classList.remove('show');
+}
+
+function handlePhotoFiles(files) {
+  var remaining = 10 - PHOTO_FILES.length;
+  if (remaining <= 0) { showToast('Max 10 photos allowed', 'warn'); return; }
+  var toLoad = Math.min(files.length, remaining);
+  var loaded = 0;
+  for (var i = 0; i < toLoad; i++) {
+    (function(file) {
+      if (file.size > 10 * 1024 * 1024) {
+        showToast(file.name + ' too large (max 10MB)', 'err');
+        loaded++;
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        compressImage(e.target.result, 1200, 0.8, function(compressed) {
+          PHOTO_FILES.push({ dataUrl: compressed, name: file.name });
+          loaded++;
+          if (loaded === toLoad) renderPhotoPreview();
+        });
+      };
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+  document.getElementById('fPropPhotos').value = '';
+}
+
+function compressImage(dataUrl, maxW, quality, cb) {
+  var img = new Image();
+  img.onload = function() {
+    var w = img.width, h = img.height;
+    if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    cb(c.toDataURL('image/jpeg', quality));
+  };
+  img.src = dataUrl;
+}
+
+function renderPhotoPreview() {
+  var container = document.getElementById('photoPreview');
+  if (!PHOTO_FILES.length) { container.innerHTML = ''; return; }
+  container.innerHTML = PHOTO_FILES.map(function(p, i) {
+    return '<div class="photo-item">'
+      + '<img src="' + p.dataUrl + '" alt="' + esc(p.name) + '">'
+      + '<button class="photo-rm" onclick="removePhoto(' + i + ')" title="Remove">&times;</button>'
+      + '<span class="photo-order">' + (i + 1) + '</span>'
+      + '</div>';
+  }).join('');
+}
+
+function removePhoto(index) {
+  PHOTO_FILES.splice(index, 1);
+  renderPhotoPreview();
+}
+
+function movePhoto(index, dir) {
+  var target = index + dir;
+  if (target < 0 || target >= PHOTO_FILES.length) return;
+  var temp = PHOTO_FILES[index];
+  PHOTO_FILES[index] = PHOTO_FILES[target];
+  PHOTO_FILES[target] = temp;
+  renderPhotoPreview();
 }
 
 function saveProperty() {
@@ -547,6 +633,7 @@ function saveProperty() {
     bedrooms: parseInt(document.getElementById('fPropBeds').value) || 1,
     bathrooms: parseInt(document.getElementById('fPropBaths').value) || 1,
     image: document.getElementById('fPropImg').value.trim(),
+    photos: PHOTO_FILES.slice(),
     description: document.getElementById('fPropDesc').value.trim(),
     whatsapp: document.getElementById('fPropWa').value.trim(),
     status: 'active',
@@ -625,12 +712,15 @@ function loadMyProperties() {
   tbody.innerHTML = list.map(function(p) {
     var planClass = p.plan === 'Premium' ? 'badge-featured' : p.plan === 'Standard' ? 'badge-approved' : 'badge-pending';
     var statusClass = p.status === 'active' ? 'approved' : 'rejected';
-    var imgHtml = p.image
-      ? '<img src="' + esc(p.image) + '" alt="" style="width:56px;height:42px;object-fit:cover;border-radius:6px">'
+    var photoCount = (p.photos || []).length;
+    var imgSrc = photoCount > 0 ? p.photos[0].dataUrl : (p.image || '');
+    var imgHtml = imgSrc
+      ? '<img src="' + esc(imgSrc) + '" alt="" style="width:56px;height:42px;object-fit:cover;border-radius:6px">'
       : '<div style="width:56px;height:42px;background:var(--s2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--i4)">No img</div>';
+    var photoBadge = photoCount > 0 ? ' <span style="font-size:.65rem;color:var(--i4)">' + photoCount + ' &#128247;</span>' : '';
     return '<tr>'
       + '<td>' + imgHtml + '</td>'
-      + '<td><strong>' + esc(p.name) + '</strong><br><span style="font-size:.72rem;color:var(--i4)">' + esc(p.city) + (p.area ? ', ' + esc(p.area) : '') + '</span></td>'
+      + '<td><strong>' + esc(p.name) + '</strong>' + photoBadge + '<br><span style="font-size:.72rem;color:var(--i4)">' + esc(p.city) + (p.area ? ', ' + esc(p.area) : '') + '</span></td>'
       + '<td>' + esc(p.area || '—') + '</td>'
       + '<td>' + esc(p.type) + '</td>'
       + '<td><span class="badge ' + planClass + '" style="cursor:pointer" onclick="changePlan(\'' + p.id + '\')" title="Click to change plan">' + esc(p.plan) + ' &#8635;</span></td>'
