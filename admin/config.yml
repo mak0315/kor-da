@@ -2,7 +2,8 @@ backend:
   name: github
   repo: mak0315/kor-da
   branch: main
-  base_url: ""
+  base_url: "https://kor-da.vercel.app"
+  auth_endpoint: "/auth"
 
 media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"
