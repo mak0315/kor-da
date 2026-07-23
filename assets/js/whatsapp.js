@@ -11,51 +11,18 @@
 var WA_NUMBER = '923155881733';
 
 /* ============================================================
-   HERO SEARCH → WHATSAPP
+   HERO SEARCH → FILTER + WHATSAPP
    ============================================================ */
 function doSearch(){
-  var city = document.getElementById('hCity') ? document.getElementById('hCity').value : '';
-  var ci   = document.getElementById('hIn')   ? document.getElementById('hIn').value   : '';
-  var co   = document.getElementById('hOut')  ? document.getElementById('hOut').value  : '';
-
-  if(ci && co && ci >= co){ toast('Check-out must be after check-in','warn'); return; }
-
-  // Filter visible property cards
-  if(city){
-    var key = city.split(',')[0].toLowerCase();
-    var cards = document.querySelectorAll('.lcard[data-cat]');
-    for(var i = 0; i < cards.length; i++){
-      var loc = (cards[i].querySelector('.lloc') ? cards[i].querySelector('.lloc').textContent : '').toLowerCase();
-      cards[i].style.display = loc.indexOf(key) >= 0 ? '' : 'none';
-    }
+  if (typeof window.doSearch === 'function') {
+    window.doSearch();
+  } else {
+    var city = document.getElementById('hCity') ? document.getElementById('hCity').value : '';
+    var msg = 'Hi Kor Da, I need a short stay in Islamabad.';
+    if(city) msg = 'Hi Kor Da, I\'m looking for a stay in ' + city + '.';
+    msg += ' Please share available properties and details.';
+    openWA(msg);
   }
-
-  // Build WA message
-  var msg = 'Hi Kor Da, I need a short stay in Islamabad.';
-  if(city) msg = 'Hi Kor Da, I\'m looking for a stay in ' + city + '.';
-  if(ci)   msg += ' Check-in: ' + ci + '.';
-  if(co)   msg += ' Check-out: ' + co + '.';
-  msg += ' Please share available properties and details.';
-
-  var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
-
-  toast(city ? 'Searching ' + city + '...' : 'Searching all Islamabad...', 'info');
-  setTimeout(function(){
-    var el = document.getElementById('listings');
-    if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-    // Open WhatsApp after short delay
-    setTimeout(function(){ window.open(waUrl, '_blank', 'noopener'); }, 800);
-  }, 380);
-}
-
-/* ============================================================
-   BOOK NOW (property card / property page)
-   ============================================================ */
-function bookNow(propertyName, price){
-  var name = propertyName || 'your property';
-  var msg  = 'Hi Kor Da, I\'m interested in ' + name + '. Please share availability and booking details.';
-  if(price) msg += ' (Listed at PKR ' + price + '/night)';
-  openWA(msg);
 }
 
 /* ============================================================

@@ -1,0 +1,9 @@
+---
+id: "e-11"
+name: "E-11 (Near NUST)"
+slug: "e11"
+description: "Affordable studios near NUST and FAST universities. Popular with students and researchers."
+priceFrom: 3500
+propertyCount: 5
+highlight: "Near NUST & FAST"
+---

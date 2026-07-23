@@ -40,7 +40,38 @@
     return `
       <div class="acard rv" onclick="gFilter('${area.name}')">
         <div class="atitle">${area.name}</div>
-        <div class="acount">${area.count || '10+'} Verified Stays</div>
+        ${area.highlight ? '<div class="ahl">' + area.highlight + '</div>' : ''}
+        <div class="acount">${area.propertyCount || '10+'} Verified Stays</div>
+        <div class="aprice">From PKR ${fmt(area.priceFrom)}/night</div>
+      </div>
+    `;
+  };
+
+  /* Reusable Blog Card UI Component */
+  window.BlogCard = function(post) {
+    var img = post.image || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80';
+    var dateStr = post.date ? new Date(post.date).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+    return `
+      <a class="bcard rv" href="/blog/${post.slug}">
+        <div class="bimg"><img src="${img}" alt="${post.title}" loading="lazy"></div>
+        <div class="bdet">
+          <div class="bmeta">${post.category || 'Article'}${dateStr ? ' · ' + dateStr : ''}</div>
+          <h3 class="btitle">${post.title}</h3>
+          <p class="bexcerpt">${post.excerpt || ''}</p>
+        </div>
+      </a>
+    `;
+  };
+
+  /* Reusable Testimonial Card UI Component */
+  window.TestimonialCard = function(t) {
+    var stars = '';
+    for (var i = 0; i < (t.rating || 5); i++) stars += '★';
+    return `
+      <div class="tcard rv">
+        <div class="tstars">${stars}</div>
+        <p class="tcontent">"${t.content}"</p>
+        <div class="tauthor"><strong>${t.name}</strong>${t.location ? ' · ' + t.location : ''}</div>
       </div>
     `;
   };
@@ -51,6 +82,9 @@
     if (price) msg += " (Listed at PKR " + price + "/night)";
     if (typeof openWA === 'function') {
       openWA(msg);
+    } else {
+      var waNum = window.KORDA_CONFIG ? window.KORDA_CONFIG.waNumber : '923155881733';
+      window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
     }
   };
 })();

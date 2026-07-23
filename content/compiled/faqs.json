@@ -1,9 +1,44 @@
 [
-  { "question": "How do I pay? Can I use EasyPaisa?", "answer": "Yes — EasyPaisa (03495620844) is our primary payment method. We also accept JazzCash, debit/credit cards, and bank transfer. All payments in PKR through Safepay escrow (SBP-licensed). No USD, no foreign fees.", "order": 1 },
-  { "question": "How does Safepay escrow protect me?", "answer": "Your payment goes into Safepay escrow — SBP-licensed — and is held until 24 hours after you check in and confirm your stay. If you dispute within 24 hours, the money stays in escrow until we resolve it. Hosts cannot receive payment before you're satisfied.", "order": 2 },
-  { "question": "How are hosts CNIC-verified?", "answer": "Every host's CNIC is verified against NADRA's official Verisys database before their listing goes live. Only a registered Pakistani company can access Verisys — this is one of Kor Da's key competitive advantages over foreign platforms.", "order": 3 },
-  { "question": "Which areas of Islamabad are covered?", "answer": "All Islamabad sectors: F-5 to F-11 (including all sub-sectors), G-6 to G-15, E-7, E-11, I-8, I-10, H-8 to H-13, all DHA phases (1-3, Valley), all Bahria Town phases (1-7, Enclave), Blue Area, Diplomatic Enclave, Bani Gala, Gulberg Greens, Park Enclave, and Top City-1. Rawalpindi including Saddar, DHA, and Bahria Town Rawalpindi is also covered.", "order": 4 },
-  { "question": "What commission does Kor Da charge?", "answer": "Kor Da charges hosts 9% only on completed bookings — the lowest in Pakistan. Zero listing fee, zero monthly cost. You keep 91%, paid via EasyPaisa, JazzCash, or bank transfer after guest checks in.", "order": 5 },
-  { "question": "What if something is wrong with my stay?", "answer": "File a dispute within 24 hours of check-in via WhatsApp (0315-5881733). We respond same day. If the property doesn't match the listing, you get a full refund from escrow. Both parties submit evidence and we make a fair, binding decision.", "order": 6 },
-  { "question": "When does Kor Da launch?", "answer": "We are in final onboarding of our first verified hosts in Islamabad — launching very soon. Contact us on WhatsApp at 0315-5881733 for the latest updates and early access.", "order": 7 }
+  {
+    "question": "Which areas of Islamabad are covered?",
+    "answer": "All Islamabad sectors: F-5 to F-11 (including all sub-sectors), G-6 to G-15, E-7, E-11, I-8, I-10, H-8 to H-13, all DHA phases (1-3, Valley), all Bahria Town phases (1-7, Enclave), Blue Area, Diplomatic Enclave, Bani Gala, Gulberg Greens, Park Enclave, and Top City-1. Rawalpindi including Saddar, DHA, and Bahria Town Rawalpindi is also covered.",
+    "order": 4,
+    "id": "which-areas-of-islamabad-are-covered?"
+  },
+  {
+    "question": "How are hosts CNIC-verified?",
+    "answer": "Every host's CNIC is verified against NADRA's official Verisys database before their listing goes live. Only a registered Pakistani company can access Verisys — this is one of Kor Da's key competitive advantages over foreign platforms.",
+    "order": 3,
+    "id": "how-are-hosts-cnic-verified?"
+  },
+  {
+    "question": "What commission does Kor Da charge?",
+    "answer": "Kor Da charges hosts 9% only on completed bookings — the lowest in Pakistan. Zero listing fee, zero monthly cost. You keep 91%, paid via EasyPaisa, JazzCash, or bank transfer after guest checks in.",
+    "order": 5,
+    "id": "what-commission-does-kor-da-charge?"
+  },
+  {
+    "question": "What if something is wrong with my stay?",
+    "answer": "File a dispute within 24 hours of check-in via WhatsApp (0315-5881733). We respond same day. If the property doesn't match the listing, you get a full refund from escrow. Both parties submit evidence and we make a fair, binding decision.",
+    "order": 6,
+    "id": "what-if-something-is-wrong-with-my-stay?"
+  },
+  {
+    "question": "How does Safepay escrow protect me?",
+    "answer": "Your payment goes into Safepay escrow — SBP-licensed — and is held until 24 hours after you check in and confirm your stay. If you dispute within 24 hours, the money stays in escrow until we resolve it. Hosts cannot receive payment before you're satisfied.",
+    "order": 2,
+    "id": "how-does-safepay-escrow-protect-me?"
+  },
+  {
+    "question": "When does Kor Da launch?",
+    "answer": "We are in final onboarding of our first verified hosts in Islamabad — launching very soon. Contact us on WhatsApp at 0315-5881733 for the latest updates and early access.",
+    "order": 7,
+    "id": "when-does-kor-da-launch?"
+  },
+  {
+    "question": "How do I pay? Can I use EasyPaisa?",
+    "answer": "Yes — EasyPaisa (03495620844) is our primary payment method. We also accept JazzCash, debit/credit cards, and bank transfer. All payments in PKR through Safepay escrow (SBP-licensed). No USD, no foreign fees.",
+    "order": 1,
+    "id": "how-do-i-pay?-can-i-use-easypaisa?"
+  }
 ]

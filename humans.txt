@@ -1,0 +1,21 @@
+# humans.txt — Kor Da
+# https://korda.pk/humans.txt
+
+/* HUMAN */
+
+  Name: Kor Da Team
+  Contact: kordapakistan@gmail.com
+  WhatsApp: 0315-5881733
+  Location: Islamabad, Pakistan
+
+/* THANKS */
+
+  Built with: VS Code, Decap CMS, Node.js
+  Hosted on: Vercel
+  Icons: In-house SVG
+
+/* SITE */
+
+  Standards: HTML5, CSS3, ES2020+
+  Components: Vanilla JS, Decap CMS
+  Last update: 2026

@@ -96,33 +96,9 @@ if(cntEl){
   cntObs.observe(cntEl);
 }
 
-/* Listing Filter */
-function fCat(btn){
-  var fps = $$('.fp');
-  for(var i = 0; i < fps.length; i++){ fps[i].classList.remove('on'); fps[i].setAttribute('aria-pressed','false'); }
-  btn.classList.add('on'); btn.setAttribute('aria-pressed','true');
-  var cat = btn.dataset.cat || 'all';
-  var cards = $$('.lcard[data-cat]');
-  var vis = 0;
-  for(var i = 0; i < cards.length; i++){
-    var show = cat === 'all' || cards[i].dataset.cat === cat;
-    cards[i].style.display = show ? '' : 'none';
-    if(show) vis++;
-  }
-  var le = $('le');
-  if(le) le.style.display = ($('lgrid').children.length && vis) ? 'none' : 'block';
-}
-
-function gFilter(cat){
-  var btn = document.querySelector('.fp[data-cat="' + cat + '"]') || document.querySelector('.fp[data-cat="all"]');
-  if(btn) fCat(btn);
-  setTimeout(function(){ var el = $('listings'); if(el) el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100);
-}
-
-(function(){
-  var le = $('le');
-  if(le) le.style.display = $('lgrid') && $('lgrid').children.length ? 'none' : 'block';
-})();
+/* Listing filtering routes to search.js (window.fCat / window.gFilter) */
+function fCat(btn){ if (window.fCat) window.fCat(btn); }
+function gFilter(cat){ if (window.gFilter) window.gFilter(cat); }
 
 /* Area Filter */
 function aArea(btn, area){
@@ -131,7 +107,7 @@ function aArea(btn, area){
     for(var i = 0; i < atags.length; i++) atags[i].classList.remove('on');
     btn.classList.add('on');
   }
-  if(area){
+  if(area && window.PropertyService){
     var hc = $('hCity');
     if(hc){
       for(var i = 0; i < hc.options.length; i++){
@@ -140,15 +116,9 @@ function aArea(btn, area){
         }
       }
     }
-    var cards = $$('.lcard[data-cat]');
-    for(var i = 0; i < cards.length; i++){
-      var loc = (cards[i].querySelector('.lloc') ? cards[i].querySelector('.lloc').textContent : '').toLowerCase();
-      cards[i].style.display = loc.indexOf(area.toLowerCase()) >= 0 ? '' : 'none';
-    }
-    var vis = 0;
-    var ch = $('lgrid') ? $('lgrid').children : [];
-    for(var i = 0; i < ch.length; i++){ if(ch[i].style.display !== 'none') vis++; }
-    var le = $('le'); if(le) le.style.display = vis ? 'none' : 'block';
+    window.PropertyService.search({ area: area }).then(function(results){
+      if (window.renderListings) window.renderListings(results);
+    });
   }
   var el = $('listings'); if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
 }
@@ -324,52 +294,7 @@ if('IntersectionObserver' in window){
   $$('img[loading="lazy"]').forEach(function(img){ imgObs.observe(img); });
 }
 
-/* Load Listings from PropertyService */
-async function loadListings(){
-  var lgrid = $('lgrid');
-  var le = $('le');
-  if(!lgrid) return;
-
-  var waNum = window.KORDA_CONFIG ? window.KORDA_CONFIG.waNumber : '923155881733';
-
-  try {
-    var listings = window.PropertyService ? await window.PropertyService.getAll() : [];
-    if(listings && listings.length > 0){
-      lgrid.innerHTML = listings.map(function(l){
-        var waMsg = 'Hi Kor Da, I am interested in '+l.title+'. Please share availability and booking details.';
-        var waUrl = 'https://wa.me/'+waNum+'?text='+encodeURIComponent(waMsg);
-        var amenStr = (l.amenities||[]).slice(0,3).map(function(a){ return '<span class="lchip">'+a+'</span>'; }).join('');
-        return '<div class="lcard rv" data-cat="'+(l.category||'all')+'" data-id="'+(l.id||l.slug||'')+'" onclick="window.open(\''+waUrl+'\',\'_blank\',\'noopener\')">'
-          + '<div class="lgal"><img src="'+(l.image||'')+'" alt="'+l.title+'" loading="lazy">'
-          + '<button class="lfav" onclick="event.stopPropagation();togFav(this)" aria-label="Save">♡</button>'
-          + (l.featured ? '<span class="lpbadge">Featured</span>' : '') + '</div>'
-          + '<div class="lbody"><div class="lrow"><span class="lt">'+(l.type||'')+'</span>'
-          + '<span class="lr"><span class="star">★</span> '+(l.rating||4.8)+' ('+((l.reviews||0))+')</span></div>'
-          + '<div class="lloc">📍 '+(l.city||'Islamabad')+'</div>'
-          + (amenStr ? '<div class="lchips">'+amenStr+'</div>' : '')
-          + '<div class="lfoot"><div class="lprice">PKR '+fmt(l.price)+' <span class="lnight">/ night</span></div>'
-          + '<span class="lavail">Available</span>'
-          + '</div></div></div>';
-      }).join('');
-      if(le) le.style.display = 'none';
-      var newRv = document.querySelectorAll('.lcard.rv');
-      if(typeof rvObs !== 'undefined'){
-        for(var i = 0; i < newRv.length; i++) rvObs.observe(newRv[i]);
-      }
-    } else {
-      if(le) le.style.display = 'block';
-      lgrid.innerHTML = '';
-    }
-  } catch(err) {
-    console.warn('loadListings error:', err);
-    if(le) le.style.display = 'block';
-    if(lgrid) lgrid.innerHTML = '';
-  }
-}
-
-window.addEventListener('load', function(){
-  loadListings();
-});
+/* Listing rendering is in cms.js (renderListings via PropertyCard) */
 
 console.log('%cKor Da — Static MVP v2.0','background:#1C4D40;color:#fff;padding:8px 16px;border-radius:6px;font-weight:700');
 console.log('%c0315-5881733 | kordapakistan@gmail.com | @korda.pk','color:#1C4D40;font-size:11px');

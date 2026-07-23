@@ -1,0 +1,9 @@
+---
+id: "f-7"
+name: "F-7 Markaz"
+slug: "f7"
+description: "Premium diplomatic enclave with top restaurants and shopping. Most popular for corporate travelers."
+priceFrom: 4500
+propertyCount: 12
+highlight: "Best for business travelers"
+---

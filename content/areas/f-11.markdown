@@ -1,0 +1,9 @@
+---
+id: "f-11"
+name: "F-11 Islamabad"
+slug: "f11"
+description: "Modern apartment blocks with Margalla Hills views. Great WiFi, ideal for extended stays."
+priceFrom: 5000
+propertyCount: 8
+highlight: "Scenic Margalla Hills views"
+---

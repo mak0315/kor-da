@@ -1,0 +1,9 @@
+---
+id: "f-6"
+name: "F-6 Markaz"
+slug: "f6"
+description: "Elite sector with Super Market, restaurants, and diplomatic missions."
+priceFrom: 5500
+propertyCount: 5
+highlight: "Elite, diplomatic enclave"
+---

@@ -1,0 +1,9 @@
+---
+id: "g-8"
+name: "G-8 (Near PIMS)"
+slug: "g8"
+description: "Walking distance to PIMS Hospital. Popular with medical travelers and families."
+priceFrom: 4000
+propertyCount: 9
+highlight: "Near PIMS Hospital"
+---

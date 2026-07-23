@@ -145,13 +145,18 @@
           var loc = (p.city || '') + ' ' + (p.area || '');
           if (loc.toLowerCase().indexOf(filters.area.toLowerCase()) === -1) match = false;
         }
+        if (filters.type && filters.type !== 'all') {
+          if ((p.type || '').toLowerCase().indexOf(filters.type.toLowerCase()) === -1) match = false;
+        }
         if (filters.keyword) {
           var kw = filters.keyword.toLowerCase();
           var text = (p.title || '') + ' ' + (p.city || '') + ' ' + (p.description || '');
           if (text.toLowerCase().indexOf(kw) === -1) match = false;
         }
         if (filters.maxPrice && p.price > filters.maxPrice) match = false;
+        if (filters.minPrice && p.price < filters.minPrice) match = false;
         if (filters.minBeds && p.beds && parseInt(p.beds) < filters.minBeds) match = false;
+        if (filters.maxGuests && p.maxGuests && p.maxGuests < filters.maxGuests) match = false;
         return match;
       });
     }

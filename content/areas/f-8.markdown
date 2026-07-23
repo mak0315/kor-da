@@ -1,0 +1,9 @@
+---
+id: "f-8"
+name: "F-8 Islamabad"
+slug: "f8"
+description: "Upscale quiet sector with parks and family-friendly environment."
+priceFrom: 5000
+propertyCount: 4
+highlight: "Quiet, upscale living"
+---

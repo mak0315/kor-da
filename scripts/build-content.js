@@ -1,72 +1,132 @@
 /**
- * KOR DA — CONTENT BUILDER (scripts/build-content.js)
- * Compiles markdown/JSON from /content/* into /content/compiled/*.json
- * Run: node scripts/build-content.js
+ * build-content.js — Compiles Decap CMS Markdown (.md) frontmatter files
+ * into compiled JSON for fast browser-side data access.
+ *
+ * Usage: node scripts/build-content.js
+ *
+ * Watches content/collections/*.md and produces content/compiled/*.json
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const contentDir = path.join(__dirname, '..', 'content');
-const compiledDir = path.join(contentDir, 'compiled');
+const CONTENT_DIR = path.join(__dirname, '..', 'content');
+const COMPILED_DIR = path.join(CONTENT_DIR, 'compiled');
 
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+const COLLECTIONS = {
+  properties: { ext: '.md', idField: 'slug' },
+  blog: { ext: '.md', idField: 'slug' },
+  faqs: { ext: '.md', idField: 'question' },
+  testimonials: { ext: '.md', idField: 'name' },
+  areas: { ext: '.markdown', idField: 'id' },
+};
+
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if (!match) return null;
+
+  const yamlBlock = match[1];
+  const body = (match[2] || '').trim();
+
+  const entry = {};
+  let currentKey = null;
+  let currentList = null;
+  let isInList = false;
+
+  const lines = yamlBlock.split('\n');
+  for (const line of lines) {
+    const listItemMatch = line.match(/^\s+-\s+"(.+)"$/);
+    if (listItemMatch) {
+      if (currentList) currentList.push(listItemMatch[1]);
+      continue;
+    }
+
+    const listItemSimple = line.match(/^\s+-\s+(.+)$/);
+    if (listItemSimple) {
+      if (currentList) currentList.push(listItemSimple[1]);
+      continue;
+    }
+
+    if (isInList && !line.match(/^\s+-/)) {
+      isInList = false;
+      currentList = null;
+    }
+
+    const keyVal = line.match(/^(\w+):\s*(.*)$/);
+    if (!keyVal) continue;
+
+    currentKey = keyVal[1];
+    const val = keyVal[2].trim();
+
+    if (val === '' || val === '[]') {
+      entry[currentKey] = [];
+      currentList = [];
+      isInList = true;
+      continue;
+    }
+
+    if (val === 'true') entry[currentKey] = true;
+    else if (val === 'false') entry[currentKey] = false;
+    else if (/^\d+$/.test(val)) entry[currentKey] = parseInt(val, 10);
+    else if (/^\d+\.\d+$/.test(val)) entry[currentKey] = parseFloat(val);
+    else if (/^\[.*\]$/.test(val)) {
+      entry[currentKey] = val.slice(1, -1).split(',').map(s => s.trim().replace(/^"|"$/g, '')).filter(Boolean);
+    }
+    else entry[currentKey] = val.replace(/^"(.*)"$/, '$1');
+  }
+
+  if (body) entry.body = body;
+  return entry;
 }
 
-function readJsonFiles(dir) {
-  const files = fs.readdirSync(dir).filter(f => f.endsWith('.json'));
-  return files.map(f => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf-8')));
+function compileCollection(name, ext, idField) {
+  const dir = path.join(CONTENT_DIR, name);
+  const results = [];
+
+  if (!fs.existsSync(dir)) {
+    console.warn(`  [warn] Collection directory missing: ${dir}`);
+    return results;
+  }
+
+  const files = fs.readdirSync(dir).filter(f => f.endsWith(ext));
+  for (const file of files) {
+    const raw = fs.readFileSync(path.join(dir, file), 'utf-8');
+    const entry = parseFrontmatter(raw);
+    if (entry) {
+      const id = entry[idField] || file.replace(ext, '');
+      entry.id = String(id).toLowerCase().replace(/\s+/g, '-');
+      results.push(entry);
+    } else {
+      console.warn(`  [warn] Could not parse: ${name}/${file}`);
+    }
+  }
+
+  return results;
 }
 
-function readMarkdownFiles(dir) {
-  const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
-  return files.map(f => {
-    const raw = fs.readFileSync(path.join(dir, f), 'utf-8');
-    const parts = raw.split('---');
-    if (parts.length < 3) return null;
-    const frontmatter = {};
-    parts[1].trim().split('\n').forEach(line => {
-      const idx = line.indexOf(':');
-      if (idx > 0) {
-        const key = line.slice(0, idx).trim();
-        let val = line.slice(idx + 1).trim();
-        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-        frontmatter[key] = val;
-      }
-    });
-    const body = parts.slice(2).join('---').trim();
-    return { ...frontmatter, body };
-  }).filter(Boolean);
+function build() {
+  console.log('Building content...\n');
+
+  if (!fs.existsSync(COMPILED_DIR)) {
+    fs.mkdirSync(COMPILED_DIR, { recursive: true });
+  }
+
+  for (const [name, config] of Object.entries(COLLECTIONS)) {
+    const items = compileCollection(name, config.ext, config.idField);
+    const outPath = path.join(COMPILED_DIR, `${name}.json`);
+    fs.writeFileSync(outPath, JSON.stringify(items, null, 2), 'utf-8');
+    console.log(`  ${name}: ${items.length} items → content/compiled/${name}.json`);
+  }
+
+  // Copy homepage.json through unchanged
+  const homepageSrc = path.join(CONTENT_DIR, 'homepage.json');
+  const homepageDst = path.join(COMPILED_DIR, 'homepage.json');
+  if (fs.existsSync(homepageSrc)) {
+    fs.copyFileSync(homepageSrc, homepageDst);
+    console.log('  homepage: copied → content/compiled/homepage.json');
+  }
+
+  console.log('\nDone.');
 }
 
-function compileCollection(name, reader) {
-  const dir = path.join(contentDir, name);
-  if (!fs.existsSync(dir)) return [];
-  const items = reader(dir);
-  const outPath = path.join(compiledDir, `${name}.json`);
-  fs.writeFileSync(outPath, JSON.stringify(items, null, 2));
-  console.log(`Compiled ${items.length} ${name} → ${outPath}`);
-}
-
-ensureDir(compiledDir);
-
-// Properties: JSON files
-compileCollection('properties', readJsonFiles);
-// Blog: markdown files
-compileCollection('blog', readMarkdownFiles);
-// FAQs: JSON files
-compileCollection('faqs', readJsonFiles);
-// Testimonials: JSON files
-compileCollection('testimonials', readJsonFiles);
-// Areas: JSON files
-compileCollection('areas', readJsonFiles);
-
-// Copy homepage.json if exists
-const hpPath = path.join(contentDir, 'homepage.json');
-if (fs.existsSync(hpPath)) {
-  fs.copyFileSync(hpPath, path.join(compiledDir, 'homepage.json'));
-  console.log('Copied homepage.json → content/compiled/homepage.json');
-}
-
-console.log('Content build complete.');
+build();

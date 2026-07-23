@@ -6,18 +6,22 @@
   'use strict';
 
   window.doSearch = async function(){
-    var city = document.getElementById('hCity') ? document.getElementById('hCity').value : '';
-    var ci   = document.getElementById('hIn')   ? document.getElementById('hIn').value   : '';
-    var co   = document.getElementById('hOut')  ? document.getElementById('hOut').value  : '';
+    var city  = document.getElementById('hCity')  ? document.getElementById('hCity').value  : '';
+    var ci    = document.getElementById('hIn')    ? document.getElementById('hIn').value    : '';
+    var co    = document.getElementById('hOut')   ? document.getElementById('hOut').value   : '';
+    var guests= document.getElementById('hGuests')? document.getElementById('hGuests').value: '';
+    var type  = document.getElementById('hType')  ? document.getElementById('hType').value  : '';
 
     if(ci && co && ci >= co){ 
       if (typeof toast === 'function') toast('Check-out must be after check-in', 'warn'); 
       return; 
     }
 
-    var filters = {
-      keyword: city ? city.split(',')[0].trim() : ''
-    };
+    var filters = {};
+
+    if (city) filters.keyword = city.split(',')[0].trim();
+    if (guests) filters.maxGuests = parseInt(guests, 10);
+    if (type && type !== 'all') filters.type = type;
 
     var results = await window.PropertyService.search(filters);
     window.renderListings(results);

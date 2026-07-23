@@ -1,0 +1,9 @@
+---
+id: "g-11"
+name: "G-11 Islamabad"
+slug: "g11"
+description: "Close to Metro and markets. Family-friendly with spacious apartments and parking."
+priceFrom: 5500
+propertyCount: 6
+highlight: "Family-friendly with Metro access"
+---

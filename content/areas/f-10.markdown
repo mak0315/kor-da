@@ -1,0 +1,9 @@
+---
+id: "f-10"
+name: "F-10 Islamabad"
+slug: "f10"
+description: "Central sector near universities and markets. Great connectivity."
+priceFrom: 4500
+propertyCount: 3
+highlight: "Central location"
+---
