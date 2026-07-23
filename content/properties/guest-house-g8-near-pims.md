@@ -20,9 +20,9 @@ amenities:
   - "TV"
   - "Geyser"
   - "UPS/Generator"
-image: "https://images.unsplash.com/photo-1564078516393-cf04bd96a897?auto=format&fit=crop&w=800&q=75"
+image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75"
 gallery:
-  - "https://images.unsplash.com/photo-1564078516393-cf04bd96a897?auto=format&fit=crop&w=800&q=75"
+  - "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=75"
 waContact: "923155881733"
 mapsUrl: ""
 seoTitle: "Guest House G-8 Near PIMS Hospital | Kor Da"
