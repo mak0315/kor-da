@@ -106,11 +106,23 @@ tr:hover td{background:rgba(230,245,240,.4)}
 .modal-title{font-family:Georgia,serif;font-size:1.15rem;font-weight:700;margin-bottom:16px}
 .modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--i4)}
 .modal-close:hover{color:var(--ink)}
-.photo-item{position:relative;width:80px;height:64px;border-radius:8px;overflow:hidden;border:2px solid var(--s2);flex-shrink:0}
-.photo-item img{width:100%;height:100%;object-fit:cover}
-.photo-item .photo-rm{position:absolute;top:2px;right:2px;width:18px;height:18px;background:var(--err);color:#fff;border:none;border-radius:50%;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;opacity:0;transition:opacity .15s}
-.photo-item:hover .photo-rm{opacity:1}
-.photo-item .photo-order{position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.55);color:#fff;font-size:.55rem;padding:1px 4px;border-radius:3px}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:12px}
+.photo-card{position:relative;border-radius:10px;overflow:hidden;border:2.5px solid var(--s2);aspect-ratio:4/3;cursor:pointer;transition:all .2s;background:var(--s2)}
+.photo-card:hover{border-color:var(--t);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.photo-card.main{border-color:var(--t);box-shadow:0 0 0 2px rgba(28,77,64,.15)}
+.photo-card img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-card .photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.6) 100%);opacity:0;transition:opacity .2s;display:flex;flex-direction:column;justify-content:flex-end;padding:6px}
+.photo-card:hover .photo-overlay{opacity:1}
+.photo-card .photo-badge{position:absolute;top:6px;left:6px;background:var(--t);color:#fff;font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em;text-transform:uppercase}
+.photo-card .photo-actions{display:flex;gap:3px;position:absolute;top:6px;right:6px}
+.photo-card .photo-btn{width:24px;height:24px;border-radius:50%;border:none;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.photo-btn-del{background:rgba(220,50,50,.85);color:#fff}
+.photo-btn-del:hover{background:rgba(220,50,50,1)}
+.photo-btn-set{background:rgba(255,255,255,.85);color:var(--t)}
+.photo-btn-set:hover{background:#fff}
+.photo-btn-move{background:rgba(255,255,255,.85);color:var(--ink)}
+.photo-btn-move:hover{background:#fff}
+.photo-counter{font-size:.75rem;color:var(--i4);margin-top:6px}
 
 @media(max-width:768px){
   .sidebar{width:52px;padding:12px 6px}
@@ -376,13 +388,15 @@ tr:hover td{background:rgba(230,245,240,.4)}
     </div>
 
     <label class="lbl">Photos</label>
-    <div id="photoDrop" style="border:2px dashed rgba(28,77,64,.2);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s)" onclick="document.getElementById('fPropPhotos').click()" ondragover="event.preventDefault();this.style.borderColor='var(--t)';this.style.background='var(--tbg)'" ondragleave="this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)'" ondrop="event.preventDefault();this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)';handlePhotoFiles(event.dataTransfer.files)">
-      <div style="font-size:1.5rem;margin-bottom:6px">&#128247;</div>
-      <div style="font-size:.85rem;color:var(--i3);font-weight:500">Click or drag photos here</div>
-      <div style="font-size:.72rem;color:var(--i4);margin-top:4px">JPG, PNG, WebP — up to 10 photos</div>
+    <div id="photoDrop" style="border:2px dashed rgba(28,77,64,.2);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--s)" onclick="document.getElementById('fPropPhotos').click()" ondragover="event.preventDefault();this.style.borderColor='var(--t)';this.style.background='var(--tbg)'" ondragleave="this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)'" ondrop="event.preventDefault();this.style.borderColor='rgba(28,77,64,.2)';this.style.background='var(--s)';handlePhotoFiles(event.dataTransfer.files)">
+      <div style="font-size:2rem;margin-bottom:6px">&#128247;</div>
+      <div style="font-size:.9rem;color:var(--t1);font-weight:600">Tap to upload or drag photos</div>
+      <div style="font-size:.75rem;color:var(--i4);margin-top:4px">Select multiple at once &middot; JPG, PNG, WebP &middot; Max 10 photos</div>
+      <div style="font-size:.7rem;color:var(--i5);margin-top:6px">First photo becomes the main cover image</div>
     </div>
     <input type="file" id="fPropPhotos" accept="image/*" multiple style="display:none" onchange="handlePhotoFiles(this.files)">
-    <div id="photoPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"></div>
+    <div id="photoPreview" class="photo-grid"></div>
+    <div class="photo-counter" id="photoCounter"></div>
 
     <label class="lbl" style="margin-top:14px">Or paste Image URL</label>
     <input type="url" class="inp" id="fPropImg" placeholder="https://...">
@@ -589,14 +603,28 @@ function compressImage(dataUrl, maxW, quality, cb) {
 
 function renderPhotoPreview() {
   var container = document.getElementById('photoPreview');
-  if (!PHOTO_FILES.length) { container.innerHTML = ''; return; }
+  var counter = document.getElementById('photoCounter');
+  if (!PHOTO_FILES.length) { container.innerHTML = ''; if(counter) counter.textContent = ''; return; }
   container.innerHTML = PHOTO_FILES.map(function(p, i) {
-    return '<div class="photo-item">'
+    var isMain = i === 0;
+    return '<div class="photo-card' + (isMain ? ' main' : '') + '">'
       + '<img src="' + p.dataUrl + '" alt="' + esc(p.name) + '">'
-      + '<button class="photo-rm" onclick="removePhoto(' + i + ')" title="Remove">&times;</button>'
-      + '<span class="photo-order">' + (i + 1) + '</span>'
-      + '</div>';
+      + (isMain ? '<div class="photo-badge">Cover</div>' : '')
+      + '<div class="photo-actions">'
+      + (isMain ? '' : '<button class="photo-btn photo-btn-set" onclick="setMainPhoto(' + i + ')" title="Set as cover">&#9733;</button>')
+      + (i > 0 ? '<button class="photo-btn photo-btn-move" onclick="movePhoto(' + i + ',-1)" title="Move left">&#9664;</button>' : '')
+      + (i < PHOTO_FILES.length - 1 ? '<button class="photo-btn photo-btn-move" onclick="movePhoto(' + i + ',1)" title="Move right">&#9654;</button>' : '')
+      + '<button class="photo-btn photo-btn-del" onclick="removePhoto(' + i + ')" title="Remove">&#10005;</button>'
+      + '</div></div>';
   }).join('');
+  if(counter) counter.textContent = PHOTO_FILES.length + ' photo' + (PHOTO_FILES.length > 1 ? 's' : '') + ' &middot; First photo = cover image';
+}
+
+function setMainPhoto(index) {
+  if (index === 0 || index >= PHOTO_FILES.length) return;
+  var item = PHOTO_FILES.splice(index, 1)[0];
+  PHOTO_FILES.unshift(item);
+  renderPhotoPreview();
 }
 
 function removePhoto(index) {
