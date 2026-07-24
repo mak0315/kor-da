@@ -39,6 +39,29 @@
       "seoDescription": "Book Travel Hive apartment in H-13 Islamabad on Kor Da. PKR 11,999/night. Fully furnished, WiFi, gym, gaming area. Near NUST. WhatsApp 0315-5881733."
     },
     {
+      "baths": 10,
+      "body": "8 rooms \n2 sweets \n2 single \n4 master \n \nExperience comfort, privacy, and hospitality in the heart of Islamabad.\nLocated in the peaceful and secure sector E-11/2, Paradise Palace Islamabad is the perfect stay for families, couples, business travelers, and tourists.\nWe offer modern rooms, daily cleaning, delicious breakfast (optional), and a friendly staff available 24/7.",
+      "price": 44999,
+      "city": " Islamabad",
+      "area": "Paradise Palace Islamabad 2 House #108, Street 6, E-11/2 Islamabad",
+      "featured": true,
+      "beds": "8",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm-2-.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Paradise palace ",
+      "type": "Guest House",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.31-pm.jpeg",
+      "category": "family",
+      "maxGuests": 25
+    },
+    {
       "baths": 1,
       "body": "Affordable studio apartment near NUST and FAST universities. Ideal for students, travelers, and short stays.",
       "price": 3800,
