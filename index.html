@@ -594,6 +594,13 @@
   <div class="modal-box" id="pdModalBody" onclick="event.stopPropagation()"></div>
 </div>
 
+<!-- IMAGE ZOOM OVERLAY -->
+<div class="imgzoom-bg" id="imgZoom" role="dialog" aria-label="Zoom image">
+  <button class="imgzoom-close" onclick="closeImgZoom()" aria-label="Close zoom">&times;</button>
+  <img id="imgZoomEl" class="imgzoom-el" onclick="event.stopPropagation()" alt="Zoomed photo">
+  <div class="imgzoom-hint">Scroll to zoom &middot; Tap outside to close</div>
+</div>
+
 <!-- CHAT WIDGET -->
 <button class="cfab" id="cfab" onclick="tChat()" aria-label="Chat with Kor Da" aria-expanded="false">
   &#128172;<div class="cbadge" id="cbadge">1</div>

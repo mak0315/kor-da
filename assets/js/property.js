@@ -41,23 +41,26 @@
     if (!prop) return;
     var modal = document.getElementById('pdModal');
     if (!modal) return;
-    var imgUrl = (prop.gallery && prop.gallery[0]) ? prop.gallery[0] : (prop.image || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80');
+    var allImages = [];
+    if (prop.image) allImages.push(prop.image);
+    if (prop.gallery && prop.gallery.length) {
+      prop.gallery.forEach(function(g) { if (allImages.indexOf(g) === -1) allImages.push(g); });
+    }
+    if (allImages.length === 0) allImages.push('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80');
+    var imgCount = allImages.length;
+    var imgCounter = imgCount > 1 ? '<span class="pd-img-count">1/' + imgCount + '</span>' : '';
+    var scrollGallery = '<div class="pd-scroll-gallery">' + allImages.map(function(g, i) {
+      return '<img src="' + g + '" alt="Photo ' + (i+1) + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '" onclick="openImgZoom(this)" data-idx="' + i + '">';
+    }).join('') + '</div>';
     var amenities = (prop.amenities && prop.amenities.length > 0) ? prop.amenities : ['WiFi','AC','Kitchen'];
     var amenityHtml = amenities.map(function(a){ return '<span class="pd-tag">' + a + '</span>'; }).join('');
-    var galleryHtml = '';
-    if (prop.gallery && prop.gallery.length > 1) {
-      galleryHtml = '<div class="pd-gallery">' + prop.gallery.map(function(g, i) {
-        return '<img src="' + g + '" alt="Photo ' + (i+1) + '" loading="lazy" onclick="event.stopPropagation()">';
-      }).join('') + '</div>';
-    }
     var waMsg = 'Hi Kor Da, I am interested in ' + (prop.title || prop.type) + ' Islamabad. Please share availability and booking details.';
     var waLink = 'https://wa.me/' + (prop.waContact || '923155881733') + '?text=' + encodeURIComponent(waMsg);
     document.getElementById('pdModalBody').innerHTML = `
-      <div class="pd-hero-img">
-        <img src="${imgUrl}" alt="${prop.title || prop.type}" onclick="event.stopPropagation()">
-        <button class="pd-close" onclick="closePD()" aria-label="Close">&times;</button>
-        ${prop.featured ? '<div class="pd-feat-badge">Featured</div>' : ''}
-      </div>
+      <button class="pd-close" onclick="closePD()" aria-label="Close">&times;</button>
+      ${prop.featured ? '<div class="pd-feat-badge">Featured</div>' : ''}
+      ${imgCounter}
+      ${scrollGallery}
       <div class="pd-content">
         <div class="pd-main">
           <div class="pd-type">${prop.type || 'Stay'}</div>
@@ -72,7 +75,6 @@
           <div class="pd-desc">${prop.body || prop.description || 'A comfortable, verified stay in Islamabad.'}</div>
           <h3 class="pd-section-title">Amenities</h3>
           <div class="pd-amenities">${amenityHtml}</div>
-          ${galleryHtml}
         </div>
         <div class="pd-sidebar">
           <div class="pd-price-box">
@@ -84,6 +86,14 @@
         </div>
       </div>
     `;
+    var scrollEl = modal.querySelector('.pd-scroll-gallery');
+    if (scrollEl) {
+      scrollEl.addEventListener('scroll', function() {
+        var idx = Math.round(scrollEl.scrollLeft / scrollEl.offsetWidth);
+        var counter = modal.querySelector('.pd-img-count');
+        if (counter && imgCount > 1) counter.textContent = (idx + 1) + '/' + imgCount;
+      });
+    }
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
   };
@@ -93,11 +103,59 @@
     if (modal) { modal.classList.remove('show'); document.body.style.overflow = ''; }
   };
 
+  window.openImgZoom = function(img) {
+    var overlay = document.getElementById('imgZoom');
+    if (!overlay) return;
+    var zi = document.getElementById('imgZoomEl');
+    if (zi) { zi.src = img.src; zi.alt = img.alt; }
+    overlay.classList.add('show');
+    window._zoomScale = 1;
+    if (zi) { zi.style.transform = 'scale(1)'; zi.style.transition = 'transform .2s ease'; }
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
     var pdModal = document.getElementById('pdModal');
     if (pdModal) pdModal.addEventListener('click', function(e) { if (e.target === pdModal) closePD(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePD(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closePD(); closeImgZoom(); } });
+
+    var imgZoomEl = document.getElementById('imgZoomEl');
+    if (imgZoomEl) {
+      imgZoomEl.addEventListener('wheel', zoomImg, { passive: true });
+      var lastDist = 0;
+      imgZoomEl.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 2) {
+          lastDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        }
+      });
+      imgZoomEl.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          var scale = (dist / lastDist) * (window._zoomScale || 1);
+          window._zoomScale = Math.max(0.5, Math.min(3, scale));
+          imgZoomEl.style.transform = 'scale(' + window._zoomScale + ')';
+          imgZoomEl.style.transition = 'none';
+          lastDist = dist;
+        }
+      }, { passive: false });
+    }
+    var imgZoomBg = document.getElementById('imgZoom');
+    if (imgZoomBg) imgZoomBg.addEventListener('click', function(e) { if (e.target === imgZoomBg) closeImgZoom(); });
   });
+
+  window.closeImgZoom = function() {
+    var overlay = document.getElementById('imgZoom');
+    if (overlay) overlay.classList.remove('show');
+  };
+
+  window.zoomImg = function(e) {
+    var zi = document.getElementById('imgZoomEl');
+    if (!zi) return;
+    if (e.deltaY < 0) window._zoomScale = Math.min(3, (window._zoomScale || 1) + 0.15);
+    else window._zoomScale = Math.max(0.5, (window._zoomScale || 1) - 0.15);
+    zi.style.transform = 'scale(' + window._zoomScale + ')';
+    zi.style.transition = 'transform .15s ease';
+  };
 
   /* Reusable Area Card UI Component */
   window.AreaCard = function(area) {

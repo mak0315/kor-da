@@ -160,20 +160,18 @@ body,html{overflow-x:hidden;width:100%}
   #pdModal .pd-content{grid-template-columns:1fr}
   #pdModal .pd-sidebar{border-left:none;border-top:1px solid rgba(28,77,64,.07)}
   #pdModal .pd-meta{grid-template-columns:1fr 1fr}
-  #pdModal .pd-hero-img{max-height:35vh;aspect-ratio:16/9}
-  #pdModal .pd-gallery{grid-template-columns:repeat(3,1fr)}
+  #pdModal .pd-scroll-gallery img{aspect-ratio:16/10}
 }
 @media(max-width:480px){
-  #pdModal .pd-hero-img{max-height:30vh;aspect-ratio:16/10}
   #pdModal .pd-title{font-size:1.2rem}
   #pdModal .pd-main{padding:18px 16px}
   #pdModal .pd-sidebar{padding:18px 16px}
   #pdModal .pd-meta{grid-template-columns:1fr 1fr;gap:6px}
-  #pdModal .pd-gallery{grid-template-columns:repeat(2,1fr)}
-  #pdModal .pd-gallery img{height:auto}
+  #pdModal .pd-scroll-gallery img{aspect-ratio:4/3}
   #pdModal .modal-box{max-height:95vh}
+  #pdModal .pd-price-box{position:relative;top:0}
 }
 @media(max-width:360px){
-  #pdModal .pd-hero-img{aspect-ratio:2/1}
   #pdModal .pd-title{font-size:1.1rem}
+  #pdModal .pd-scroll-gallery img{aspect-ratio:3/2}
 }
