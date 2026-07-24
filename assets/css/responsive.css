@@ -154,3 +154,17 @@
 *{box-sizing:border-box}
 img,video{max-width:100%;height:auto;display:block}
 body,html{overflow-x:hidden;width:100%}
+
+/* Property Detail Modal Responsive */
+@media(max-width:768px){
+  #pdModal .pd-content{grid-template-columns:1fr}
+  #pdModal .pd-sidebar{border-left:none;border-top:1px solid rgba(28,77,64,.07)}
+  #pdModal .pd-meta{grid-template-columns:1fr 1fr}
+  #pdModal .pd-hero-img{max-height:35vh}
+}
+@media(max-width:480px){
+  #pdModal .pd-hero-img{max-height:30vh}
+  #pdModal .pd-title{font-size:1.2rem}
+  #pdModal .pd-main{padding:18px 16px}
+  #pdModal .pd-sidebar{padding:18px 16px}
+}
