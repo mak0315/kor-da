@@ -149,6 +149,30 @@
     "seoDescription": "Book a luxury studio in F-7 Markaz, Islamabad on Kor Da. PKR 4,500/night. Verified host, WiFi, AC, kitchen. WhatsApp 0315-5881733.",
     "body": "Modern fully-furnished studio in the heart of F-7 Markaz. 5 min walk to Jinnah Super Market, restaurants and shopping.",
     "id": "luxury-studio-f7-islamabad"
+  },
+  {
+    "title": "Travel Hive - H-13 (Near NUST)",
+    "slug": "travel-hive-h13-islamabad",
+    "type": "Full Apartment",
+    "city": "H-13, Islamabad",
+    "area": "H-13",
+    "address": "Landmark III, H-13 Sector, Islamabad",
+    "price": 11999,
+    "beds": "1 Bedroom",
+    "baths": 1,
+    "maxGuests": 5,
+    "category": "business",
+    "featured": true,
+    "rating": 4.8,
+    "reviews": 0,
+    "amenities": ["WiFi","AC","Smart TV","Kitchen","Parking","Gym","Gaming Area","Security"],
+    "image": "assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.49-pm-1-.jpeg",
+    "gallery": ["assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.51-pm-1-.jpeg"],
+    "waContact": "923155881733",
+    "seoTitle": "Travel Hive Apartment H-13 Islamabad | Kor Da",
+    "seoDescription": "Book Travel Hive apartment in H-13 Islamabad on Kor Da. PKR 11,999/night. Fully furnished, WiFi, gym, gaming area. Near NUST. WhatsApp 0315-5881733.",
+    "body": "Fully furnished apartment in Landmark III, H-13 Sector, Islamabad. 10 min drive from Centaurus, 20 min from airport, near NUST. Includes free gym, gaming area, WiFi, smart TV, housekeeping.",
+    "id": "travel-hive-h13-islamabad"
   }
   ]
 }
