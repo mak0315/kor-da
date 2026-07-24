@@ -64,7 +64,7 @@
 
 /* Property Detail Modal */
 #pdModal{z-index:3000}
-#pdModal .modal-box{width:min(860px,97vw);max-height:92vh;overflow-y:auto;padding:0;position:relative}
+#pdModal .modal-box{width:min(860px,97vw);max-height:92vh;overflow-y:auto;overflow-x:hidden;padding:0;position:relative}
 #pdModal .pd-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:var(--rf);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:1.3rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
 #pdModal .pd-close:hover{background:rgba(0,0,0,.75)}
 #pdModal .pd-feat-badge{position:absolute;top:14px;left:14px;padding:5px 12px;border-radius:var(--rf);background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;z-index:4}
