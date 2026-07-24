@@ -65,13 +65,13 @@
 /* Property Detail Modal */
 #pdModal{z-index:3000}
 #pdModal .modal-box{width:min(860px,97vw);max-height:92vh;overflow-y:auto;padding:0;position:relative}
-#pdModal .pd-close{position:sticky;top:12px;float:right;margin-right:12px;margin-top:12px;width:36px;height:36px;border-radius:var(--rf);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:1.3rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
+#pdModal .pd-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:var(--rf);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:1.3rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
 #pdModal .pd-close:hover{background:rgba(0,0,0,.75)}
 #pdModal .pd-feat-badge{position:absolute;top:14px;left:14px;padding:5px 12px;border-radius:var(--rf);background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;z-index:4}
 #pdModal .pd-img-count{position:absolute;top:16px;right:60px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:var(--rf);backdrop-filter:blur(4px);z-index:4}
-#pdModal .pd-scroll-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:0;scrollbar-width:none}
+#pdModal .pd-scroll-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:0;scrollbar-width:none;width:100%}
 #pdModal .pd-scroll-gallery::-webkit-scrollbar{display:none}
-#pdModal .pd-scroll-gallery img{flex:0 0 100%;width:100%;aspect-ratio:16/9;object-fit:cover;scroll-snap-align:start;cursor:zoom-in;display:block}
+#pdModal .pd-scroll-gallery img{flex:0 0 100%;min-width:100%;width:100%;aspect-ratio:16/9;object-fit:cover;scroll-snap-align:start;cursor:zoom-in;display:block}
 #pdModal .pd-content{display:grid;grid-template-columns:1fr 280px;gap:0}
 #pdModal .pd-main{padding:24px 28px;min-width:0}
 #pdModal .pd-sidebar{padding:24px 20px;border-left:1px solid rgba(28,77,64,.07);min-width:0}
