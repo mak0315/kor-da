@@ -162,16 +162,19 @@
     if (imgZoomEl) {
       imgZoomEl.addEventListener('wheel', zoomImg, { passive: true });
       var lastDist = 0;
+      var swipeStartX = 0, swipeStartY = 0, swiping = false;
       imgZoomEl.addEventListener('touchstart', function(e) {
         if (e.touches.length === 2) {
           lastDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
         } else if (e.touches.length === 1) {
-          window._swipeX = e.touches[0].clientX;
-          window._swipeY = e.touches[0].clientY;
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+          swiping = true;
         }
       });
       imgZoomEl.addEventListener('touchmove', function(e) {
         if (e.touches.length === 2) {
+          swiping = false;
           e.preventDefault();
           var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
           var scale = (dist / lastDist) * (window._zoomScale || 1);
@@ -179,15 +182,19 @@
           imgZoomEl.style.transform = 'scale(' + window._zoomScale + ')';
           imgZoomEl.style.transition = 'none';
           lastDist = dist;
-        } else if (e.touches.length === 1 && (window._zoomScale || 1) <= 1) {
-          var dx = e.touches[0].clientX - (window._swipeX || 0);
-          var dy = e.touches[0].clientY - (window._swipeY || 0);
-          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        } else if (e.touches.length === 1 && swiping) {
+          var dx = e.touches[0].clientX - swipeStartX;
+          var dy = e.touches[0].clientY - swipeStartY;
+          if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) {
+            swiping = false;
+          }
+          if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+            swiping = false;
             slideImg(dx < 0 ? 1 : -1);
-            window._swipeX = e.touches[0].clientX;
           }
         }
       }, { passive: false });
+      imgZoomEl.addEventListener('touchend', function() { swiping = false; });
     }
     var imgZoomBg = document.getElementById('imgZoom');
     if (imgZoomBg) imgZoomBg.addEventListener('click', function(e) { if (e.target === imgZoomBg) closeImgZoom(); });
