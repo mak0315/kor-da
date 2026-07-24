@@ -597,8 +597,11 @@
 <!-- IMAGE ZOOM OVERLAY -->
 <div class="imgzoom-bg" id="imgZoom" role="dialog" aria-label="Zoom image">
   <button class="imgzoom-close" onclick="closeImgZoom()" aria-label="Close zoom">&times;</button>
+  <span class="imgzoom-count" id="imgZoomCount"></span>
+  <button class="imgzoom-arrow imgzoom-prev" id="imgZoomPrev" onclick="slideImg(-1)" aria-label="Previous image">&#10094;</button>
   <img id="imgZoomEl" class="imgzoom-el" onclick="event.stopPropagation()" alt="Zoomed photo">
-  <div class="imgzoom-hint">Scroll to zoom &middot; Tap outside to close</div>
+  <button class="imgzoom-arrow imgzoom-next" id="imgZoomNext" onclick="slideImg(1)" aria-label="Next image">&#10095;</button>
+  <div class="imgzoom-hint">Scroll/pinch to zoom &middot; Swipe or arrows to browse &middot; Tap outside to close</div>
 </div>
 
 <!-- CHAT WIDGET -->
