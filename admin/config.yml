@@ -11,32 +11,31 @@ public_folder: "/assets/images/uploads"
 collections:
   - name: "properties"
     label: "Properties"
-    file: "content/compiled/properties.json"
-    fields:
-      - label: "Properties"
+    files:
+      - label: "All Properties"
         name: "properties"
-        widget: "list"
-        field:
-          label: "Property"
-          name: "property"
-          widget: "object"
-          fields:
-            - { label: "Title", name: "title", widget: "string" }
-            - { label: "Type", name: "type", widget: "select", options: ["Studio / 1-Bed","Full Apartment","Serviced Apartment","Guest House","Room","House","Villa"] }
-            - { label: "City", name: "city", widget: "string" }
-            - { label: "Area", name: "area", widget: "string" }
-            - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
-            - { label: "Bedrooms", name: "beds", widget: "string" }
-            - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
-            - { label: "Max Guests", name: "maxGuests", widget: "number", min: 1 }
-            - { label: "Category", name: "category", widget: "select", options: ["business","family","budget","medical","university","all"] }
-            - { label: "Featured", name: "featured", widget: "boolean", default: false }
-            - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", widget: "string" } }
-            - { label: "Main Photo", name: "image", widget: "image" }
-            - { label: "Gallery", name: "gallery", widget: "list", allow_add: true, field: { label: "Photo", widget: "image" } }
-            - { label: "WhatsApp", name: "waContact", widget: "string", default: "923155881733" }
-            - { label: "Description", name: "body", widget: "text", rows: 4 }
-            - { label: "ID", name: "id", widget: "string", pattern: ["^[a-z0-9-]+$", "lowercase-hyphens-only"] }
+        file: "content/compiled/properties.json"
+        fields:
+          - label: "Properties"
+            name: "properties"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Type", name: "type", widget: "select", options: ["Studio / 1-Bed","Full Apartment","Serviced Apartment","Guest House","Room","House","Villa"] }
+              - { label: "City", name: "city", widget: "string" }
+              - { label: "Area", name: "area", widget: "string" }
+              - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
+              - { label: "Bedrooms", name: "beds", widget: "string" }
+              - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
+              - { label: "Max Guests", name: "maxGuests", widget: "number", min: 1 }
+              - { label: "Category", name: "category", widget: "select", options: ["business","family","budget","medical","university","all"] }
+              - { label: "Featured", name: "featured", widget: "boolean", default: false }
+              - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", name: "amenity", widget: "string" } }
+              - { label: "Main Photo", name: "image", widget: "image" }
+              - { label: "Gallery", name: "gallery", widget: "list", allow_add: true, field: { label: "Photo", name: "photo", widget: "image" } }
+              - { label: "WhatsApp", name: "waContact", widget: "string", default: "923155881733" }
+              - { label: "Description", name: "body", widget: "text", rows: 4 }
+              - { label: "ID", name: "id", widget: "string", pattern: ["^[a-z0-9-]+$", "lowercase-hyphens-only"] }
 
   - name: "blog"
     label: "Blog Posts"
