@@ -12,8 +12,9 @@
 
     if (listings && listings.length > 0) {
       lgrid.innerHTML = listings.map(function(l) {
-        return window.PropertyCard(l);
-      }).join('');
+        try { return window.PropertyCard(l); }
+        catch(e) { console.warn('PropertyCard render error:', e, l); return ''; }
+      }).filter(function(h){ return h; }).join('');
       if (le) le.style.display = 'none';
 
       /* Re-observe new .rv cards for scroll reveal */

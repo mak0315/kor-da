@@ -11,9 +11,10 @@
   window.PropertyCard = function(l) {
     var imgUrl = (l.gallery && l.gallery[0]) ? l.gallery[0] : (l.image || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80');
     var isSaved = (typeof favs !== 'undefined' && favs.has) ? favs.has(l.id || l.slug) : false;
+    var cardId = l.id || l.slug || (l.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'property-' + Math.random().toString(36).substr(2,6);
     
     return `
-      <div class="lcard rv" data-id="${l.id || l.slug}" data-cat="${l.category || 'all'}" onclick="showPropertyDetail('${(l.id || l.slug).replace(/'/g, "\\'")}', event)" style="cursor:pointer">
+      <div class="lcard rv" data-id="${cardId}" data-cat="${l.category || 'all'}" onclick="showPropertyDetail('${cardId.replace(/'/g, "\\'")}', event)" style="cursor:pointer">
         <div class="limg">
           <img src="${imgUrl}" alt="${l.title || l.type}" loading="lazy">
           <button class="lfav ${isSaved ? 'saved' : ''}" onclick="togFav(this);event.stopPropagation()" aria-label="Save Favorite">${isSaved ? '♥' : '♡'}</button>
@@ -38,6 +39,10 @@
   window.showPropertyDetail = async function(slug, evt) {
     if (evt && evt.target && (evt.target.closest('.lfav') || evt.target.closest('.btn-p'))) return;
     var prop = await PropertyService.getBySlug(slug);
+    if (!prop) { prop = (await PropertyService.getAll()).find(function(p) {
+      return (p.id || p.slug || '').toLowerCase() === (slug || '').toLowerCase() ||
+             (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug;
+    }); }
     if (!prop) return;
     var modal = document.getElementById('pdModal');
     if (!modal) return;

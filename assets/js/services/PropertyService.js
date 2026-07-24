@@ -158,7 +158,21 @@
         }
       } catch (e) {}
 
-      cache = jsonProps.concat(adminProps);
+      var raw = jsonProps.concat(adminProps);
+      cache = raw.filter(function(p) {
+        if (!p || typeof p !== 'object') return false;
+        if (!p.title) return false;
+        if (!p.id && !p.slug) {
+          p.id = (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'prop-' + Math.random().toString(36).substr(2,6);
+          p.slug = p.id;
+        }
+        p.price = parseInt(p.price) || 0;
+        p.baths = parseInt(p.baths) || 1;
+        p.maxGuests = parseInt(p.maxGuests) || 2;
+        p.amenities = Array.isArray(p.amenities) ? p.amenities : [];
+        p.gallery = Array.isArray(p.gallery) ? p.gallery : [];
+        return true;
+      });
       return cache;
     },
 
