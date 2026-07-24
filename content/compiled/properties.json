@@ -1,4 +1,5 @@
-[
+{
+  "properties": [
   {
     "title": "Cozy Studio — E-11 (Near NUST)",
     "slug": "cozy-studio-e11-near-nust",
@@ -149,4 +150,5 @@
     "body": "Modern fully-furnished studio in the heart of F-7 Markaz. 5 min walk to Jinnah Super Market, restaurants and shopping.",
     "id": "luxury-studio-f7-islamabad"
   }
-]
+  ]
+}

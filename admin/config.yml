@@ -11,49 +11,32 @@ public_folder: "/assets/images/uploads"
 collections:
   - name: "properties"
     label: "Properties"
-    folder: "content/properties"
-    create: true
-    slug: "{{slug}}"
-    path: "{{slug}}"
+    file: "content/compiled/properties.json"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - label: "Type"
-        name: "type"
-        widget: "select"
-        options:
-          - "Studio / 1-Bed"
-          - "Full Apartment"
-          - "Serviced Apartment"
-          - "Guest House"
-          - "Room"
-          - "House"
-          - "Villa"
-      - { label: "City", name: "city", widget: "string", example: "Islamabad" }
-      - { label: "Area", name: "area", widget: "string", example: "G-8, F-11, DHA" }
-      - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
-      - { label: "Bedrooms", name: "beds", widget: "string", example: "2 Bedrooms" }
-      - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
-      - { label: "Max Guests", name: "maxGuests", widget: "number", min: 1 }
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options:
-          - { label: "Business", value: "business" }
-          - { label: "Family", value: "family" }
-          - { label: "Budget", value: "budget" }
-          - { label: "Medical", value: "medical" }
-          - { label: "University", value: "university" }
-          - { label: "All", value: "all" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", name: "amenity", widget: "string" } }
-      - { label: "Main Photo", name: "image", widget: "image", media_library: { config: { multiple: false } } }
-      - label: "Gallery Photos"
-        name: "gallery"
+      - label: "Properties"
+        name: "properties"
         widget: "list"
-        allow_add: true
-        field: { label: "Photo", name: "url", widget: "image" }
-      - { label: "WhatsApp Contact", name: "waContact", widget: "string", default: "923155881733" }
-      - { label: "Description", name: "body", widget: "text", rows: 4 }
+        field:
+          label: "Property"
+          name: "property"
+          widget: "object"
+          fields:
+            - { label: "Title", name: "title", widget: "string" }
+            - { label: "Type", name: "type", widget: "select", options: ["Studio / 1-Bed","Full Apartment","Serviced Apartment","Guest House","Room","House","Villa"] }
+            - { label: "City", name: "city", widget: "string" }
+            - { label: "Area", name: "area", widget: "string" }
+            - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
+            - { label: "Bedrooms", name: "beds", widget: "string" }
+            - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
+            - { label: "Max Guests", name: "maxGuests", widget: "number", min: 1 }
+            - { label: "Category", name: "category", widget: "select", options: ["business","family","budget","medical","university","all"] }
+            - { label: "Featured", name: "featured", widget: "boolean", default: false }
+            - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", widget: "string" } }
+            - { label: "Main Photo", name: "image", widget: "image" }
+            - { label: "Gallery", name: "gallery", widget: "list", allow_add: true, field: { label: "Photo", widget: "image" } }
+            - { label: "WhatsApp", name: "waContact", widget: "string", default: "923155881733" }
+            - { label: "Description", name: "body", widget: "text", rows: 4 }
+            - { label: "ID", name: "id", widget: "string", pattern: ["^[a-z0-9-]+$", "lowercase-hyphens-only"] }
 
   - name: "blog"
     label: "Blog Posts"
@@ -66,14 +49,7 @@ collections:
       - { label: "Author", name: "author", widget: "string", default: "Kor Da Team" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Featured Image", name: "image", widget: "image" }
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options:
-          - { label: "Tips", value: "tips" }
-          - { label: "Guide", value: "guide" }
-          - { label: "News", value: "news" }
-          - { label: "Islamabad", value: "islamabad" }
+      - { label: "Category", name: "category", widget: "select", options: ["tips","guide","news","islamabad"] }
       - { label: "Tags", name: "tags", widget: "list", allow_add: true, field: { label: "Tag", name: "tag", widget: "string" } }
       - { label: "Body", name: "body", widget: "markdown" }
 

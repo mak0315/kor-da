@@ -111,8 +111,10 @@
         var res = await fetch('content/compiled/properties.json');
         if (res.ok) {
           var data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
+          if (Array.isArray(data)) {
             jsonProps = data;
+          } else if (data && Array.isArray(data.properties)) {
+            jsonProps = data.properties;
           }
         }
       } catch (err) {
