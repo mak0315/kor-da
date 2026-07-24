@@ -1,9 +1,7 @@
-# Kor Da
-# https://korda.pk/robots.txt
-
 User-agent: *
 Allow: /
+Disallow: /_admin_korda_secret/
 Disallow: /admin/
-Disallow: /content/
+Disallow: /api/
 
 Sitemap: https://korda.pk/sitemap.xml
