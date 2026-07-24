@@ -15,10 +15,8 @@ collections:
     create: true
     slug: "{{slug}}"
     path: "{{slug}}"
-    preview_path: ""
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Lowercase slug with hyphens only"] }
       - label: "Type"
         name: "type"
         widget: "select"
@@ -30,9 +28,8 @@ collections:
           - "Room"
           - "House"
           - "Villa"
-      - { label: "City", name: "city", widget: "string", example: "G-8, Islamabad" }
-      - { label: "Area", name: "area", widget: "string", example: "G-8" }
-      - { label: "Address", name: "address", widget: "string" }
+      - { label: "City", name: "city", widget: "string", example: "Islamabad" }
+      - { label: "Area", name: "area", widget: "string", example: "G-8, F-11, DHA" }
       - { label: "Price per Night (PKR)", name: "price", widget: "number", min: 0 }
       - { label: "Bedrooms", name: "beds", widget: "string", example: "2 Bedrooms" }
       - { label: "Bathrooms", name: "baths", widget: "number", min: 0 }
@@ -48,20 +45,15 @@ collections:
           - { label: "University", value: "university" }
           - { label: "All", value: "all" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Rating", name: "rating", widget: "number", step: 0.1, min: 0, max: 5 }
-      - { label: "Reviews Count", name: "reviews", widget: "number", min: 0 }
       - { label: "Amenities", name: "amenities", widget: "list", allow_add: true, field: { label: "Amenity", name: "amenity", widget: "string" } }
-      - { label: "Main Image URL", name: "image", widget: "string", hint: "Paste image URL or upload in Media" }
-      - label: "Gallery URLs"
+      - { label: "Main Photo", name: "image", widget: "image", media_library: { config: { multiple: false } } }
+      - label: "Gallery Photos"
         name: "gallery"
         widget: "list"
         allow_add: true
-        field: { label: "Image URL", name: "url", widget: "string" }
+        field: { label: "Photo", name: "url", widget: "image" }
       - { label: "WhatsApp Contact", name: "waContact", widget: "string", default: "923155881733" }
-      - { label: "Google Maps URL", name: "mapsUrl", widget: "string", required: false }
-      - { label: "SEO Title", name: "seoTitle", widget: "string", required: false }
-      - { label: "SEO Description", name: "seoDescription", widget: "text", required: false }
-      - { label: "Description (body)", name: "body", widget: "text", required: false }
+      - { label: "Description", name: "body", widget: "text", rows: 4 }
 
   - name: "blog"
     label: "Blog Posts"
@@ -70,11 +62,10 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Lowercase slug with hyphens only"] }
       - { label: "Excerpt", name: "excerpt", widget: "text", rows: 3 }
       - { label: "Author", name: "author", widget: "string", default: "Kor Da Team" }
       - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Featured Image", name: "image", widget: "string" }
+      - { label: "Featured Image", name: "image", widget: "image" }
       - label: "Category"
         name: "category"
         widget: "select"
