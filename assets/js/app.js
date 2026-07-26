@@ -69,3 +69,16 @@ if('IntersectionObserver' in window){
 
 console.log('%cKor Da — Static MVP v2.0','background:#1C4D40;color:#fff;padding:8px 16px;border-radius:6px;font-weight:700');
 console.log('%c0315-5881733 | kordapakistan@gmail.com | @korda.pk','color:#1C4D40;font-size:11px');
+
+/* Open property from shared hash link: #property=slug */
+function checkPropertyHash() {
+  var h = window.location.hash;
+  if (h && h.indexOf('#property=') === 0) {
+    var slug = decodeURIComponent(h.substring(10));
+    if (slug && window.showPropertyDetail) {
+      setTimeout(function() { window.showPropertyDetail(slug); }, 400);
+    }
+  }
+}
+window.addEventListener('DOMContentLoaded', checkPropertyHash);
+window.addEventListener('hashchange', function() { if (window.location.hash.indexOf('#property=') === 0) checkPropertyHash(); });

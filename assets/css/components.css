@@ -40,6 +40,8 @@
 .lbadge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:var(--rf);background:var(--t1);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .lfav{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:var(--rf);background:rgba(253,250,245,.88);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:var(--i3);font-size:1.1rem;transition:all var(--d1);border:none;cursor:pointer}
 .lfav:hover,.lfav.saved{background:#fff;color:var(--err)}
+.lshare{position:absolute;top:12px;right:52px;width:34px;height:34px;border-radius:var(--rf);background:rgba(253,250,245,.88);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:var(--i3);font-size:.95rem;transition:all var(--d1);border:none;cursor:pointer}
+.lshare:hover{background:#fff;color:var(--t1)}
 .ldet{padding:20px;display:flex;flex-direction:column;flex:1}
 .ltop{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .ltype{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
@@ -67,6 +69,8 @@
 #pdModal .modal-box{width:min(860px,97vw);max-height:92vh;overflow-y:auto;overflow-x:hidden;padding:0;position:relative}
 #pdModal .pd-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:var(--rf);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:1.3rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
 #pdModal .pd-close:hover{background:rgba(0,0,0,.75)}
+#pdModal .pd-share{position:absolute;top:12px;right:54px;width:36px;height:36px;border-radius:var(--rf);background:rgba(0,0,0,.55);backdrop-filter:blur(4px);color:#fff;font-size:1rem;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:background .2s}
+#pdModal .pd-share:hover{background:rgba(0,0,0,.75)}
 #pdModal .pd-feat-badge{position:absolute;top:14px;left:14px;padding:5px 12px;border-radius:var(--rf);background:var(--t1);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;z-index:4}
 #pdModal .pd-img-count{position:absolute;top:16px;right:60px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:var(--rf);backdrop-filter:blur(4px);z-index:4}
 #pdModal .pd-scroll-gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:0;scrollbar-width:none;width:100%}

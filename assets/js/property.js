@@ -18,6 +18,7 @@
         <div class="limg">
           <img src="${imgUrl}" alt="${l.title || l.type}" loading="lazy">
           <button class="lfav ${isSaved ? 'saved' : ''}" onclick="togFav(this);event.stopPropagation()" aria-label="Save Favorite">${isSaved ? '♥' : '♡'}</button>
+          <button class="lshare" onclick="shareProperty('${(l.title || l.type).replace(/'/g, "\\'")}', '${cardId.replace(/'/g, "\\'")}', event)" aria-label="Share property">&#128228;</button>
           ${l.featured ? '<div class="lbadge">Featured</div>' : ''}
         </div>
         <div class="ldet">
@@ -64,6 +65,7 @@
     var waLink = 'https://wa.me/' + (prop.waContact || '923155881733') + '?text=' + encodeURIComponent(waMsg);
     document.getElementById('pdModalBody').innerHTML = `
       <button class="pd-close" onclick="closePD()" aria-label="Close">&times;</button>
+      <button class="pd-share" onclick="shareProperty('${(prop.title || prop.type).replace(/'/g, "\\'")}', '${(prop.id || prop.slug || '').replace(/'/g, "\\'")}')" aria-label="Share property">&#128228;</button>
       ${prop.featured ? '<div class="pd-feat-badge">Featured</div>' : ''}
       ${imgCounter}
       ${scrollGallery}
@@ -244,6 +246,31 @@
         <div class="tauthor"><strong>${t.name}</strong>${t.location ? ' · ' + t.location : ''}</div>
       </div>
     `;
+  };
+
+  /* Helper — Share Property */
+  window.shareProperty = function(title, slug, evt) {
+    if (evt) evt.stopPropagation();
+    var url = window.location.origin + '/#property=' + encodeURIComponent(slug);
+    var text = 'Check out ' + title + ' on Kor Da — verified short stay in Islamabad!';
+    if (navigator.share) {
+      navigator.share({ title: title, text: text, url: url }).catch(function() {});
+    } else {
+      var popup = document.getElementById('sharePopup');
+      if (!popup) {
+        popup = document.createElement('div');
+        popup.id = 'sharePopup';
+        popup.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);padding:14px 18px;display:flex;gap:10px;z-index:9999;align-items:center;animation:slideUp .25s ease';
+        popup.innerHTML = '<span style="font-size:.78rem;font-weight:700;color:var(--i3);margin-right:4px">Share:</span>'
+          + '<a href="https://wa.me/?text=' + encodeURIComponent(text + ' ' + url) + '" target="_blank" rel="noopener" style="width:38px;height:38px;border-radius:10px;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none" title="WhatsApp">&#128172;</a>'
+          + '<a href="https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '" target="_blank" rel="noopener" style="width:38px;height:38px;border-radius:10px;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none" title="Facebook">f</a>'
+          + '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url) + '" target="_blank" rel="noopener" style="width:38px;height:38px;border-radius:10px;background:#1DA1F2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;text-decoration:none" title="Twitter">&#128038;</a>'
+          + '<button onclick="navigator.clipboard.writeText(\'' + url.replace(/'/g, "\\'") + '\');this.innerHTML=\'&#10003;\';setTimeout(function(){document.getElementById(\'sharePopup\')?.remove()},1200)" style="width:38px;height:38px;border-radius:10px;background:var(--s);border:1px solid rgba(28,77,64,.12);color:var(--i3);display:flex;align-items:center;justify-content:center;font-size:1rem;cursor:pointer" title="Copy link">&#128279;</button>'
+          + '<button onclick="this.parentElement.remove()" style="width:28px;height:28px;border-radius:50%;background:var(--s);border:none;color:var(--i4);font-size:.9rem;cursor:pointer;flex-shrink:0" aria-label="Close">&times;</button>';
+        document.body.appendChild(popup);
+        setTimeout(function() { var el = document.getElementById('sharePopup'); if (el) el.remove(); }, 6000);
+      }
+    }
   };
 
   /* Helper for Booking trigger */
