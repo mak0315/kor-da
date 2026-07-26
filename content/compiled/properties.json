@@ -2,6 +2,32 @@
   "properties": [
     {
       "baths": 1,
+      "body": "Studio apartment, topcity. \nAttached bath\nSmart TV \nHigh speed wifi upto 36-37 mbps\nMini fridge\nCloset\nDining table with 2 chairs/workstation \nCheck-in through reception.\nLift accessed through code. \nHousekeeping available. ",
+      "price": 7999,
+      "city": "ISLAMABAD",
+      "area": "Plot 34 Kunwar, Block, Block A TopCity-1, Islamabad",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.03-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.03-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm-2-.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "Attached bath Smart TV  High speed wifi upto 36-37 mbps Mini fridge Closet Dining table with 2 chairs/workstation  Check-in through reception. Lift accessed through code.  Housekeeping available. "
+      ],
+      "title": "Studio apartment, topcity. ",
+      "type": "Studio / 1-Bed",
+      "id": "2",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.02-pm.jpeg",
+      "category": "family",
+      "maxGuests": 5
+    },
+    {
+      "baths": 1,
       "body": "Fully furnished apartment in Landmark III, H-13 Sector, Islamabad. 10 min drive from Centaurus, 20 min from airport, near NUST. Includes free gym, gaming area, WiFi, smart TV, housekeeping.",
       "price": 11999,
       "city": "H-13, Islamabad",
@@ -211,6 +237,10 @@
       "category": "business",
       "maxGuests": 2,
       "seoDescription": "Book a luxury studio in F-7 Markaz, Islamabad on Kor Da. PKR 4,500/night. Verified host, WiFi, AC, kitchen. WhatsApp 0315-5881733."
+    },
+    {
+      "featured": false,
+      "waContact": "923155881733"
     }
   ]
 }
