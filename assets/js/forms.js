@@ -1,55 +1,71 @@
 /**
  * KOR DA — FORM & WHATSAPP FLOW (forms.js)
- * Form validation → Animated success modal → Open WhatsApp (KORDA_CONFIG.waNumber)
- * Compatible with Web3Forms (standard <form> fields)
+ * Modular: collect → validate → build message → submit
+ * Data collection separated from submission for future API swap.
  */
 (function(){
   'use strict';
+
+  /* ── AMENITY LIST ──────────────────────────────────────────────── */
+  var AMENITY_OPTIONS = [
+    'WiFi', 'Air Conditioning', 'Kitchen', 'Parking', 'TV',
+    'Washing Machine', 'Geyser', 'UPS / Generator', 'Security',
+    'Balcony', 'Gym', 'Elevator', 'Pool Access', 'Garden',
+    'Iron / Steamer', 'Microwave', 'Refrigerator', 'Study Desk'
+  ];
+
+  /* ── HELPERS ────────────────────────────────────────────────────── */
 
   function getWaNumber() {
     return (window.KORDA_CONFIG && window.KORDA_CONFIG.waNumber) ? window.KORDA_CONFIG.waNumber : '923155881733';
   }
 
-  /* Form Validation */
-  window.fval = function(form){
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? (el.value || '').trim() : '';
+  }
+
+  function setErr(id, bad) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('err', bad);
+  }
+
+  /* ── GENERIC FORM VALIDATION ───────────────────────────────────── */
+
+  window.fval = function(form) {
     var ok = true;
     var reqs = form.querySelectorAll('[required]');
-    for(var i = 0; i < reqs.length; i++){
+    for (var i = 0; i < reqs.length; i++) {
       var f = reqs[i];
       var v = (f.value || '').trim();
-      var bad = !v 
+      var bad = !v
         || (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
         || (f.type === 'checkbox' && !f.checked);
       f.classList.toggle('err', bad);
-      if(bad) ok = false;
+      if (bad) ok = false;
     }
     return ok;
   };
 
-  /* Open WhatsApp with prefilled message */
-  window.openWA = function(text){
+  /* ── WHATSAPP ──────────────────────────────────────────────────── */
+
+  window.openWA = function(text) {
     var url = 'https://wa.me/' + getWaNumber() + '?text=' + encodeURIComponent(text);
     window.open(url, '_blank', 'noopener');
   };
 
-  /* Form success modal and delayed WhatsApp launch */
-  window.showFormSuccess = function(form, message, waText){
-    if (typeof toast === 'function') {
-      toast('Form submitted! Opening WhatsApp...', 'ok');
-    }
-    
-    // Animate form container
+  window.showFormSuccess = function(form, message, waText) {
+    if (typeof toast === 'function') toast(message || 'Submitted!', 'ok');
     form.style.opacity = '0.5';
-    setTimeout(function(){
+    setTimeout(function() {
       form.style.opacity = '1';
       form.reset();
-      if (waText) {
-        window.openWA(waText);
-      }
+      if (waText) window.openWA(waText);
     }, 600);
   };
 
-  /* ── Photo upload for host form ── */
+  /* ── PHOTO UPLOAD ──────────────────────────────────────────────── */
+
   var HOST_PHOTOS = [];
   var MAX_HOST_PHOTOS = 10;
 
@@ -138,60 +154,235 @@
     }
   }
 
-  window.addEventListener('DOMContentLoaded', function(){
-    initHostPhotoUpload();
+  /* ── AMENITY BUTTONS ───────────────────────────────────────────── */
 
-    // Host Form
+  function initAmenityButtons() {
+    var container = document.getElementById('amw');
+    if (!container) return;
+    container.innerHTML = AMENITY_OPTIONS.map(function(a) {
+      return '<div class="am" data-am="' + a + '" onclick="this.classList.toggle(\'on\')">' + a + '</div>';
+    }).join('');
+  }
+
+  /* ── HOST FORM: DATA COLLECTION ────────────────────────────────── */
+
+  function collectHostFormData() {
+    return {
+      fullName:       val('hN'),
+      whatsapp:       val('hPh'),
+      cnic:           val('hCn'),
+      email:          val('hEm'),
+      address:        val('hAd'),
+      area:           val('hAr'),
+      propertyType:   val('hTy'),
+      bedrooms:       val('hBd'),
+      pricePerNight:  val('hPr'),
+      maxGuests:      val('hMG'),
+      category:       val('hCt'),
+      description:    val('hDs'),
+      amenities:      getSelectedAmenities(),
+      photoCount:     HOST_PHOTOS.length,
+      agreement:      !!document.getElementById('agr') && document.getElementById('agr').checked
+    };
+  }
+
+  function getSelectedAmenities() {
+    var tags = document.querySelectorAll('#amw .am.on');
+    var list = [];
+    for (var i = 0; i < tags.length; i++) {
+      list.push(tags[i].getAttribute('data-am'));
+    }
+    return list;
+  }
+
+  /* ── HOST FORM: VALIDATION ─────────────────────────────────────── */
+
+  function validateListingForm(data) {
+    var fields = [
+      { id: 'hN',  val: data.fullName,      label: 'Full Name' },
+      { id: 'hPh', val: data.whatsapp,       label: 'WhatsApp Number' },
+      { id: 'hCn', val: data.cnic,           label: 'CNIC Number' },
+      { id: 'hAd', val: data.address,        label: 'Address' },
+      { id: 'hAr', val: data.area,           label: 'Area / City' },
+      { id: 'hTy', val: data.propertyType,   label: 'Property Type' },
+      { id: 'hBd', val: data.bedrooms,       label: 'Bedrooms' },
+      { id: 'hPr', val: data.pricePerNight,  label: 'Price per Night' }
+    ];
+    var ok = true;
+    var firstBad = null;
+    for (var i = 0; i < fields.length; i++) {
+      var bad = !fields[i].val;
+      setErr(fields[i].id, bad);
+      if (bad && !firstBad) firstBad = fields[i].id;
+    }
+    if (!data.agreement) {
+      var agr = document.getElementById('agr');
+      if (agr) agr.style.outline = '2px solid var(--err)';
+      if (!firstBad) firstBad = 'agr';
+      ok = false;
+    } else {
+      var agrEl = document.getElementById('agr');
+      if (agrEl) agrEl.style.outline = '';
+    }
+    if (!ok && firstBad) {
+      var el = document.getElementById(firstBad);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return ok;
+  }
+
+  /* ── HOST FORM: BUILD WHATSAPP MESSAGE ─────────────────────────── */
+
+  function buildWhatsAppMessage(data) {
+    var L = [];
+    var SEP = '━━━━━━━━━━━━━━━━';
+
+    L.push('🏠 NEW PROPERTY LISTING APPLICATION');
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('👤 HOST DETAILS');
+    L.push('• Full Name: ' + (data.fullName || '—'));
+    L.push('• WhatsApp Number: ' + (data.whatsapp || '—'));
+    L.push('• CNIC Number: ' + (data.cnic || '—'));
+    L.push('• Email: ' + (data.email || '—'));
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('📍 PROPERTY DETAILS');
+    L.push('• Full Address: ' + (data.address || '—'));
+    L.push('• Area / City: ' + (data.area || '—'));
+    L.push('• Property Type: ' + (data.propertyType || '—'));
+    L.push('• Bedrooms: ' + (data.bedrooms || '—'));
+    L.push('• Price per Night (PKR): ' + (data.pricePerNight || '—'));
+    L.push('• Maximum Guests: ' + (data.maxGuests || '—'));
+    L.push('• Best Category: ' + (data.category || 'General'));
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('📝 DESCRIPTION');
+    L.push(data.description || '—');
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('🏡 AMENITIES');
+    if (data.amenities.length) {
+      for (var i = 0; i < data.amenities.length; i++) {
+        L.push('• ' + data.amenities[i]);
+      }
+    } else {
+      L.push('• None selected');
+    }
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('📸 PHOTOS');
+    L.push('Photos Selected: ' + data.photoCount);
+    if (data.photoCount > 0) {
+      L.push('');
+      L.push('⚠️ IMPORTANT: Please attach the selected property photos before sending this WhatsApp message.');
+    }
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('✅ HOST AGREEMENT');
+    L.push('Agreement Accepted: ' + (data.agreement ? 'Yes' : 'No'));
+    L.push('');
+    L.push(SEP);
+    L.push('');
+    L.push('Submitted from Kor Da Listing Form');
+
+    return L.join('\n');
+  }
+
+  /* ── HOST FORM: SUBMIT (swap this for API later) ───────────────── */
+
+  function submitListing(data) {
+    var message = buildWhatsAppMessage(data);
+
+    /* Future: replace this block with an API call
+    fetch('/api/host', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(...)
+
+    For now, opens WhatsApp with the built message.
+    */
+
+    if (typeof toast === 'function') {
+      if (data.photoCount > 0) {
+        toast('Listing ready! Attach your ' + data.photoCount + ' photo(s) in WhatsApp before sending.', 'ok', 5000);
+      } else {
+        toast('Listing details ready. Opening WhatsApp...', 'ok');
+      }
+    }
+
+    window.openWA(message);
+  }
+
+  /* ── HOST FORM: WIRE UP ────────────────────────────────────────── */
+
+  function initHostForm() {
     var hform = document.getElementById('hform');
-    if(hform){
-      hform.addEventListener('submit', function(e){
-        e.preventDefault();
-        if(!window.fval(hform)){
-          if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
-          return;
-        }
-        var name = document.getElementById('hN') ? document.getElementById('hN').value : '';
-        var city = document.getElementById('hAr') ? document.getElementById('hAr').value : 'Islamabad';
-        var type = document.getElementById('hTy') ? document.getElementById('hTy').value : 'Property';
-        var beds = document.getElementById('hBd') ? document.getElementById('hBd').value : '';
-        
-        var waMsg = 'Hi Kor Da, I want to list my property in ' + city + '. Details: ' + name + ' (' + beds + ' ' + type + ').';
-        if (HOST_PHOTOS.length) waMsg += ' I have ' + HOST_PHOTOS.length + ' photo' + (HOST_PHOTOS.length > 1 ? 's' : '') + ' to share.';
-        HOST_PHOTOS = [];
-        renderHostPhotos();
-        window.showFormSuccess(hform, 'Host application received!', waMsg);
-      });
-    }
+    if (!hform) return;
 
-    // Waitlist Form
+    hform.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = collectHostFormData();
+      if (!validateListingForm(data)) {
+        if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
+        return;
+      }
+      submitListing(data);
+      HOST_PHOTOS = [];
+      renderHostPhotos();
+      hform.reset();
+      document.querySelectorAll('#amw .am.on').forEach(function(el) { el.classList.remove('on'); });
+    });
+  }
+
+  /* ── WAITLIST FORM ─────────────────────────────────────────────── */
+
+  function initWaitlistForm() {
     var wlf = document.getElementById('wlf');
-    if(wlf){
-      wlf.addEventListener('submit', function(e){
-        e.preventDefault();
-        var em = document.getElementById('wle') ? document.getElementById('wle').value : '';
-        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){
-          if (typeof toast === 'function') toast('Valid email required', 'warn');
-          return;
-        }
-        var waMsg = 'Hi Kor Da, please add me to the waitlist: ' + em;
-        window.showFormSuccess(wlf, 'Added to waitlist!', waMsg);
-      });
-    }
+    if (!wlf) return;
+    wlf.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var em = val('wle');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+        if (typeof toast === 'function') toast('Valid email required', 'warn');
+        return;
+      }
+      window.showFormSuccess(wlf, 'Added to waitlist!', 'Hi Kor Da, please add me to the waitlist: ' + em);
+    });
+  }
 
-    // Contact Form
+  /* ── CONTACT FORM ──────────────────────────────────────────────── */
+
+  function initContactForm() {
     var cf = document.getElementById('cf');
-    if(cf){
-      cf.addEventListener('submit', function(e){
-        e.preventDefault();
-        if(!window.fval(cf)){
-          if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
-          return;
-        }
-        var name = document.getElementById('cN') ? document.getElementById('cN').value : '';
-        var msg = document.getElementById('cM') ? document.getElementById('cM').value : '';
-        var waMsg = 'Hi Kor Da, message from ' + name + ': ' + msg;
-        window.showFormSuccess(cf, 'Message sent!', waMsg);
-      });
-    }
+    if (!cf) return;
+    cf.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!window.fval(cf)) {
+        if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
+        return;
+      }
+      var name = val('cN');
+      var msg = val('cM');
+      window.showFormSuccess(cf, 'Message sent!', 'Hi Kor Da, message from ' + name + ': ' + msg);
+    });
+  }
+
+  /* ── BOOT ──────────────────────────────────────────────────────── */
+
+  window.addEventListener('DOMContentLoaded', function() {
+    initAmenityButtons();
+    initHostPhotoUpload();
+    initHostForm();
+    initWaitlistForm();
+    initContactForm();
   });
+
 })();
