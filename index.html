@@ -144,12 +144,41 @@
           <input type="date" class="hsc-inp" id="hOut" aria-label="Check-out">
         </div>
       </div>
+      <div id="hNights" style="display:none;text-align:center;padding:6px 0;font-size:.82rem;font-weight:700;color:var(--t1)"></div>
       <div class="hsc-field">
         <div class="hsc-lbl">Guests</div>
         <select class="hsc-inp" id="hGuests" aria-label="Guests">
           <option>1 guest</option><option>2 guests</option>
           <option selected>3&#8211;4 guests</option><option>5&#8211;6 guests</option><option>7+ guests</option>
         </select>
+      </div>
+      <div class="hsc-dates">
+        <div class="hsc-field">
+          <div class="hsc-lbl">Min Budget / Night (PKR)</div>
+          <input type="number" class="hsc-inp" id="hBudgetMin" placeholder="e.g. 5000" min="500" max="500000" aria-label="Minimum budget per night">
+        </div>
+        <div class="hsc-field">
+          <div class="hsc-lbl">Max Budget / Night (PKR)</div>
+          <input type="number" class="hsc-inp" id="hBudgetMax" placeholder="e.g. 10000" min="500" max="500000" aria-label="Maximum budget per night">
+        </div>
+      </div>
+      <div class="hsc-dates">
+        <div class="hsc-field">
+          <div class="hsc-lbl">Property Type</div>
+          <select class="hsc-inp" id="hPropType" aria-label="Property type">
+            <option value="">Any</option><option>Apartment</option><option>House</option><option>Guest House</option><option>Portion</option><option>Studio</option><option>Villa</option>
+          </select>
+        </div>
+        <div class="hsc-field">
+          <div class="hsc-lbl">Bedrooms Required</div>
+          <select class="hsc-inp" id="hBedReq" aria-label="Bedrooms">
+            <option value="">Any</option><option>1</option><option>2</option><option>3</option><option>4+</option>
+          </select>
+        </div>
+      </div>
+      <div class="hsc-field">
+        <div class="hsc-lbl">Special Requirements</div>
+        <input type="text" class="hsc-inp" id="hSpecial" placeholder="e.g. family trip, parking, near hospital, late check-in" aria-label="Special requirements">
       </div>
       <button class="hsc-btn" onclick="doSearch()" aria-label="Search">&#128269; Search Stays</button>
       <div class="hsc-div">or</div>
