@@ -2,6 +2,36 @@
   "properties": [
     {
       "baths": 1,
+      "body": "Studio in River hills \n🏨 Amenities Included\n✔ Free High-Speed WiFi\n✔ Air-Conditioned Rooms\n✔ Refrigerator in Every Room\n✔ Hot Water Available 24/7\n✔ Daily Room Cleaning\n✔ 24-Hour Kitchen Service\n✔ Safe & Secure Indoor Car Parking\n✔ Calm & Family-Friendly Environment\n",
+      "price": 6999,
+      "city": "islamabad ",
+      "area": "Studio in River hills ",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.35-am.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.35-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.36-am.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Studio in River hills",
+      "type": "Full Apartment",
+      "id": "03",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am.jpeg",
+      "category": "family",
+      "maxGuests": 4
+    },
+    {
+      "featured": false,
+      "waContact": "923155881733"
+    },
+    {
+      "baths": 1,
       "body": "Studio apartment, topcity. \nAttached bath\nSmart TV \nHigh speed wifi upto 36-37 mbps\nMini fridge\nCloset\nDining table with 2 chairs/workstation \nCheck-in through reception.\nLift accessed through code. \nHousekeeping available. ",
       "price": 7999,
       "city": "ISLAMABAD",
