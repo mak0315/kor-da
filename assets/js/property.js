@@ -87,8 +87,7 @@
         <div class="pd-sidebar">
           <div class="pd-price-box">
             <div class="pd-price">PKR ${fmt(prop.price)}<span> / night</span></div>
-            <button class="pd-wa-btn" onclick="event.stopPropagation();closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">&#128172; Book via WhatsApp</button>
-            <button class="btn btn-p" style="width:100%;margin-top:8px" onclick="closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">Book Now</button>
+            <button class="btn btn-p" style="width:100%" onclick="closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">&#128172; Book Now</button>
             <p class="pd-trust">CNIC-verified host · Safepay escrow · Pay in PKR</p>
           </div>
         </div>
@@ -349,7 +348,7 @@
   };
 
   function resetBookingForm() {
-    ['bkName','bkPhone','bkCheckIn','bkCheckOut','bkBudget','bkRequests'].forEach(function(id) {
+    ['bkName','bkPhone','bkCheckIn','bkCheckOut','bkRequests'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) { el.value = ''; el.classList.remove('err'); }
     });
@@ -395,7 +394,6 @@
       checkOut: checkOut,
       nights: nights,
       guests: val('bkGuests'),
-      budget: val('bkBudget'),
       arrival: val('bkArrival'),
       purpose: val('bkPurpose'),
       requests: val('bkRequests'),
