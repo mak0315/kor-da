@@ -5,6 +5,7 @@
 (function(){
   'use strict';
 
+  function esc(s) { return String(s).replace(/[<>&"']/g, function(c) { return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function fmt(n){ return parseInt(n).toLocaleString('en-PK'); }
 
   /* Reusable Property Card UI Component */
@@ -61,11 +62,10 @@
     }).join('') + '</div>';
     var amenities = (prop.amenities && prop.amenities.length > 0) ? prop.amenities : ['WiFi','AC','Kitchen'];
     var amenityHtml = amenities.map(function(a){ return '<span class="pd-tag">' + a + '</span>'; }).join('');
-    var waMsg = 'Hi Kor Da, I am interested in ' + (prop.title || prop.type) + ' Islamabad. Please share availability and booking details.';
-    var waLink = 'https://wa.me/' + (prop.waContact || '923155881733') + '?text=' + encodeURIComponent(waMsg);
+    var pdSlug = (prop.id || prop.slug || '');
     document.getElementById('pdModalBody').innerHTML = `
       <button class="pd-close" onclick="closePD()" aria-label="Close">&times;</button>
-      <button class="pd-share" onclick="shareProperty('${(prop.title || prop.type).replace(/'/g, "\\'")}', '${(prop.id || prop.slug || '').replace(/'/g, "\\'")}')" aria-label="Share property"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+      <button class="pd-share" onclick="shareProperty('${(prop.title || prop.type).replace(/'/g, "\\'")}', '${pdSlug.replace(/'/g, "\\'")}')" aria-label="Share property"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
       ${prop.featured ? '<div class="pd-feat-badge">Featured</div>' : ''}
       ${imgCounter}
       ${scrollGallery}
@@ -87,8 +87,8 @@
         <div class="pd-sidebar">
           <div class="pd-price-box">
             <div class="pd-price">PKR ${fmt(prop.price)}<span> / night</span></div>
-            <a href="${waLink}" target="_blank" rel="noopener" class="pd-wa-btn" onclick="event.stopPropagation()">&#128172; Book via WhatsApp</a>
-            <button class="btn btn-p" style="width:100%;margin-top:8px" onclick="closePD();setTimeout(function(){bookNow('${(prop.id || prop.slug || '').replace(/'/g, "\\'")}')},200)">Book Now</button>
+            <button class="pd-wa-btn" onclick="event.stopPropagation();closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">&#128172; Book via WhatsApp</button>
+            <button class="btn btn-p" style="width:100%;margin-top:8px" onclick="closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">Book Now</button>
             <p class="pd-trust">CNIC-verified host · Safepay escrow · Pay in PKR</p>
           </div>
         </div>
@@ -279,21 +279,16 @@
 
   window.bookNow = function(slug) {
     if (!slug) return;
-    PropertyService.getBySlug(slug).then(function(prop) {
-      if (!prop) {
-        PropertyService.getAll().then(function(all) {
-          var found = null;
-          for (var i = 0; i < all.length; i++) {
-            if ((all[i].id || all[i].slug || '') === slug ||
-                (all[i].title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
-              found = all[i]; break;
-            }
-          }
-          if (found) openBookingModal(found);
-        });
-        return;
+    PropertyService.getAll().then(function(all) {
+      var found = null;
+      for (var i = 0; i < all.length; i++) {
+        var p = all[i];
+        if (p.slug === slug || p.id === slug ||
+            (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
+          found = p; break;
+        }
       }
-      openBookingModal(prop);
+      if (found) { openBookingModal(found); }
     });
   };
 
