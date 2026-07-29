@@ -27,8 +27,29 @@
       "maxGuests": 4
     },
     {
-      "featured": false,
-      "waContact": "923155881733"
+      "baths": 1,
+      "body": "Studio in Kazani Heights \nAll amenities included",
+      "price": 7999,
+      "city": "islamabad ",
+      "area": "Studio in Kazani Heights ",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.36-am.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Studio in Kazani Heights ",
+      "type": "Full Apartment",
+      "id": "04",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.34-am.jpeg",
+      "category": "family",
+      "maxGuests": 4
     },
     {
       "baths": 1,
