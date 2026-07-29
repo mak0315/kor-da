@@ -69,6 +69,9 @@
   .hsc-dates{grid-template-columns:1fr}
   .sg{grid-template-columns:1fr}
   .sn{font-size:1.5rem}
+  #bkModal .bk-col{grid-template-columns:1fr}
+  #bkModal .bk-dates{grid-template-columns:1fr}
+  #bkModal .bk-pi-row{flex-direction:column;align-items:flex-start;gap:4px}
   .isb-grid{grid-template-columns:repeat(2,1fr)}
   .astats{grid-template-columns:1fr 1fr}
   .t-hero{font-size:clamp(1.7rem,5vw,3rem)}

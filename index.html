@@ -593,6 +593,38 @@
   <div class="imgzoom-hint">Scroll/pinch to zoom &middot; Swipe or arrows to browse &middot; Tap outside to close</div>
 </div>
 
+<!-- BOOKING MODAL -->
+<div class="modal-bg" id="bkModal" role="dialog" aria-label="Book this property" aria-modal="true">
+  <div class="modal-box bk-box" id="bkModalBody">
+    <button class="modal-close" onclick="closeBkModal()" aria-label="Close">&times;</button>
+    <div class="bk-prop-info" id="bkPropInfo"></div>
+    <div class="bk-form">
+      <div class="bk-fields">
+        <div class="bk-col">
+          <div class="bk-fg"><label class="bk-lbl">Full Name *</label><input type="text" class="bk-inp" id="bkName" placeholder="Muhammad Ali" autocomplete="name"></div>
+          <div class="bk-fg"><label class="bk-lbl">WhatsApp Number *</label><input type="tel" class="bk-inp" id="bkPhone" placeholder="+92 3XX XXX XXXX" autocomplete="tel"></div>
+        </div>
+        <div class="bk-dates">
+          <div class="bk-fg"><label class="bk-lbl">Check-in *</label><input type="date" class="bk-inp" id="bkCheckIn"></div>
+          <div class="bk-fg"><label class="bk-lbl">Check-out *</label><input type="date" class="bk-inp" id="bkCheckOut"></div>
+        </div>
+        <div id="bkNights" class="bk-nights"></div>
+        <div class="bk-col">
+          <div class="bk-fg"><label class="bk-lbl">Guests *</label><select class="bk-inp" id="bkGuests"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>8</option><option>10+</option></select></div>
+          <div class="bk-fg"><label class="bk-lbl">Estimated Budget (PKR)</label><input type="number" class="bk-inp" id="bkBudget" placeholder="e.g. 5000"></div>
+        </div>
+        <div class="bk-col">
+          <div class="bk-fg"><label class="bk-lbl">Arrival Time</label><select class="bk-inp" id="bkArrival"><option value="">Flexible</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></div>
+          <div class="bk-fg"><label class="bk-lbl">Purpose of Stay</label><select class="bk-inp" id="bkPurpose"><option value="">Select...</option><option>Family</option><option>Business</option><option>Vacation</option><option>Medical</option><option>Event</option><option>Other</option></select></div>
+        </div>
+        <div class="bk-fg"><label class="bk-lbl">Special Requests</label><textarea class="bk-inp bk-ta" id="bkRequests" placeholder="e.g. late check-in, need parking &amp; WiFi, ground floor, extra mattress, airport pickup"></textarea></div>
+      </div>
+      <div class="bk-cost" id="bkCost"></div>
+      <button class="btn btn-p btn-xl" id="bkSubmit" onclick="submitBooking()" style="width:100%;justify-content:center">&#128172; Send Booking Request</button>
+    </div>
+  </div>
+</div>
+
 <!-- CHAT WIDGET -->
 <button class="cfab" id="cfab" onclick="tChat()" aria-label="Chat with Kor Da" aria-expanded="false">
   &#128172;<div class="cbadge" id="cbadge">1</div>

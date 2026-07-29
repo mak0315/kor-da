@@ -30,7 +30,7 @@
           <p class="lloc">📍 ${l.city || l.area || 'Islamabad'}</p>
           <div class="lbot">
             <div class="lprice"><strong>PKR ${fmt(l.price)}</strong> / night</div>
-            <button class="btn btn-p btn-sm" onclick="bookNow('${(l.title || l.type).replace(/'/g, "\\'")}', '${fmt(l.price)}');event.stopPropagation()">Book Now</button>
+            <button class="btn btn-p btn-sm" onclick="bookNow('${cardId.replace(/'/g, "\\'")}');event.stopPropagation()">Book Now</button>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
           <div class="pd-price-box">
             <div class="pd-price">PKR ${fmt(prop.price)}<span> / night</span></div>
             <a href="${waLink}" target="_blank" rel="noopener" class="pd-wa-btn" onclick="event.stopPropagation()">&#128172; Book via WhatsApp</a>
-            <button class="btn btn-p" style="width:100%;margin-top:8px" onclick="bookNow('${(prop.title || prop.type).replace(/'/g, "\\'")}', '${fmt(prop.price)}');event.stopPropagation()">Book Now</button>
+            <button class="btn btn-p" style="width:100%;margin-top:8px" onclick="closePD();setTimeout(function(){bookNow('${(prop.id || prop.slug || '').replace(/'/g, "\\'")}')},200)">Book Now</button>
             <p class="pd-trust">CNIC-verified host · Safepay escrow · Pay in PKR</p>
           </div>
         </div>
@@ -273,15 +273,319 @@
     }
   };
 
-  /* Helper for Booking trigger */
-  window.bookNow = function(propertyName, price){
-    var msg = "Hi Kor Da, I'm interested in " + propertyName + ". Please share availability and booking details.";
-    if (price) msg += " (Listed at PKR " + price + "/night)";
-    if (typeof openWA === 'function') {
-      openWA(msg);
-    } else {
-      var waNum = window.KORDA_CONFIG ? window.KORDA_CONFIG.waNumber : '923155881733';
-      window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-    }
+  /* ── BOOKING MODAL ────────────────────────────────────────────── */
+
+  window._bkProp = null;
+
+  window.bookNow = function(slug) {
+    if (!slug) return;
+    PropertyService.getBySlug(slug).then(function(prop) {
+      if (!prop) {
+        PropertyService.getAll().then(function(all) {
+          var found = null;
+          for (var i = 0; i < all.length; i++) {
+            if ((all[i].id || all[i].slug || '') === slug ||
+                (all[i].title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
+              found = all[i]; break;
+            }
+          }
+          if (found) openBookingModal(found);
+        });
+        return;
+      }
+      openBookingModal(prop);
+    });
   };
+
+  function genListingId(prop) {
+    var cityCode = 'ISB';
+    var area = (prop.area || prop.city || '').toLowerCase();
+    if (area.indexOf('lhr') !== -1 || area.indexOf('lahore') !== -1) cityCode = 'LHR';
+    else if (area.indexOf('rwp') !== -1 || area.indexOf('rawalpindi') !== -1) cityCode = 'RWP';
+    else if (area.indexOf('khi') !== -1 || area.indexOf('karachi') !== -1) cityCode = 'KHI';
+    var num = (prop.id || '').replace(/[^0-9]/g, '') || Math.floor(Math.random() * 900 + 100);
+    return 'KD-' + cityCode + '-' + String(num).padStart(3, '0');
+  }
+
+  function openBookingModal(prop) {
+    window._bkProp = prop;
+    var modal = document.getElementById('bkModal');
+    if (!modal) return;
+    var listingId = genListingId(prop);
+    var propTitle = prop.title || prop.type || 'Property';
+    var propLoc = (prop.area || prop.city || 'Islamabad');
+    var propType = prop.type || 'Stay';
+    var propBeds = prop.beds || '1';
+    var propGuests = prop.maxGuests || '4';
+    var propPrice = prop.price || 0;
+
+    document.getElementById('bkPropInfo').innerHTML =
+      '<div class="bk-pi-row">'
+        + '<div><div class="bk-pi-title">' + esc(propTitle) + '</div>'
+        + '<div class="bk-pi-id">' + listingId + ' &middot; ' + esc(propLoc) + '</div></div>'
+        + '<div class="bk-pi-price">PKR ' + fmt(propPrice) + '<span style="font-size:.7rem;font-weight:400;color:var(--i4)"> / night</span></div>'
+      + '</div>'
+      + '<div class="bk-pi-detail">'
+        + '<span>' + esc(propType) + '</span>'
+        + '<span>' + propBeds + ' Bed' + (propBeds > 1 ? 's' : '') + '</span>'
+        + '<span>Up to ' + propGuests + ' guests</span>'
+      + '</div>';
+
+    var guestsEl = document.getElementById('bkGuests');
+    if (guestsEl) {
+      var maxG = parseInt(propGuests, 10) || 4;
+      guestsEl.innerHTML = '';
+      for (var i = 1; i <= maxG; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = i;
+        guestsEl.appendChild(opt);
+      }
+    }
+
+    resetBookingForm();
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.closeBkModal = function() {
+    var modal = document.getElementById('bkModal');
+    if (modal) { modal.classList.remove('show'); document.body.style.overflow = ''; }
+  };
+
+  function resetBookingForm() {
+    ['bkName','bkPhone','bkCheckIn','bkCheckOut','bkBudget','bkRequests'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.value = ''; el.classList.remove('err'); }
+    });
+    ['bkArrival','bkPurpose'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.selectedIndex = 0; el.classList.remove('err'); }
+    });
+    var g = document.getElementById('bkGuests');
+    if (g) g.selectedIndex = Math.min(2, g.options.length - 1);
+    document.getElementById('bkNights').style.display = 'none';
+    document.getElementById('bkCost').style.display = 'none';
+  }
+
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? (el.value || '').trim() : '';
+  }
+
+  function setFieldErr(id, bad) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('err', bad);
+  }
+
+  function calculateNights(checkIn, checkOut) {
+    if (!checkIn || !checkOut) return 0;
+    var a = new Date(checkIn + 'T00:00:00');
+    var b = new Date(checkOut + 'T00:00:00');
+    return Math.max(0, Math.round((b - a) / (1000 * 60 * 60 * 24)));
+  }
+
+  function collectBookingData() {
+    var prop = window._bkProp;
+    var checkIn = val('bkCheckIn');
+    var checkOut = val('bkCheckOut');
+    var nights = calculateNights(checkIn, checkOut);
+    var pricePerNight = prop ? parseInt(prop.price, 10) : 0;
+    return {
+      property: prop,
+      listingId: genListingId(prop),
+      fullName: val('bkName'),
+      phone: val('bkPhone'),
+      checkIn: checkIn,
+      checkOut: checkOut,
+      nights: nights,
+      guests: val('bkGuests'),
+      budget: val('bkBudget'),
+      arrival: val('bkArrival'),
+      purpose: val('bkPurpose'),
+      requests: val('bkRequests'),
+      pricePerNight: pricePerNight,
+      estimatedTotal: nights * pricePerNight
+    };
+  }
+
+  function validateBookingForm(data) {
+    var fields = [
+      { id: 'bkName', val: data.fullName, label: 'Full Name' },
+      { id: 'bkPhone', val: data.phone, label: 'WhatsApp Number' },
+      { id: 'bkCheckIn', val: data.checkIn, label: 'Check-in' },
+      { id: 'bkCheckOut', val: data.checkOut, label: 'Check-out' },
+      { id: 'bkGuests', val: data.guests, label: 'Guests' }
+    ];
+    var ok = true;
+    var firstBad = null;
+    for (var i = 0; i < fields.length; i++) {
+      var bad = !fields[i].val;
+      setFieldErr(fields[i].id, bad);
+      if (bad && !firstBad) { firstBad = fields[i].id; ok = false; }
+    }
+    if (data.checkIn && data.checkOut && data.checkIn >= data.checkOut) {
+      setFieldErr('bkCheckOut', true);
+      if (!firstBad) firstBad = 'bkCheckOut';
+      ok = false;
+      if (typeof toast === 'function') toast('Check-out must be after check-in', 'warn');
+    }
+    var maxG = window._bkProp ? (parseInt(window._bkProp.maxGuests, 10) || 10) : 10;
+    if (data.guests && parseInt(data.guests, 10) > maxG) {
+      setFieldErr('bkGuests', true);
+      if (!firstBad) firstBad = 'bkGuests';
+      ok = false;
+      if (typeof toast === 'function') toast('Max ' + maxG + ' guests for this property', 'warn');
+    }
+    if (!ok && firstBad) {
+      var el = document.getElementById(firstBad);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    return ok;
+  }
+
+  function buildBookingMessage(data) {
+    var p = data.property;
+    var L = [];
+    var S = '━━━━━━━━━━━━━━━━━━';
+
+    L.push('🏠 KOR DA BOOKING REQUEST');
+    L.push(''); L.push(S); L.push(''); L.push('🏡 PROPERTY');
+    L.push('');
+    L.push('Listing ID:');
+    L.push(data.listingId);
+    L.push('');
+    L.push('Property:');
+    L.push(p.title || p.type || 'Not specified');
+    L.push('');
+    L.push('Location:');
+    L.push((p.area || p.city || 'Islamabad') + (p.address ? ' - ' + p.address : ''));
+    L.push('');
+    L.push('Property Type:');
+    L.push(p.type || 'Stay');
+    L.push('');
+    L.push('Bedrooms:');
+    L.push(p.beds || '1');
+    L.push('');
+    L.push('Price:');
+    L.push('PKR ' + fmt(data.pricePerNight) + ' / Night');
+    L.push('');
+    L.push('Listing:');
+    L.push(window.location.origin + '/#property=' + encodeURIComponent(p.id || p.slug || ''));
+    L.push(''); L.push(S); L.push(''); L.push('👤 GUEST');
+    L.push('');
+    L.push('Name:');
+    L.push(data.fullName);
+    L.push('');
+    L.push('WhatsApp:');
+    L.push(data.phone);
+    L.push(''); L.push(S); L.push(''); L.push('📅 STAY DETAILS');
+    L.push('');
+    L.push('Check-in:');
+    L.push(data.checkIn || 'Not specified');
+    L.push('');
+    L.push('Check-out:');
+    L.push(data.checkOut || 'Not specified');
+    L.push('');
+    L.push('Total Nights:');
+    L.push(data.nights > 0 ? data.nights.toString() : 'Not calculated');
+    L.push('');
+    L.push('Guests:');
+    L.push(data.guests);
+    L.push('');
+    L.push('Arrival Time:');
+    L.push(data.arrival || 'Flexible');
+    L.push('');
+    L.push('Purpose of Stay:');
+    L.push(data.purpose || 'Not specified');
+    L.push(''); L.push(S); L.push('');
+
+    L.push('💰 ESTIMATED COST');
+    L.push('');
+    L.push('Per Night:');
+    L.push('PKR ' + fmt(data.pricePerNight));
+    L.push('');
+    L.push('Estimated Total:');
+    L.push(data.nights > 0 ? 'PKR ' + fmt(data.estimatedTotal) : 'N/A');
+    L.push('');
+    L.push('(Final amount subject to confirmation)');
+    L.push(''); L.push(S); L.push('');
+
+    L.push('📝 SPECIAL REQUESTS');
+    L.push('');
+    L.push(data.requests || 'None');
+    L.push(''); L.push(S); L.push('');
+
+    L.push('Please confirm:');
+    L.push('');
+    L.push('✅ Availability');
+    L.push('✅ Final Price');
+    L.push('✅ Payment Method');
+    L.push('✅ Check-in Instructions');
+    L.push('');
+    L.push('Thank you.');
+    L.push('');
+    L.push('Sent via Kor Da');
+
+    return L.join('\n');
+  }
+
+  window.submitBooking = function() {
+    var data = collectBookingData();
+    if (!validateBookingForm(data)) {
+      if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
+      return;
+    }
+
+    /* Future: replace with submitBookingAPI(data) */
+    var message = buildBookingMessage(data);
+    if (typeof toast === 'function') toast('Your booking request is ready! Review & send in WhatsApp.', 'ok', 5000);
+    var waNum = window.KORDA_CONFIG ? window.KORDA_CONFIG.waNumber : '923155881733';
+    window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
+    window.closeBkModal();
+  };
+
+  /* ── NIGHTS + COST LIVE CALCULATION ─────────────────────────────── */
+
+  function updateBookingCalc() {
+    var checkIn = val('bkCheckIn');
+    var checkOut = val('bkCheckOut');
+    var nights = calculateNights(checkIn, checkOut);
+    var nightsEl = document.getElementById('bkNights');
+    if (nights > 0) {
+      nightsEl.textContent = nights + ' Night' + (nights > 1 ? 's' : '');
+      nightsEl.style.display = 'block';
+    } else {
+      nightsEl.style.display = 'none';
+    }
+
+    var prop = window._bkProp;
+    var costEl = document.getElementById('bkCost');
+    if (prop && nights > 0) {
+      var price = parseInt(prop.price, 10) || 0;
+      var total = price * nights;
+      costEl.innerHTML =
+        '<div class="bk-cost-row"><span>PKR ' + fmt(price) + ' &times; ' + nights + ' night' + (nights > 1 ? 's' : '') + '</span><span><strong>PKR ' + fmt(total) + '</strong></span></div>'
+        + '<div class="bk-cost-total"><span>Estimated Total</span><span>PKR ' + fmt(total) + '</span></div>'
+        + '<div class="bk-cost-note">Estimated total before confirmation</div>';
+      costEl.style.display = 'block';
+    } else {
+      costEl.style.display = 'none';
+    }
+  }
+
+  /* ── WIRE UP ────────────────────────────────────────────────────── */
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var bkModal = document.getElementById('bkModal');
+    if (bkModal) {
+      bkModal.addEventListener('click', function(e) { if (e.target === bkModal) closeBkModal(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeBkModal(); });
+    }
+    ['bkCheckIn','bkCheckOut'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('change', updateBookingCalc);
+    });
+  });
+
 })();
