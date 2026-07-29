@@ -11,7 +11,7 @@
     {k:['book','booking','reserve','available'],r:'WhatsApp us at 0315-5881733 with the property name and dates. We respond within 2 hours!'},
     {k:['cnic','nadra','verify'],r:'Every host is verified via NADRA Verisys before listing. Only CNIC-verified Pakistanis can host on Kor Da.'},
     {k:['hello','hi','salam','aoa','assalam'],r:'Wa Alaikum Assalam! Welcome to Kor Da Islamabad. Looking for a stay or want to list your property?'},
-    {k:['commission','fee','percent'],r:'Kor Da charges hosts only 9% on completed bookings — lowest in Pakistan. You keep 91%.'},
+    {k:['commission','fee','percent'],r:'Kor Da charges a small commission only on completed bookings — hosts keep the majority. Zero listing fee, zero monthly cost.'},
     {k:['f-7','f-8','dha','bahria','g-8','islamabad','pims','nust'],r:'We cover all of Islamabad: F-6 to F-11, G-6 to G-15, DHA, Bahria Town, Blue Area, Bani Gala and all sectors.'},
     {k:['safe','trust','secure','escrow'],r:'CNIC-verified hosts. 24-hour dispute protection. WhatsApp: 0315-5881733 for any issue.'},
     {k:['cancel','refund'],r:'Contact us within 24 hours of check-in via WhatsApp: 0315-5881733. We respond same day.'}

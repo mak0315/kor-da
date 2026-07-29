@@ -16,8 +16,8 @@
     heroSubtitle: 'CNIC-verified hosts · Pay in PKR · EasyPaisa & JazzCash. Escrow protection.',
     statLabel1: '20,000+',
     statDesc1: 'STR listings across Pakistan',
-    statLabel2: '9%',
-    statDesc2: 'Commission — lowest in Pakistan'
+    statLabel2: '24hr',
+    statDesc2: 'Host approval after CNIC verification'
   };
 
   window.SettingsService = {

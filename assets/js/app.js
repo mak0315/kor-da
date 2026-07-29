@@ -32,24 +32,6 @@ function aArea(btn, area){
   var el = $('listings'); if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-/* Earnings Calculator */
-function uc(){
-  var r = parseInt($('cr') ? $('cr').value : 5000);
-  var n = parseInt($('cn') ? $('cn').value : 15);
-  var g = r * n, c = Math.round(g * .09), net = g - c;
-  if($('crv')) $('crv').textContent = 'PKR ' + fmt(r);
-  if($('cnv')) $('cnv').textContent = n + ' nights';
-  if($('cres')) $('cres').textContent = 'PKR ' + fmt(net);
-  if($('csub')) $('csub').textContent = n + ' x PKR ' + fmt(r) + ' = PKR ' + fmt(g) + ' gross';
-  if($('cg')) $('cg').textContent = 'PKR ' + fmt(g);
-  if($('cc')) $('cc').textContent = '-PKR ' + fmt(c);
-  if($('cn2')) $('cn2').textContent = 'PKR ' + fmt(net);
-  var re = $('cr'), ne = $('cn');
-  if(re) re.style.setProperty('--rp', (((r - 1000) / (30000 - 1000)) * 100).toFixed(1) + '%');
-  if(ne) ne.style.setProperty('--rp', (((n - 1) / 29) * 100).toFixed(1) + '%');
-}
-window.addEventListener('load', uc);
-
 /* Lazy Image Loading */
 if('IntersectionObserver' in window){
   window.addEventListener('DOMContentLoaded', function(){
