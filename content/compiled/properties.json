@@ -1,6 +1,34 @@
 {
   "properties": [
     {
+      "baths": 20,
+      "body": "Guest house\n14 rooms\nMaster bed  7000 6 rooms\nMaster plus single 8500 6 rooms\n2 mastwr bed  9000 1 rooms\n3 master bed 12000  (1) rooms\nTotal 14 rooms",
+      "price": 5999,
+      "city": "islamabad ",
+      "area": "E-11/1 ",
+      "featured": true,
+      "beds": "16",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.52.10-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.49-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.49-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.46-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.47-pm.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Guest house with 14 rooms ",
+      "type": "Guest House",
+      "id": "01",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm-1-.jpeg",
+      "category": "family",
+      "maxGuests": 50
+    },
+    {
       "baths": 1,
       "body": "Studio in River hills \n🏨 Amenities Included\n✔ Free High-Speed WiFi\n✔ Air-Conditioned Rooms\n✔ Refrigerator in Every Room\n✔ Hot Water Available 24/7\n✔ Daily Room Cleaning\n✔ 24-Hour Kitchen Service\n✔ Safe & Secure Indoor Car Parking\n✔ Calm & Family-Friendly Environment\n",
       "price": 6999,
@@ -288,10 +316,6 @@
       "category": "business",
       "maxGuests": 2,
       "seoDescription": "Book a luxury studio in F-7 Markaz, Islamabad on Kor Da. PKR 4,500/night. Verified host, WiFi, AC, kitchen. WhatsApp 0315-5881733."
-    },
-    {
-      "featured": false,
-      "waContact": "923155881733"
     }
   ]
 }
