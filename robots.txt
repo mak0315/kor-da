@@ -1,7 +1,12 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 Disallow: /_admin_korda_secret/
 Disallow: /admin/
 Disallow: /api/
+Disallow: /archive/
 
-Sitemap: https://korda.pk/sitemap.xml
+# Crawl-delay for slower crawlers
+User-agent: Yandex
+Crawl-delay: 5
+
+Sitemap: https://www.kordaa.com/sitemap.xml

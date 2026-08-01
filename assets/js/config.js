@@ -1,5 +1,5 @@
-/**
- * KOR DA — CENTRAL SITE CONFIGURATION (config.js)
+﻿/**
+ * KOR DA â€” CENTRAL SITE CONFIGURATION (config.js)
  * 
  * Centralized settings for phone number, WhatsApp number, brand, currency, and location.
  * Updating values here propagates automatically across all UI components and forms.
@@ -11,7 +11,7 @@
     phoneDisplay: "0315-5881733",
     waNumber: "923155881733",
     siteName: "Kor Da",
-    siteUrl: "https://korda.pk",
+    siteUrl: "https://www.kordaa.com",
     email: "kordapakistan@gmail.com",
     city: "Islamabad",
     currency: "PKR",

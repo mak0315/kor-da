@@ -2,7 +2,7 @@ backend:
   name: github
   repo: mak0315/kor-da
   branch: main
-  base_url: "https://korda-amber.vercel.app"
+  base_url: "https://www.kordaa.com"
   auth_endpoint: "/auth"
 
 media_folder: "assets/images/uploads"

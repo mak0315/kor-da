@@ -13,7 +13,8 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
     }
   ],
@@ -23,6 +24,10 @@
   ],
   "redirects": [
     { "source": "/admin", "destination": "/admin/index.html", "permanent": false },
-    { "source": "/dashboard", "destination": "/_admin_korda_secret/index.html", "permanent": true }
+    { "source": "/dashboard", "destination": "/_admin_korda_secret/index.html", "permanent": true },
+    { "source": "/:path*", "destination": "https://www.kordaa.com/:path*", "permanent": true, "has": [{ "type": "host", "value": "kordaa.com" }] },
+    { "source": "/:path*", "destination": "https://www.kordaa.com/:path*", "permanent": true, "has": [{ "type": "host", "value": "korda.pk" }] },
+    { "source": "/:path*", "destination": "https://www.kordaa.com/:path*", "permanent": true, "has": [{ "type": "host", "value": "www.korda.pk" }] },
+    { "source": "/:path*", "destination": "https://www.kordaa.com/:path*", "permanent": true, "has": [{ "type": "host", "value": "korda-amber.vercel.app" }] }
   ]
 }

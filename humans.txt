@@ -1,5 +1,5 @@
-# humans.txt — Kor Da
-# https://korda.pk/humans.txt
+﻿# humans.txt â€” Kor Da
+# https://www.kordaa.com/humans.txt
 
 /* HUMAN */
 
