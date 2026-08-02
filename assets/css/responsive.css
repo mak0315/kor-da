@@ -30,6 +30,11 @@
 /* ≤ 768px */
 @media(max-width:768px){
   .nlinks,.nacts{display:none}
+  .hs.hs0{background-image:url('../images/hero-new-1-m.png') !important}
+  .hs.hs1{background-image:url('../images/hero-new-2-m.png') !important}
+  .hs.hs2{background-image:url('../images/hero-new-3-m.png') !important}
+  .hs.hs3{background-image:url('../images/hero-new-4-m.png') !important}
+  .hs.hs4{background-image:url('../images/hero-new-5-m.png') !important}
   .nhbg{display:flex}
   .cgrid{grid-template-columns:repeat(2,1fr)}
   .hcon{grid-template-columns:1fr}
