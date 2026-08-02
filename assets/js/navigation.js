@@ -72,13 +72,13 @@
     }
 
     /* Scroll spy: highlight Explore / Host / About by section */
-    var spySecs = [['hero', null], ['host-form', null], ['about', null]];
+    var spySecs = [['listings', null], ['host-form', null], ['about', null]];
     for(var s = 0; s < spySecs.length; s++){
       var se = document.getElementById(spySecs[s][0]);
       spySecs[s][1] = se;
     }
     function spyScroll(){
-      var y = window.scrollY + 110, cur = 'hero';
+      var y = window.scrollY + 110, cur = 'listings';
       for(var s = 0; s < spySecs.length; s++){
         if(spySecs[s][1] && spySecs[s][1].offsetTop <= y) cur = spySecs[s][0];
       }
