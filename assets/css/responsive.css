@@ -29,6 +29,8 @@
 
 /* ≤ 768px */
 @media(max-width:768px){
+  .trust-strip{gap:8px;padding:12px var(--gx)}
+  .tb{padding:8px 13px;font-size:.71rem}
   .nlinks,.nacts{display:none}
   .hs.hs0{background-image:url('../images/hero-new-3-m.png') !important}
   .hs.hs1{background-image:url('../images/hero-new-2-m.png') !important}
@@ -162,6 +164,13 @@
 *{box-sizing:border-box}
 img,video{max-width:100%;height:auto;display:block}
 body,html{overflow-x:hidden;width:100%}
+
+/* Touch target sizing (coarse pointers) */
+@media (hover:none) and (pointer:coarse){
+  .atag,.fp,.tb,.hsc-inp,.hsc-btn,.hsc-wa{min-height:44px}
+  .atag,.fp,.tb{display:inline-flex;align-items:center}
+  .btn:not(.btn-sm):not(.btn-xs){min-height:44px;display:inline-flex;align-items:center}
+}
 
 /* Property Detail Modal Responsive */
 @media(max-width:768px){

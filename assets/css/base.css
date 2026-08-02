@@ -1,7 +1,7 @@
 /* KOR DA — RESET & TYPOGRAPHY (base.css) */
 *,::before,::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;font-size:16px;scroll-padding-top:74px}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F7F3EC;color:#1A1810;line-height:1.65;overflow-x:hidden}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F7F3EC;color:#1A1810;line-height:1.7;letter-spacing:.012em;overflow-x:hidden}
 img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
 button{cursor:pointer;font-family:inherit;border:none;background:none}
 ul{list-style:none}input,select,textarea{font-family:inherit}
@@ -23,3 +23,15 @@ em.gold{font-style:italic;color:var(--g3)}em.teal{font-style:italic;color:var(--
 ::-webkit-scrollbar-thumb{background:var(--s3);border-radius:var(--rf)}
 ::-webkit-scrollbar-thumb:hover{background:var(--t1)}
 ::selection{background:rgba(28,77,64,.14);color:var(--t0)}
+
+/* KEYBOARD FOCUS (a11y) */
+:focus-visible{outline:2px solid var(--t1);outline-offset:2px;border-radius:var(--r1)}
+.fi:focus-visible,.hsc-inp:focus-visible,.wli:focus-visible,.bk-inp:focus-visible,.cin:focus-visible,.calc-range:focus-visible{outline:none}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion:reduce){
+  *,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rv,.au{opacity:1!important;transform:none!important}
+  .hdots,.hs,.sbar::before,.cc::after,.l2::after{animation:none!important}
+}

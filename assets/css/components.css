@@ -21,8 +21,8 @@
 
 /* Forms */
 .fg{margin-bottom:15px}
-.fl{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--i2);margin-bottom:5px}
-.fi{width:100%;padding:11px 14px;background:var(--s);border:1.5px solid rgba(28,77,64,.13);border-radius:var(--r3);font-size:.93rem;color:var(--ink);transition:border-color var(--d1),box-shadow var(--d1);font-family:var(--sans)}
+.fl{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--i2);margin-bottom:7px}
+.fi{width:100%;padding:13px 14px;background:var(--s);border:1.5px solid rgba(28,77,64,.13);border-radius:var(--r3);font-size:.93rem;color:var(--ink);transition:border-color var(--d1),box-shadow var(--d1);font-family:var(--sans)}
 .fi:focus{outline:none;border-color:var(--t1);box-shadow:0 0 0 3px rgba(28,77,64,.09)}
 .fi::placeholder{color:var(--i5)}select.fi{cursor:pointer}textarea.fi{resize:vertical;min-height:88px}
 .fhint{font-size:.73rem;color:var(--i4);margin-top:4px}
