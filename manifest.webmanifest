@@ -1,0 +1,24 @@
+{
+  "name": "Kor Da — Verified Short Stays in Pakistan",
+  "short_name": "Kor Da",
+  "description": "Pakistan's verified home rental platform. Book short stays in PKR with CNIC-verified hosts, EasyPaisa payments and Safepay escrow protection.",
+  "id": "/",
+  "lang": "en-PK",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1C4D40",
+  "theme_color": "#1C4D40",
+  "categories": ["travel", "lifestyle", "shopping"],
+  "icons": [
+    { "src": "/images/favicon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/images/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Explore Stays", "short_name": "Stays", "description": "Browse verified stays", "url": "/#listings" },
+    { "name": "List Your Property", "short_name": "Host", "description": "Host on Kor Da", "url": "/#host-form" },
+    { "name": "Contact Us", "short_name": "Contact", "description": "Get in touch with Kor Da", "url": "/#contact" }
+  ]
+}

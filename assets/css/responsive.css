@@ -37,6 +37,8 @@
   body:has(.mnav){padding-bottom:72px;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
   .cfab{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
   #toast{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+  .aip{left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:auto;transform:translateY(20px)}
+  .aip.show{transform:translateY(0)}
   .hs.hs0{background-image:url('../images/hero-new-3-m.png') !important}
   .hs.hs1{background-image:url('../images/hero-new-2-m.png') !important}
   .hs.hs2{background-image:url('../images/hero-new-4-m.png') !important}
@@ -102,6 +104,9 @@
   .hsc-inp{padding:10px 11px;font-size:.86rem;min-height:44px}
   .hsc-btn{padding:13px;font-size:.88rem;min-height:48px;margin-top:10px;border-radius:var(--r3)}
   .hsc-wa{padding:10px;font-size:.8rem}
+  .aip{padding:16px 16px 14px}
+  .aip-t{font-size:1.04rem}
+  .aip-d{font-size:.8rem}
   .hsc-div{font-size:.73rem;margin:8px 0}
   .hsc-pay{font-size:.62rem;margin-top:7px}
   .htrust{gap:5px}

@@ -20,6 +20,10 @@
 <meta name="twitter:description" content="Book verified short stay apartments, guest houses and vacation rentals across Pakistan. Easy booking, local support and transparent pricing.">
 <meta name="twitter:image" content="https://www.kordaa.com/assets/images/kor-da-logo.jpg">
 <meta name="theme-color" content="#1C4D40">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kor Da">
 <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large">
 <link rel="canonical" href="https://www.kordaa.com/">
 <meta name="geo.region" content="PK-IS">
@@ -32,7 +36,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="msapplication-TileColor" content="#1C4D40">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://www.kordaa.com/#organization","name":"Kor Da","url":"https://www.kordaa.com","logo":{"@type":"ImageObject","url":"https://www.kordaa.com/assets/images/kor-da-logo.jpg"},"image":"https://www.kordaa.com/assets/images/kor-da-logo.jpg","telephone":"+92-315-5881733","email":"kordapakistan@gmail.com","description":"Pakistan's verified home rental platform. Book furnished short-term stays with CNIC-verified hosts, EasyPaisa payments, and Safepay escrow protection.","address":{"@type":"PostalAddress","streetAddress":"Havelian","addressLocality":"Havelian","addressRegion":"Khyber Pakhtunkhwa","postalCode":"24120","addressCountry":"PK"},"contactPoint":{"@type":"ContactPoint","telephone":"+92-315-5881733","contactType":"customer service","areaServed":"PK","availableLanguage":["English","Urdu"]},"sameAs":["https://www.instagram.com/korda.pk","https://www.tiktok.com/@kor.da82","https://www.linkedin.com/company/kor-da","https://www.facebook.com/korda.pk","https://wa.me/923155881733"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Kor Da","url":"https://www.kordaa.com","description":"Islamabad verified home rental — CNIC-verified hosts, EasyPaisa, PKR pricing","inLanguage":"en-PK","potentialAction":{"@type":"SearchAction","target":"https://www.kordaa.com/#listings?area={search_term_string}","query-input":"required name=search_term_string"}}</script>
@@ -719,6 +723,32 @@
 
 <!-- WHATSAPP BOOKING BUTTON IS NOW ON EVERY CARD -->
 
+<!-- INSTALL APP PROMPT (PWA) -->
+<div class="aip" id="aip" role="dialog" aria-modal="false" aria-label="Install Kor Da app" aria-hidden="true">
+  <button type="button" class="aip-x" id="aipX" aria-label="Dismiss">&#10005;</button>
+
+  <div class="aip-b" id="aipInstallView">
+    <div class="aip-ic" aria-hidden="true"><img src="assets/images/kor-da-logo.jpg" alt="" width="56" height="56" loading="lazy"></div>
+    <div class="aip-t">Install Kor Da</div>
+    <p class="aip-d">Get faster access, a better mobile experience, and use Kor Da like a real app.</p>
+    <div class="aip-acts">
+      <button type="button" class="btn btn-p btn-sm" id="aipInstall">Install</button>
+      <button type="button" class="btn btn-o btn-sm" id="aipLater">Maybe Later</button>
+    </div>
+  </div>
+
+  <div class="aip-b" id="aipIosView" hidden>
+    <div class="aip-ic" aria-hidden="true"><img src="assets/images/kor-da-logo.jpg" alt="" width="56" height="56" loading="lazy"></div>
+    <div class="aip-t">Install Kor Da on your iPhone</div>
+    <ol class="aip-steps">
+      <li><span class="aip-st">1</span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/></svg> Tap the <b>Share</b> button</li>
+      <li><span class="aip-st">2</span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6"/><path d="M9 12h6"/></svg> Select <b>Add to Home Screen</b></li>
+      <li><span class="aip-st">3</span><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Tap <b>Add</b></li>
+    </ol>
+    <button type="button" class="btn btn-o btn-sm" id="aipLater2" style="width:100%">Maybe Later</button>
+  </div>
+</div>
+
 <script src="assets/js/utils.js"></script>
 <script src="assets/js/config.js"></script>
 <script src="assets/js/navigation.js"></script>
@@ -736,6 +766,7 @@
 <script src="assets/js/search.js"></script>
 <script src="assets/js/cms.js"></script>
 <script src="assets/js/whatsapp.js"></script>
+<script src="assets/js/install.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
