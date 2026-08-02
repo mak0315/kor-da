@@ -32,6 +32,11 @@
   .trust-strip{gap:8px;padding:12px var(--gx)}
   .tb{padding:8px 13px;font-size:.71rem}
   .nlinks,.nacts{display:none}
+  .mnav{display:flex}
+  .nhbg{display:none}
+  body:has(.mnav){padding-bottom:72px;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .cfab{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+  #toast{bottom:calc(82px + env(safe-area-inset-bottom,0px))}
   .hs.hs0{background-image:url('../images/hero-new-3-m.png') !important}
   .hs.hs1{background-image:url('../images/hero-new-2-m.png') !important}
   .hs.hs2{background-image:url('../images/hero-new-4-m.png') !important}
@@ -53,7 +58,7 @@
   .lgrid{grid-template-columns:1fr}
   .fgrd{grid-template-columns:1fr}
   .wlform{flex-direction:column}
-  .cpanel{right:12px;bottom:78px;width:calc(100vw - 24px)}
+  .cpanel{right:12px;bottom:calc(138px + env(safe-area-inset-bottom,0px));width:calc(100vw - 24px)}
   .t-hero{font-size:clamp(2rem,5.5vw,4rem)}
   .t-h1{font-size:clamp(1.6rem,4vw,3rem)}
   .t-h2{font-size:clamp(1.3rem,3vw,2.2rem)}
@@ -85,7 +90,7 @@
   .t-h1{font-size:clamp(1.4rem,3.5vw,2.5rem)}
   .calc-rv{font-size:clamp(1.5rem,3.5vw,2.5rem)}
   .btn-lg{padding:13px 24px;font-size:.9rem}
-  .cpanel{right:8px;bottom:72px;width:calc(100vw - 16px)}
+  .cpanel{right:8px;bottom:calc(138px + env(safe-area-inset-bottom,0px));width:calc(100vw - 16px)}
   .ccon{gap:16px}
   .hsub{max-width:100%;text-align:center}
   #hero{padding-top:clamp(52px,12vw,68px);padding-bottom:clamp(24px,4vw,40px);min-height:100svh}
