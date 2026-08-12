@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var VERSION = 'korda-v4';
+var VERSION = 'korda-v5';
 
 var CORE = [
   '/',
@@ -50,15 +50,27 @@ self.addEventListener('fetch', function(e){
 
   if(req.method !== 'GET' || url.origin !== self.location.origin || isAdmin(url)) return;
 
-  /* Navigations: network first, fall back to cached homepage when offline. */
+  /* Navigations: cache first so the phone's launch screen ends the instant the
+     page paints, then refresh the cached copy in the background. */
   if(req.mode === 'navigate'){
     e.respondWith(
-      fetch(req).then(function(res){
-        var copy = res.clone();
-        caches.open(VERSION).then(function(c){ c.put(req, copy); });
-        return res;
-      }).catch(function(){
-        return caches.match('/');
+      caches.match(req).then(function(cached){
+        if(cached){
+          fetch(req).then(function(res){
+            if(res && res.status === 200){
+              var copy = res.clone();
+              caches.open(VERSION).then(function(c){ c.put(req, copy); });
+            }
+          }).catch(function(){});
+          return cached;
+        }
+        return fetch(req).then(function(res){
+          var copy = res.clone();
+          caches.open(VERSION).then(function(c){ c.put(req, copy); });
+          return res;
+        }).catch(function(){
+          return caches.match('/');
+        });
       })
     );
     return;
