@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var VERSION = 'korda-v1';
+var VERSION = 'korda-v2';
 
 var CORE = [
   '/',
@@ -13,6 +13,11 @@ var CORE = [
   '/manifest.webmanifest',
   '/assets/css/main.css',
   '/assets/images/kor-da-logo.jpg',
+  '/assets/images/splash/splash-1.jpg',
+  '/assets/images/splash/splash-2.jpg',
+  '/assets/images/splash/splash-3.jpg',
+  '/assets/images/splash/splash-4.jpg',
+  '/assets/images/splash/splash-5.jpg',
   '/images/favicon-192.png',
   '/images/favicon-512.png'
 ];

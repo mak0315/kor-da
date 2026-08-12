@@ -49,6 +49,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="assets/css/main.css">
 
+<!-- Preload splash slideshow images (small JPEGs for fast launch screen) -->
+<link rel="preload" as="image" href="assets/images/splash/splash-1.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/images/splash/splash-2.jpg">
+<link rel="preload" as="image" href="assets/images/splash/splash-3.jpg">
+<link rel="preload" as="image" href="assets/images/splash/splash-4.jpg">
+<link rel="preload" as="image" href="assets/images/splash/splash-5.jpg">
+
 <!-- Google Analytics (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-REPLACE_WITH_GA4_ID"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-REPLACE_WITH_GA4_ID');</script>
@@ -57,6 +64,19 @@
 <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","REPLACE_WITH_CLARITY_ID");</script>
 </head>
 <body>
+
+<!-- SPLASH SCREEN (PWA app launch) -->
+<div class="splash" id="splash" aria-hidden="true" hidden>
+  <div class="splash-slides" id="splashSlides" aria-hidden="true"></div>
+  <div class="splash-ov" aria-hidden="true"></div>
+  <div class="splash-in">
+    <div class="splash-logo" aria-hidden="true"><img src="assets/images/kor-da-logo.jpg" alt=""></div>
+    <div class="splash-name">Kor Da</div>
+    <div class="splash-tag">Find. Stay. Belong.</div>
+    <div class="splash-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <!-- NAVBAR -->
@@ -123,53 +143,38 @@
     <span class="mnav-ic" aria-hidden="true"><i class="fa-solid fa-circle-info"></i></span>
     <span class="mnav-lb">About</span>
   </a>
-  <button type="button" class="mnav-i" id="mnavMenuBtn" aria-label="Open menu" aria-haspopup="dialog" aria-controls="msheet" aria-expanded="false">
-    <span class="mnav-ic" aria-hidden="true">&#9776;</span>
-    <span class="mnav-lb">Menu</span>
+  <button type="button" class="mnav-i" id="mnavProfileBtn" aria-label="Profile" aria-haspopup="dialog" aria-controls="msheet" aria-expanded="false">
+    <span class="mnav-ic" aria-hidden="true"><i class="fa-solid fa-user"></i></span>
+    <span class="mnav-lb">Profile</span>
   </button>
 </nav>
 
-<!-- MOBILE MENU SHEET -->
+<!-- MOBILE PROFILE SHEET -->
 <div class="moverlay" id="moverlay" aria-hidden="true"></div>
-<div class="msheet" id="msheet" role="dialog" aria-modal="true" aria-label="Menu">
+<div class="msheet" id="msheet" role="dialog" aria-modal="true" aria-label="Profile">
   <div class="msheet-bar" aria-hidden="true"></div>
   <div class="msheet-h">
-    <span class="msheet-t">Menu</span>
-    <button type="button" class="msheet-x" id="msheetX" aria-label="Close menu">&#10005;</button>
+    <span class="msheet-t">Profile</span>
+    <button type="button" class="msheet-x" id="msheetX" aria-label="Close profile">&#10005;</button>
   </div>
   <div class="msheet-b">
-    <div class="msg">
-      <div class="msl">Browse by City</div>
-      <a href="apartments-islamabad.html" class="msi">Islamabad</a>
-      <a href="#listings" class="msi">Karachi</a>
-      <a href="#listings" class="msi">Lahore</a>
-      <a href="#listings" class="msi">Peshawar</a>
-      <a href="#listings" class="msi">Quetta</a>
+    <div class="mpf">
+      <div class="mpf-av" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+      <div class="mpf-m">
+        <div class="mpf-n">Guest</div>
+        <div class="mpf-s">Sign in to save stays &amp; manage bookings</div>
+      </div>
+      <button type="button" class="btn btn-p btn-sm" id="mpfSign">Sign In</button>
     </div>
     <div class="msg">
-      <div class="msl">Browse by Property Type</div>
-      <a href="#categories" class="msi">Apartments</a>
-      <a href="#categories" class="msi">Houses &amp; Portions</a>
-      <a href="#categories" class="msi">Guest Houses</a>
-      <a href="#categories" class="msi">Studios</a>
-    </div>
-    <div class="msg">
-      <div class="msl">Popular Destinations</div>
-      <a href="area/f-7-islamabad.html" class="msi">F-7 Markaz</a>
-      <a href="area/f-8-islamabad.html" class="msi">F-8</a>
-      <a href="area/g-8-islamabad.html" class="msi">G-8</a>
-      <a href="area/bahria-town-islamabad.html" class="msi">Bahria Town</a>
-      <a href="area/blue-area-islamabad.html" class="msi">Blue Area</a>
-      <a href="area/dha-islamabad.html" class="msi">DHA Islamabad</a>
-    </div>
-    <div class="msg">
-      <div class="msl">Support</div>
+      <div class="msl">My Kor Da</div>
+      <a href="#listings" class="msi">&#9825; Saved Stays</a>
       <a href="#faq" class="msi">&#10067; Help Center</a>
-      <a href="#contact" class="msi">&#9993;&#65039; Contact Us</a>
       <a href="https://wa.me/923155881733" target="_blank" rel="noopener" class="msi">&#128172; WhatsApp Support</a>
     </div>
     <div class="msg">
-      <div class="msl">Legal</div>
+      <div class="msl">Settings &amp; Legal</div>
+      <a href="#contact" class="msi">&#9993;&#65039; Contact Us</a>
       <a href="privacy.html" class="msi">Privacy Policy</a>
       <a href="terms.html" class="msi">Terms &amp; Conditions</a>
     </div>
@@ -751,6 +756,7 @@
 </div>
 
 <script src="assets/js/utils.js"></script>
+<script src="assets/js/splash.js?v=7"></script>
 <script src="assets/js/config.js"></script>
 <script src="assets/js/navigation.js"></script>
 <script src="assets/js/hero.js"></script>

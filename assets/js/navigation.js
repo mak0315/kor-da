@@ -49,7 +49,7 @@
     /* ── Mobile bottom nav ─────────────────────────────── */
     var mnav   = document.getElementById('mnav'),
         mItems = mnav ? mnav.querySelectorAll('.mnav-i[data-sec]') : [],
-        mMenu  = document.getElementById('mnavMenuBtn'),
+        mProfile = document.getElementById('mnavProfileBtn'),
         mSheet = document.getElementById('msheet'),
         mOv    = document.getElementById('moverlay'),
         mX     = document.getElementById('msheetX');
@@ -87,12 +87,12 @@
     window.addEventListener('scroll', spyScroll, { passive: true });
     spyScroll();
 
-    /* ── Menu bottom sheet ─────────────────────────────── */
+    /* ── Profile bottom sheet ──────────────────────────── */
     function openSheet(){
       if(!mSheet) return;
       mSheet.classList.add('open');
       mOv && mOv.classList.add('on');
-      if(mMenu){ mMenu.setAttribute('aria-expanded', 'true'); mMenu._f = document.activeElement; }
+      if(mProfile){ mProfile.setAttribute('aria-expanded', 'true'); mProfile._f = document.activeElement; }
       if(mOv) mOv.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       var first = mSheet.querySelector('.msi, .msheet-x');
@@ -103,13 +103,13 @@
       if(!mSheet) return;
       mSheet.classList.remove('open');
       mOv && mOv.classList.remove('on');
-      if(mMenu) mMenu.setAttribute('aria-expanded', 'false');
+      if(mProfile) mProfile.setAttribute('aria-expanded', 'false');
       mOv && mOv.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
-      if(mMenu && mMenu._f) mMenu.focus();
+      if(mProfile && mProfile._f) mProfile.focus();
     }
 
-    if(mMenu) mMenu.addEventListener('click', function(){
+    if(mProfile) mProfile.addEventListener('click', function(){
       mSheet && mSheet.classList.contains('open') ? closeSheet() : openSheet();
     });
     if(mX) mX.addEventListener('click', closeSheet);
@@ -119,6 +119,11 @@
     for(var k = 0; k < msiLinks.length; k++){
       msiLinks[k].addEventListener('click', closeSheet);
     }
+
+    var pfSign = document.getElementById('mpfSign');
+    if(pfSign) pfSign.addEventListener('click', function(){
+      if(typeof toast === 'function') toast('Sign in is coming soon');
+    });
 
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && mSheet && mSheet.classList.contains('open')) closeSheet();
