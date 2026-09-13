@@ -1,0 +1,89 @@
+/* ============================================================
+   KOR DA — SHARED INNER-PAGE STYLES (page.css)
+   Scoped layout components used by every inner page (explore,
+   host, profile, info, legal). Built only from existing Kor Da
+   design tokens in variables.css — no new visual language.
+   ============================================================ */
+
+/* ── PAGE HERO (dark header under the fixed transparent nav) ── */
+.pg-hero{position:relative;background:linear-gradient(135deg,var(--t0),var(--t1));padding:calc(84px + clamp(36px,6vw,64px)) var(--gx) clamp(40px,6vw,60px);color:#fff;overflow:hidden}
+.pg-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% -10%,rgba(233,168,37,.12),transparent 60%);pointer-events:none}
+.pg-hero-in{position:relative;max-width:var(--mw);margin:0 auto;width:100%}
+.pg-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pg-eyebrow .lbl{color:var(--g4)}
+.pg-hero h1{font-family:var(--serif);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.pg-hero .pg-sub{font-size:1.02rem;line-height:1.7;color:rgba(255,255,255,.72);max-width:620px}
+.pg-hero .pg-acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+
+/* ── SECTION HELPERS ─────────────────────────────────────────── */
+.pg-sec{padding:clamp(44px,7vw,80px) 0}
+.pg-narrow{max-width:760px;margin:0 auto}
+
+/* ── SHARED FOOTER ───────────────────────────────────────────── */
+.kd-footer{background:linear-gradient(155deg,var(--t0),#0C2A22);color:rgba(255,255,255,.6);padding:clamp(40px,6vw,64px) 0 28px;margin-top:auto}
+.kd-f-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;margin-bottom:22px}
+.kd-f-brand{display:flex;align-items:center;gap:11px}
+.kd-f-name{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:#fff}
+.kd-f-tag{font-size:.86rem;line-height:1.6;color:rgba(255,255,255,.5);max-width:420px}
+.kd-f-links{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.kd-f-links a{font-size:.86rem;color:rgba(255,255,255,.62);transition:color var(--d1)}
+.kd-f-links a:hover{color:#fff}
+.kd-f-legal a{font-size:.8rem;color:rgba(255,255,255,.45)}
+.kd-f-contact{text-align:center;font-size:.8rem;color:rgba(255,255,255,.42);margin-bottom:18px}
+.kd-f-bot{border-top:1px solid rgba(255,255,255,.08);padding-top:18px;text-align:center;font-size:.78rem;color:rgba(255,255,255,.38)}
+
+/* ── EMPTY / STATUS STATES ───────────────────────────────────── */
+.kd-empty{border:1.5px dashed rgba(28,77,64,.18);border-radius:var(--r5);background:var(--cream);padding:clamp(36px,6vw,56px) 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.kd-empty-ic{width:64px;height:64px;border-radius:50%;background:var(--tbg);display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:10px;border:1px solid rgba(28,77,64,.1)}
+.kd-empty h3{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--ink)}
+.kd-empty p{font-size:.9rem;color:var(--i4);line-height:1.6;max-width:420px}
+.kd-empty .kd-empty-acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+
+/* ── DASHBOARD / ACCOUNT LAYOUT ──────────────────────────────── */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(14px,2.5vw,20px)}
+.dash-card{background:var(--cream);border:1px solid rgba(28,77,64,.08);border-radius:var(--r5);padding:clamp(18px,3vw,24px);box-shadow:var(--xs);display:flex;flex-direction:column;gap:8px;transition:transform var(--d2) var(--ease),box-shadow var(--d2),border-color var(--d2)}
+.dash-card:hover{transform:translateY(-3px);box-shadow:var(--md);border-color:rgba(28,77,64,.16)}
+.dash-card .dc-ic{width:44px;height:44px;border-radius:var(--r3);background:var(--tbg);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:4px}
+.dash-card h3{font-family:var(--serif);font-size:1.06rem;font-weight:700;color:var(--ink)}
+.dash-card p{font-size:.83rem;color:var(--i4);line-height:1.55}
+.dash-card .dc-val{font-family:var(--serif);font-size:1.7rem;font-weight:800;color:var(--t1)}
+
+/* Side-by-side account layout (profile / settings) */
+.acct-grid{display:grid;grid-template-columns:300px 1fr;gap:clamp(20px,4vw,40px);align-items:start}
+@media(max-width:820px){.acct-grid{grid-template-columns:1fr}}
+
+/* ── LIST ROWS (bookings, messages, property lists) ──────────── */
+.kd-list{display:flex;flex-direction:column;gap:12px}
+.kd-row{display:flex;align-items:center;gap:14px;background:var(--cream);border:1px solid rgba(28,77,64,.08);border-radius:var(--r4);padding:14px 16px;transition:border-color var(--d1),box-shadow var(--d1)}
+.kd-row:hover{border-color:rgba(28,77,64,.18);box-shadow:var(--sm)}
+.kd-row-ic{width:42px;height:42px;border-radius:var(--r3);background:var(--tbg);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.kd-row-main{flex:1;min-width:0}
+.kd-row-t{font-weight:600;color:var(--ink);font-size:.94rem}
+.kd-row-s{font-size:.8rem;color:var(--i4);margin-top:2px}
+.kd-row .btn{flex-shrink:0}
+
+/* Status pill */
+.kd-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:var(--rf);font-size:.7rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;background:var(--tbg);color:var(--t1);border:1px solid rgba(28,77,64,.12)}
+.kd-pill.warn{background:var(--wbg);color:var(--warn);border-color:rgba(217,146,26,.2)}
+.kd-pill.muted{background:var(--s);color:var(--i4);border-color:rgba(28,77,64,.08)}
+
+/* ── STEPS (how it works) ────────────────────────────────────── */
+.kd-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+
+/* ── AUTH CARD (login/signup) ────────────────────────────────── */
+.auth-card{max-width:440px;margin:0 auto;background:var(--cream);border:1px solid rgba(28,77,64,.08);border-radius:var(--r6);box-shadow:var(--xl);padding:clamp(26px,4vw,40px)}
+.auth-note{background:var(--wbg);border:1px solid rgba(217,146,26,.18);border-radius:var(--r3);padding:12px 14px;font-size:.82rem;color:var(--warn);line-height:1.55;margin-bottom:18px;display:flex;gap:9px;align-items:flex-start}
+
+/* ── SIMPLE TEXT PAGE (legal / info) ─────────────────────────── */
+.prose h2{font-family:var(--serif);font-size:1.35rem;color:var(--t1);margin:30px 0 10px}
+.prose h2:first-child{margin-top:0}
+.prose p,.prose li{color:var(--i3);line-height:1.75;margin-bottom:12px;font-size:.95rem}
+.prose ul{list-style:disc;margin-left:22px;margin-bottom:16px}
+.prose a{color:var(--t1);text-decoration:underline}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:640px){
+  .pg-hero{padding-top:calc(76px + clamp(28px,6vw,44px))}
+  .kd-row{flex-wrap:wrap}
+  .kd-row .btn{width:100%;justify-content:center}
+}

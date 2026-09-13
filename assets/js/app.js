@@ -6,8 +6,8 @@
 'use strict';
 
 /* Listing filtering routes to search.js (window.fCat / window.gFilter) */
-function fCat(btn){ if (window.fCat) window.fCat(btn); }
-function gFilter(cat){ if (window.gFilter) window.gFilter(cat); }
+window.fCat = window.fCat || function(btn){ console.warn('fCat unavailable'); };
+window.gFilter = window.gFilter || function(cat){ console.warn('gFilter unavailable'); };
 
 /* Area Filter */
 function aArea(btn, area){

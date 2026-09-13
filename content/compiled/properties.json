@@ -169,7 +169,7 @@
     },
     {
       "baths": 1,
-      "body": "Affordable studio apartment near NUST and FAST universities. Ideal for students, travelers, and short stays.",
+      "body": "Compact and comfortable studio apartment in E-11, just minutes from NUST's main campus. Budget-friendly living with modern essentials, ideal for students, researchers, or visiting faculty.\n\nThis well-maintained studio features a kitchenette, high-speed WiFi, and a quiet study area. The E-11 sector is known for its peaceful environment and convenient access to the university and nearby markets.",
       "price": 3800,
       "city": "E-11, Islamabad",
       "slug": "cozy-studio-e11-near-nust",
@@ -179,7 +179,13 @@
       "gallery": [],
       "address": "E-11/2, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Kitchenette","Study Desk","TV","24/7 Water Supply","Security"],
+      "landmarks": [
+        "NUST University (Main Campus) — 5 min walk",
+        "E-11 Markaz — 5 min drive",
+        "Margalla Hills Trail 3 — 12 min drive",
+        "G-11 Markaz — 8 min drive"
+      ],
       "title": "Cozy Studio — E-11 (Near NUST)",
       "mapsUrl": "",
       "type": "Studio / 1-Bed",
@@ -194,7 +200,7 @@
     },
     {
       "baths": 2,
-      "body": "Spacious 2-bedroom apartment ideal for families. Fully equipped kitchen, close to Metro station and G-11 Markaz.",
+      "body": "Spacious family-friendly apartment in the quiet and well-connected G-11 sector. Large living area, fully equipped kitchen, and a private balcony with open views.\n\nPerfect for families visiting Islamabad. Located near Park Enclave and the G-11 Markaz, the apartment offers a peaceful retreat while keeping you close to schools, hospitals, and major commuter routes.",
       "price": 7000,
       "city": "G-11, Islamabad",
       "slug": "family-apartment-g11-islamabad",
@@ -204,7 +210,13 @@
       "gallery": [],
       "address": "G-11/1, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Full Kitchen","Parking","UPS/Generator","TV","Washing Machine","Balcony"],
+      "landmarks": [
+        "G-11 Markaz — 5 min walk",
+        "Park Enclave — 3 min drive",
+        "NUST University — 10 min drive",
+        "Islamabad International Airport — 25 min drive"
+      ],
       "title": "2-Bed Family Apartment — G-11",
       "mapsUrl": "",
       "type": "Full Apartment",
@@ -219,7 +231,7 @@
     },
     {
       "baths": 1,
-      "body": "Comfortable guest house near PIMS Hospital, Islamabad. Perfect for medical travelers. Quiet, clean, and close to all amenities.",
+      "body": "Clean and comfortable private guest house in G-8, just a short walk from PIMS Hospital. Ideal for patients' families, medical visitors, and travelers needing a quiet base near the hospital.\n\nThe guest house offers private rooms with attached baths, a shared kitchen, and a peaceful courtyard. Located in a serene residential street, it provides easy access to PIMS, G-8 Markaz, and public transport.",
       "price": 5000,
       "city": "G-8, Islamabad",
       "slug": "guest-house-g8-near-pims",
@@ -229,7 +241,13 @@
       "gallery": [],
       "address": "G-8/1, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Shared Kitchen","Parking","TV","Courtyard","UPS/Generator","Geyser"],
+      "landmarks": [
+        "PIMS Hospital — 5 min walk",
+        "G-8 Markaz — 7 min walk",
+        "Centaurus Mall — 10 min drive",
+        "Supreme Court of Pakistan — 8 min drive"
+      ],
       "title": "Guest House — G-8 (Near PIMS)",
       "mapsUrl": "",
       "type": "Serviced Apartment",
@@ -244,7 +262,7 @@
     },
     {
       "baths": 2,
-      "body": "Premium luxury apartment in the heart of Blue Area, Islamabad. Top-floor with panoramic city views. Swimming pool, gym access.",
+      "body": "Premium high-rise apartment in the heart of Islamabad's business district. Floor-to-ceiling windows, modern interiors, and breathtaking city skyline views. Walking distance to Centaurus Mall.\n\nPerfect for executives, diplomats, and discerning travelers. This fully furnished apartment features top-of-the-line appliances, a spacious living area, and a dedicated workspace. Blue Area's central location puts you minutes from major government offices, embassies, and the city's best dining.",
       "price": 8500,
       "city": "Blue Area, Islamabad",
       "slug": "luxury-apartment-blue-area",
@@ -254,7 +272,13 @@
       "gallery": [],
       "address": "Blue Area, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Full Kitchen","Parking","UPS/Generator","Smart TV","Washing Machine","Rooftop Access"],
+      "landmarks": [
+        "Centaurus Mall — 5 min walk",
+        "Serena Hotel — 8 min walk",
+        "D-Chowk / Parliament House — 5 min drive",
+        "Islamabad International Airport — 30 min drive"
+      ],
       "title": "Luxury Apartment — Blue Area",
       "mapsUrl": "",
       "type": "Full Apartment",
@@ -269,17 +293,23 @@
     },
     {
       "baths": 2,
-      "body": "Contemporary apartment in F-11 Markaz with scenic Margalla Hills view. Fast WiFi, dedicated workspace, and full kitchen. Minutes from restaurants and shopping.",
+      "body": "Contemporary apartment in F-11 Markaz with scenic Margalla Hills view. Fast WiFi, dedicated workspace, and full kitchen. Minutes from restaurants and shopping at F-11 Markaz.\n\nThis modern 2-bedroom apartment is perfect for business travelers, couples, and small families. Located in one of Islamabad's most sought-after sectors, you'll have easy access to everything the city offers while enjoying a quiet, residential atmosphere.",
       "price": 6500,
       "city": "F-11, Islamabad",
-      "slug": "luxury-apartment-f11-islamabad",
+      "slug": "modern-2-bed-apartment-f11-islamabad",
       "area": "F-11",
       "featured": true,
       "beds": "2 Bedrooms",
       "gallery": [],
       "address": "F-11 Markaz, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Kitchen","Parking","UPS/Generator","TV","Balcony"],
+      "landmarks": [
+        "F-11 Markaz — 2 min walk",
+        "Margalla Hills Trail 5 — 10 min drive",
+        "Centaurus Mall — 12 min drive",
+        "Islamabad International Airport — 30 min drive"
+      ],
       "title": "Modern 2-Bed Apartment — F-11",
       "mapsUrl": "",
       "type": "Full Apartment",
@@ -294,7 +324,7 @@
     },
     {
       "baths": 1,
-      "body": "Modern fully-furnished studio in the heart of F-7 Markaz. 5 min walk to Jinnah Super Market, restaurants and shopping.",
+      "body": "Elegant studio apartment in the heart of F-7, Islamabad's most prestigious sector. Modern furnishings, premium finishes, and a prime location surrounded by upscale boutiques and fine dining.\n\nIdeal for solo travelers, couples, and business professionals. This well-appointed studio offers everything you need for a comfortable stay in the capital's most desirable neighborhood, with Jinnah Super Market just steps away.",
       "price": 4500,
       "city": "F-7, Islamabad",
       "slug": "luxury-studio-f7-islamabad",
@@ -304,7 +334,13 @@
       "gallery": [],
       "address": "F-7 Markaz, Islamabad",
       "waContact": "923155881733",
-      "amenities": [],
+      "amenities": ["WiFi","AC","Mini Kitchen","Gym Access","LED TV","Fridge","24/7 Security"],
+      "landmarks": [
+        "Jinnah Super Market — 3 min walk",
+        "Centaurus Mall — 8 min drive",
+        "F-9 Park (Fatima Jinnah Park) — 5 min drive",
+        "Islamabad International Airport — 35 min drive"
+      ],
       "title": "Luxury Studio — F-7 Markaz",
       "mapsUrl": "",
       "type": "Studio / 1-Bed",

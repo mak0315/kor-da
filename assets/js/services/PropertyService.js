@@ -108,7 +108,7 @@
       if (cache) return cache;
       var jsonProps = [];
       try {
-        var res = await fetch('content/compiled/properties.json');
+        var res = await fetch('/content/compiled/properties.json');
         if (res.ok) {
           var data = await res.json();
           if (Array.isArray(data)) {

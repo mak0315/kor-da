@@ -1,0 +1,26 @@
+/* ============================================================
+   KOR DA — PROPERTY PAGE (property-page.css)
+   Shared, scoped styles for /properties/<slug>.html pages.
+   Extracted verbatim from the property page inline <style>
+   blocks. Loaded ONLY on property pages.
+   ============================================================ */
+
+.pd-hero{position:relative;overflow:hidden;min-height:60svh;display:flex;align-items:flex-end}
+.pd-hero-bg{position:absolute;inset:0;background-position:center;background-size:cover;filter:brightness(.45)}
+.pd-hero-con{position:relative;z-index:1;padding:clamp(24px,4vw,48px) var(--gx);width:100%}
+.pd-hero-con h1{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.8rem);color:#fff;margin-bottom:6px}
+.pd-hero-con .pd-loc{font-size:1rem;color:rgba(255,255,255,.65);margin-bottom:12px}
+.pd-body{display:grid;grid-template-columns:1fr 360px;gap:clamp(24px,4vw,48px);padding:clamp(24px,4vw,48px) 0}
+.pd-desc p{font-size:.95rem;color:var(--i3);line-height:1.8;margin-bottom:16px}
+.pd-amenities{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.pd-amenities span{padding:5px 12px;background:var(--tbg);border-radius:var(--r2);font-size:.8rem;color:var(--t1);font-weight:500;border:1px solid rgba(28,77,64,.1)}
+.pd-side{position:sticky;top:90px}
+.pd-price-box{background:var(--cream);border-radius:var(--r4);padding:clamp(20px,3vw,32px);box-shadow:var(--lg);border:1px solid rgba(28,77,64,.07)}
+.pd-price{font-family:var(--serif);font-size:2rem;font-weight:800;color:var(--t1)}
+.pd-price span{font-size:.9rem;font-weight:400;color:var(--i4)}
+.pd-wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;margin-top:16px;background:linear-gradient(135deg,#19A855,#148044);color:#fff;border-radius:var(--r3);font-size:1rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 6px 20px rgba(25,168,85,.32)}
+.pd-wa-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(25,168,85,.46)}
+.pd-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+.pd-meta-item{padding:10px;background:var(--s);border-radius:var(--r2);text-align:center}
+.pd-meta-item .label{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--i4)}
+.pd-meta-item .value{font-weight:600;color:var(--ink);margin-top:2px}

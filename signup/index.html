@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sign Up | Kor Da</title>
+<meta name="description" content="Sign up for Kor Da — UI only, authentication coming later.">
+<meta property="og:title" content="Sign Up | Kor Da">
+<meta property="og:description" content="Sign up page — authentication UI ready for Supabase connection.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kordaa.com/signup/">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#163F34">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../../../../assets/css/main.css">
+<link rel="stylesheet" href="../../../../assets/css/page.css">
+</head>
+<body>
+<!-- Shared shell rendered by assets/js/shell.js -->
+<div id="kd-nav"></div>
+
+<main id="signup-root">
+  <!-- SIGNUP FORM -->
+  <section class="pg-hero" aria-label="Sign Up">
+    <div class="pg-hero-in">
+      <div class="pg-eyebrow"><span class="lbl sh-lbl">Sign Up</span></div>
+      <h1>Create Account</h1>
+      <p class="pg-sub">Authentication coming soon.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Signup form">
+    <div class="wrap"><form id="signupForm" novalidate>
+      <div class="row"><div class="col"><div class="fgroup"><label for="sName" class="fld-lbl">Full Name <span class="req">*</span></label><input type="text" class="fld-inp" id="sName" name="name" required aria-label="Full name"></div></div></div>
+      <div class="row"><div class="col"><div class="fgroup"><label for="sEmail" class="fld-lbl">Email <span class="req">*</span></label><input type="email" class="fld-inp" id="sEmail" name="email" required aria-label="Email"></div></div></div>
+      <div class="row"><div class="col"><div class="fgroup"><label for="sPhone" class="fld-lbl">Phone <span class="req">*</span></label><input type="tel" class="fld-inp" id="sPhone" name="phone" required aria-label="Phone"></div></div></div>
+      <hr class="divider"/><div class="act"><button type="submit" class="btn btn-p">Sign Up</button><p class="body" style="margin-top:12px;color:var(--i4);font-size:.85rad">Authentication not yet connected. <a href="/login/\" class="link">Login</a> or <a href="https://wa.me/923155881733?text=Hi+Kor+Da%2C+I+need+help+with+signup" target="_blank" rel="noopener">&#128172; WhatsApp support</a></button></p></form></div>
+  </section>
+</main>
+
+<!-- Shared shell modals -->
+<div id="kd-modals"></div>
+<div id="kd-footer"></div>
+
+<script>window.KD_SHELL_OPTS = { modals: true };</script>
+<script src="../../../../assets/js/config.js"></script>
+<script src="../../../../assets/js/services/PropertyService.js"></script>
+<script src="../../../../assets/js/shell.js"></script>
+<script src="../../../../assets/js/navigation.js"></script>
+</body>
+</html>
