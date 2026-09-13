@@ -277,7 +277,7 @@
 
 /* FOOTER */
 footer{background:linear-gradient(155deg,var(--t0),#0C2A22)}
-.fgrd{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:clamp(24px,4vw,48px);padding:clamp(48px,6vw,72px) 0 clamp(28px,4vw,44px)}
+.fgrd{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;gap:clamp(20px,3.5vw,44px);padding:clamp(48px,6vw,72px) 0 clamp(28px,4vw,44px)}
 .flogo{display:flex;align-items:center;gap:9px;margin-bottom:14px}
 .fmark{width:34px;height:34px;background:rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center}
 .fbrand{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff}

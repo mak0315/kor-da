@@ -34,7 +34,13 @@
   ],
   "rewrites": [
     { "source": "/auth", "destination": "/api/auth.js" },
-    { "source": "/callback", "destination": "/api/callback.js" }
+    { "source": "/callback", "destination": "/api/callback.js" },
+    { "source": "/refund-policy", "destination": "/refund-policy.html" },
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/cookie-policy", "destination": "/cookie-policy.html" }
   ],
   "redirects": [
     { "source": "/admin", "destination": "/admin/index.html", "permanent": false },
