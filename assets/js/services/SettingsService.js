@@ -13,7 +13,7 @@
     heroLine1: 'Short Stays in',
     heroLine2: 'Pakistan',
     heroLine3: 'You Can Trust',
-    heroSubtitle: 'CNIC-verified hosts · Pay in PKR · EasyPaisa & JazzCash. Escrow protection.',
+    heroSubtitle: 'CNIC-verified hosts · Pay in PKR · EasyPaisa & JazzCash. Secure payments.',
     statLabel1: '20,000+',
     statDesc1: 'STR listings across Pakistan',
     statLabel2: '24hr',

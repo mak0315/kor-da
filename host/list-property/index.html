@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>List Your Property | Kor Da</title>
+<meta name="description" content="List your short stay property on Kor Da. CNIC-verified hosts, secure PKR payments.">
+<meta property="og:title" content="List Your Property | Kor Da">
+<meta property="og:description" content="List your short stay property on Kor Da. Verified hosts, secure PKR payments.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.kordaa.com/host/list-property/">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#163F34">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/page.css">
+</head>
+<body>
+<div id="kd-nav"></div>
+<main id="list-property-root">
+  <section class="pg-hero" aria-label="List your property">
+    <div class="pg-hero-in">
+      <div class="pg-eyebrow"><span class="lbl sh-lbl">List Your Property</span></div>
+      <h1>List Your Short Stay Property</h1>
+      <p class="pg-sub">Every host CNIC-verified. Every payment protected. All prices in PKR — EasyPaisa & JazzCash accepted.</p>
+    </div>
+  </section>
+  <section id="host-form" class="sec bg-s" aria-label="Host listing form">
+    <div class="wrap">
+      <div class="sh"><div class="sh-eye"><div class="sh-rule"></div><span class="lbl sh-lbl">Listing Form</span></div><h2 class="t-h2">Property Listing Form</h2>
+      <form id="hform" data-form="host" novalidate>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hN" class="fld-lbl">Host Name <span class="req">*</span></label><input type="text" class="fld-inp" id="hN" name="hN" required aria-label="Host name"></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hPh" class="fld-lbl">Phone <span class="req">*</span></label><input type="tel" class="fld-inp" id="hPh" name="hPh" required aria-label="Phone"></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hCn" class="fld-lbl">CNIC Number <span class="req">*</span></label><input type="text" class="fld-inp" id="hCn" name="hCn" required aria-label="CNIC"></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hEm" class="fld-lbl">Email</label><input type="email" class="fld-inp" id="hEm" name="hEm" aria-label="Email"></div></div></div>
+        <div class="row"><div class="col" style="grid-column:1 / span 2"><div class="fgroup"><label for="hAd" class="fld-lbl">Property Address <span class="req">*</span></label><input type="text" class="fld-inp" id="hAd" name="hAd" required aria-label="Property address"></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hAr" class="fld-lbl">Area / Sector <span class="req">*</span></label><select class="fld-inp" id="hAr" name="hAr" required aria-label="Area"><option value="">Select area</option><option value="F-7">F-7, Islamabad</option><option value="F-8">F-8, Islamabad</option><option value="F-10">F-10, Islamabad</option><option value="F-11">F-11, Islamabad</option><option value="G-8">G-8, Islamabad</option><option value="G-9">G-9, Islamabad</option><option value="G-10">G-10, Islamabad</option><option value="G-11">G-11, Islamabad</option><option value="E-7">E-7</option><option value="E-11">E-11</option><option value="Blue Area">Blue Area</option><option value="DHA">DHA</option><option value="Bahria">Bahria Town</option></select></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hTy" class="fld-lbl">Property Type <span class="req">*</span></label><select class="fld-inp" id="hTy" name="hTy" required aria-label="Property type"><option value="">Select type</option><option>Apartment</option><option>House</option><option>Guest House</option><option>Portion</option><option>Studio</option><option>Villa</option></select></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hBd" class="fld-lbl">Bedrooms <span class="req">*</span></label><select class="fld-inp" id="hBd" name="hBd" required aria-label="Bedrooms"><option value="">Any</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hPr" class="fld-lbl">Price / Night (PKR) <span class="req">*</span></label><input type="number" class="fld-inp" id="hPr" name="hPr" required min="500" max="500000" aria-label="Price per night"></div></div></div>
+        <div class="row"><div class="col"><div class="fgroup"><label for="hMG" class="fld-lbl">Max Guests <span class="req">*</span></label><select class="fld-inp" id="hMG" name="hMG" required aria-label="Max guests"><option value="">Any</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option></select></div></div></div>
+        <div class="row"><div class="col" style="grid-column:1 / span 2"><div class="fgroup"><label for="hCt" class="fld-lbl">Check-in Time</label><input type="text" class="fld-inp" id="hCt" name="hCt" aria-label="Check-in time (e.g. 2 PM)"></div></div></div>
+        <div class="row"><div class="col" style="grid-column:1 / span 2"><div class="fgroup"><label for="hDs" class="fld-lbl">Description</label><textarea class="fld-inp" id="hDs" name="hDs" rows="3" aria-property-description></textarea></div></div></div>
+        <hr class="divider"/><div class="row"><div class="col"><div class="fgroup"><label class="fld-lbl">Amenities</label><p class="body" style="margin-bottom:8px">Select all that apply</p><div class="amenities"><label><input type="checkbox" name="amw" value="WiFi" class="amenity"> WiFi</label><label><input type="checkbox" name="amw" value="Air Conditioning" class="amenity"> Air Conditioning</label><label><input type="checkbox" name="amw" value="Kitchen" class="amenity"> Kitchen</label><label><input type="checkbox" name="amw" value="Parking" class="amenity"> Parking</label><label><input type="checkbox" name="amw" value="TV" class="amenity"> TV</label><label><input type="checkbox" name="amw" value="Washing Machine" class="amenity"> Washing Machine</label><label><input type="checkbox" name="amw" value="Geyser" class="amenity"> Geyser</label><label><input type="checkbox" name="amw" value="UPS / Generator" class="amenity"> UPS / Generator</label><label><input type="checkbox" name="amw" value="Security" class="amenity"> Security</label><label><input type="checkbox" name="amw" value="Balcony" class="amenity"> Balcony</label><label><input type="checkbox" name="amw" value="Gym" class="amenity"> Gym</label><label><input type="checkbox" name="amw" value="Pool Access" class="amenity"> Pool Access</label><label><input type="checkbox" name="amw" value="Garden" class="amenity"> Garden</label><label><input type="checkbox" name="amw" value="Iron / Steamer" class="amenity"> Iron / Steamer</label><label><input type="checkbox" name="amw" value="Microwave" class="amenity"> Microwave</label><label><input type="checkbox" name="amw" value="Refrigerator" class="amenity"> Refrigerator</label><label><input type="checkbox" name="amw" value="Study Desk" class="amenity"> Study Desk</label></div></div></div>
+        <div class="row"><div class="col" style="grid-column:1 / span 2"><div class="fgroup"><label class="fld-lbl">Property Photos</label><p class="body" style="margin-bottom:8px">Upload 3-7 photos</p><div class="photo-upload"><div id="pdrop" class="upload-box" onclick="document.getElementById('pinp').click();"> <div>+ Add Photos</div><p>JPG, PNG, max 5MB each</p></div><input type="file" id="pinp" name="photos" multiple accept="image/*,.png,.jpg"><div id="pprev" class="preview"></div></div></div></div>
+        <hr class="divider"/><div class="row"><div class="col"><div class="fgroup"><label><input type="checkbox" name="agr" class="agree" required> I agree that all information is accurate and I CNIC-verify my property. <a href="/cancellation/" target="_blank" rel="noopener">Cancellation policy</a></label></div></div></div>
+        <div class="act"><button type="submit" class="btn btn-p"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg> Submit Listing — WhatsApp</button><a href="https://wa.me/923155881733?text=Hi+Kor+Da%2C+I+need+a+property+listing" target="_blank" rel="noopener" class="btn btn-o">&#128172; Skip form</a></div></div>
+      </form>
+    </div>
+  </section>
+</main>
+<div id="kd-modals"></div><div id="kd-footer"></div><script>window.KD_SHELL_OPTS = { modals: true };</script><script src="../../assets/js/config.js"></script><script src="../../assets/js/services/PropertyService.js"></script><script src="../../assets/js/shell.js"></script><script src="../../assets/js/forms.js"></script><script src="../../assets/js/cms.js"></script><script src="../../assets/js/animations.js"></script><script src="../../assets/js/app.js"></script><script src="../../assets/js/navigation.js"></script>
+</body>
+</html>

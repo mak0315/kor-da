@@ -19,15 +19,15 @@
   },
   {
     "question": "What if something is wrong with my stay?",
-    "answer": "File a dispute within 24 hours of check-in via WhatsApp (0315-5881733). We respond same day. If the property doesn't match the listing, you get a full refund from escrow. Both parties submit evidence and we make a fair, binding decision.",
+    "answer": "File a dispute within 24 hours of check-in via WhatsApp (0315-5881733). We respond same day. If the property doesn't match the listing, you're eligible for a full refund under our Refund Policy. Both parties submit evidence and we make a fair, binding decision.",
     "order": 6,
     "id": "what-if-something-is-wrong-with-my-stay?"
   },
   {
-    "question": "How does Safepay escrow protect me?",
-    "answer": "Your payment goes into Safepay escrow — SBP-licensed — and is held until 24 hours after you check in and confirm your stay. If you dispute within 24 hours, the money stays in escrow until we resolve it. Hosts cannot receive payment before you're satisfied.",
+    "question": "How does Kor Da protect my payment?",
+    "answer": "Payments are made securely in PKR via EasyPaisa, JazzCash, or bank transfer. If you raise a dispute within 24 hours of check-in, we respond the same day and review it fairly under our Refund Policy.",
     "order": 2,
-    "id": "how-does-safepay-escrow-protect-me?"
+    "id": "how-does-kor-da-protect-my-payment?"
   },
   {
     "question": "When does Kor Da launch?",
@@ -37,7 +37,7 @@
   },
   {
     "question": "How do I pay? Can I use EasyPaisa?",
-    "answer": "Yes — EasyPaisa (03495620844) is our primary payment method. We also accept JazzCash, debit/credit cards, and bank transfer. All payments in PKR through Safepay escrow (SBP-licensed). No USD, no foreign fees.",
+    "answer": "Yes — EasyPaisa (03495620844) is our primary payment method. We also accept JazzCash, debit/credit cards, and bank transfer. All payments in PKR. No USD, no foreign fees.",
     "order": 1,
     "id": "how-do-i-pay?-can-i-use-easypaisa?"
   }

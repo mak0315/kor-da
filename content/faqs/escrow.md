@@ -1,5 +1,5 @@
 ---
-question: "How does Safepay escrow protect me?"
-answer: "Your payment goes into Safepay escrow — SBP-licensed — and is held until 24 hours after you check in and confirm your stay. If you dispute within 24 hours, the money stays in escrow until we resolve it. Hosts cannot receive payment before you're satisfied."
+question: "How does Kor Da protect my payment?"
+answer: "Payments are made securely in PKR via EasyPaisa, JazzCash, or bank transfer. If you raise a dispute within 24 hours of check-in, we respond the same day and review it fairly under our Refund Policy."
 order: 2
 ---

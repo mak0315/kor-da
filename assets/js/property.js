@@ -88,7 +88,7 @@
           <div class="pd-price-box">
             <div class="pd-price">PKR ${fmt(prop.price)}<span> / night</span></div>
             <button class="btn btn-p" style="width:100%" onclick="closePD();setTimeout(function(){bookNow('${pdSlug.replace(/'/g, "\\'")}')},50)">&#128172; Book Now</button>
-            <p class="pd-trust">CNIC-verified host · Safepay escrow · Pay in PKR</p>
+            <p class="pd-trust">CNIC-verified host · Secure payments · Pay in PKR</p>
           </div>
         </div>
       </div>
