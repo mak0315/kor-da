@@ -35,6 +35,7 @@
   "rewrites": [
     { "source": "/auth", "destination": "/api/auth.js" },
     { "source": "/callback", "destination": "/api/callback.js" },
+    { "source": "/checkout", "destination": "/checkout.html" },
     { "source": "/refund-policy", "destination": "/refund-policy.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/contact", "destination": "/contact.html" },

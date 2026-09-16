@@ -278,17 +278,9 @@
 
   window.bookNow = function(slug) {
     if (!slug) return;
-    PropertyService.getAll().then(function(all) {
-      var found = null;
-      for (var i = 0; i < all.length; i++) {
-        var p = all[i];
-        if (p.slug === slug || p.id === slug ||
-            (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
-          found = p; break;
-        }
-      }
-      if (found) { openBookingModal(found); }
-    });
+    /* Checkout now happens on the on-site checkout page (/checkout).
+       WhatsApp is no longer used for booking (kept for support/contact only). */
+    window.location.href = '/checkout?property=' + encodeURIComponent(slug);
   };
 
   function genListingId(prop) {

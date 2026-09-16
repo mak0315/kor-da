@@ -108,12 +108,6 @@
 
   /* ── TEMPLATE: BOOKING / PRICE BOX (WhatsApp flow) ───────────────────── */
 
-  function waLink(prop) {
-    var title = prop.title || prop.type || 'this property';
-    var msg = 'Hi Kor Da, I am interested in ' + title + '. Please share availability and booking details.';
-    return 'https://wa.me/' + (prop.waContact || CONFIG.waNumber) + '?text=' + encodeURIComponent(msg);
-  }
-
   function renderBooking(prop) {
     return '<div class="pd-price-box">' +
              '<div class="pd-price">PKR ' + fmt(prop.price) + ' <span>/ night</span></div>' +
@@ -123,7 +117,7 @@
                '<div class="pd-meta-item"><div class="label">Max Guests</div><div class="value">' + esc(prop.maxGuests || 2) + '</div></div>' +
                '<div class="pd-meta-item"><div class="label">Type</div><div class="value">' + esc(prop.type || 'Stay') + '</div></div>' +
              '</div>' +
-             '<a href="' + waLink(prop) + '" target="_blank" rel="noopener" class="pd-wa-btn">&#128172; Book via WhatsApp</a>' +
+             '<a href="/checkout?property=' + encodeURIComponent(prop.slug || prop.id || '') + '" class="btn btn-p" style="width:100%;justify-content:center;margin-top:16px">Book Now</a>' +
              '<p style="font-size:.75rem;color:var(--i5);text-align:center;margin-top:10px">CNIC-verified host | Secure payments | Pay in PKR via EasyPaisa</p>' +
            '</div>';
   }
