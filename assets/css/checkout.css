@@ -1,0 +1,54 @@
+/* ============================================================
+   KOR DA — CHECKOUT PAGE (checkout.css)
+   Scoped styles for /checkout. Built only from the existing
+   Kor Da design tokens in variables.css — no new visual language.
+   ============================================================ */
+
+.ck-wrap{max-width:1060px}
+.ck-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(20px,4vw,40px);align-items:start}
+
+.ck-card{background:var(--cream);border:1px solid rgba(28,77,64,.08);border-radius:var(--r5);box-shadow:var(--sm);padding:clamp(20px,3vw,32px)}
+.ck-card-h{font-family:var(--serif);font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.ck-card-s{font-size:.85rem;color:var(--i4);margin-bottom:22px}
+
+.ck-fields{display:flex;flex-direction:column;gap:14px}
+.ck-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ck-fg{display:flex;flex-direction:column;gap:6px}
+.ck-lbl{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--i3)}
+.ck-inp{width:100%;padding:12px 13px;background:#fff;border:1.5px solid rgba(28,77,64,.13);border-radius:var(--r3);font-size:.9rem;color:var(--ink);font-family:var(--sans);transition:border-color var(--d1),box-shadow var(--d1)}
+.ck-inp:focus{outline:none;border-color:var(--t1);box-shadow:0 0 0 3px rgba(28,77,64,.09)}
+.ck-inp.err{border-color:var(--err);box-shadow:0 0 0 3px rgba(202,58,58,.12)}
+select.ck-inp{cursor:pointer}
+.ck-err{font-size:.72rem;color:var(--err);display:none}
+.ck-fg.bad .ck-err{display:block}
+
+.ck-side{position:sticky;top:90px}
+.ck-prop{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.ck-prop-img{width:74px;height:74px;border-radius:var(--r3);object-fit:cover;flex-shrink:0;background:var(--s2)}
+.ck-prop-t{font-family:var(--serif);font-size:1.02rem;font-weight:700;color:var(--ink);line-height:1.3}
+.ck-prop-l{font-size:.8rem;color:var(--i4);margin-top:3px}
+.ck-line{display:flex;justify-content:space-between;gap:12px;font-size:.86rem;color:var(--i3);padding:6px 0}
+.ck-line strong{color:var(--ink);text-align:right}
+.ck-div{border-top:1px solid rgba(28,77,64,.1);margin:10px 0}
+.ck-total{display:flex;justify-content:space-between;font-size:1.15rem;font-weight:800;color:var(--t1);padding-top:6px}
+.ck-note{font-size:.72rem;color:var(--i5);text-align:center;margin-top:8px}
+.ck-secure{display:flex;align-items:center;gap:8px;justify-content:center;font-size:.75rem;color:var(--i4);margin-top:16px;padding-top:16px;border-top:1px solid rgba(28,77,64,.08)}
+
+/* ── SUCCESS STATE ───────────────────────────────────────────── */
+.ck-success{max-width:620px;margin:0 auto;text-align:center}
+.ck-tick{width:82px;height:82px;border-radius:50%;background:var(--okbg);color:var(--ok);display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 18px;border:2px solid rgba(26,122,64,.2)}
+.ck-success h2{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2rem);font-weight:800;color:var(--ink);margin-bottom:8px}
+.ck-success .ck-lead{font-size:.98rem;color:var(--i3);line-height:1.7;margin-bottom:22px}
+.ck-ref{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;background:var(--tbg);border:1px dashed rgba(28,77,64,.28);border-radius:var(--r3);font-family:var(--sans);font-weight:800;font-size:1.05rem;color:var(--t1);letter-spacing:.05em;margin-bottom:26px}
+.ck-sumbox{text-align:left;background:var(--cream);border:1px solid rgba(28,77,64,.08);border-radius:var(--r5);box-shadow:var(--sm);padding:clamp(20px,3vw,28px);margin-bottom:26px}
+.ck-sumbox .ck-card-h{margin-bottom:16px}
+.ck-acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+@media(max-width:860px){
+  .ck-grid{grid-template-columns:1fr}
+  .ck-side{position:static;order:-1}
+}
+@media(max-width:520px){
+  .ck-col{grid-template-columns:1fr}
+  .ck-card{padding:20px 16px}
+}

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var VERSION = 'korda-v5';
+var VERSION = 'korda-v6';
 
 var CORE = [
   '/',

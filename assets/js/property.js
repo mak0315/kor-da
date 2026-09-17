@@ -278,17 +278,9 @@
 
   window.bookNow = function(slug) {
     if (!slug) return;
-    PropertyService.getAll().then(function(all) {
-      var found = null;
-      for (var i = 0; i < all.length; i++) {
-        var p = all[i];
-        if (p.slug === slug || p.id === slug ||
-            (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
-          found = p; break;
-        }
-      }
-      if (found) { openBookingModal(found); }
-    });
+    /* Checkout happens on the on-site faux checkout page (/checkout).
+       No WhatsApp handoff for booking — WhatsApp is kept for support only. */
+    window.location.href = '/checkout?property=' + encodeURIComponent(slug);
   };
 
   function genListingId(prop) {
@@ -455,92 +447,6 @@
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     return ok;
-  }
-
-  function buildBookingMessage(data) {
-    var p = data.property;
-    var L = [];
-    var S = '━━━━━━━━━━━━━━━━━━';
-
-    L.push('🏠 KOR DA BOOKING REQUEST');
-    L.push(''); L.push(S); L.push(''); L.push('🏡 PROPERTY');
-    L.push('');
-    L.push('Listing ID:');
-    L.push(data.listingId);
-    L.push('');
-    L.push('Property:');
-    L.push(p.title || p.type || 'Not specified');
-    L.push('');
-    L.push('Location:');
-    L.push((p.area || p.city || 'Islamabad') + (p.address ? ' - ' + p.address : ''));
-    L.push('');
-    L.push('Property Type:');
-    L.push(p.type || 'Stay');
-    L.push('');
-    L.push('Bedrooms:');
-    L.push(p.beds || '1');
-    L.push('');
-    L.push('Price:');
-    L.push('PKR ' + fmt(data.pricePerNight) + ' / Night');
-    L.push('');
-    L.push('Listing:');
-    L.push(window.location.origin + '/#property=' + encodeURIComponent(p.id || p.slug || ''));
-    L.push(''); L.push(S); L.push(''); L.push('👤 GUEST');
-    L.push('');
-    L.push('Name:');
-    L.push(data.fullName);
-    L.push('');
-    L.push('WhatsApp:');
-    L.push(data.phone);
-    L.push(''); L.push(S); L.push(''); L.push('📅 STAY DETAILS');
-    L.push('');
-    L.push('Check-in:');
-    L.push(data.checkIn || 'Not specified');
-    L.push('');
-    L.push('Check-out:');
-    L.push(data.checkOut || 'Not specified');
-    L.push('');
-    L.push('Total Nights:');
-    L.push(data.nights > 0 ? data.nights.toString() : 'Not calculated');
-    L.push('');
-    L.push('Guests:');
-    L.push(data.guests);
-    L.push('');
-    L.push('Arrival Time:');
-    L.push(data.arrival || 'Flexible');
-    L.push('');
-    L.push('Purpose of Stay:');
-    L.push(data.purpose || 'Not specified');
-    L.push(''); L.push(S); L.push('');
-
-    L.push('💰 ESTIMATED COST');
-    L.push('');
-    L.push('Per Night:');
-    L.push('PKR ' + fmt(data.pricePerNight));
-    L.push('');
-    L.push('Estimated Total:');
-    L.push(data.nights > 0 ? 'PKR ' + fmt(data.estimatedTotal) : 'N/A');
-    L.push('');
-    L.push('(Final amount subject to confirmation)');
-    L.push(''); L.push(S); L.push('');
-
-    L.push('📝 SPECIAL REQUESTS');
-    L.push('');
-    L.push(data.requests || 'None');
-    L.push(''); L.push(S); L.push('');
-
-    L.push('Please confirm:');
-    L.push('');
-    L.push('✅ Availability');
-    L.push('✅ Final Price');
-    L.push('✅ Payment Method');
-    L.push('✅ Check-in Instructions');
-    L.push('');
-    L.push('Thank you.');
-    L.push('');
-    L.push('Sent via Kor Da');
-
-    return L.join('\n');
   }
 
   function formatBookingDate(iso) {
