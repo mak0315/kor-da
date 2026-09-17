@@ -278,9 +278,17 @@
 
   window.bookNow = function(slug) {
     if (!slug) return;
-    /* Checkout now happens on the on-site checkout page (/checkout).
-       WhatsApp is no longer used for booking (kept for support/contact only). */
-    window.location.href = '/checkout?property=' + encodeURIComponent(slug);
+    PropertyService.getAll().then(function(all) {
+      var found = null;
+      for (var i = 0; i < all.length; i++) {
+        var p = all[i];
+        if (p.slug === slug || p.id === slug ||
+            (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') === slug) {
+          found = p; break;
+        }
+      }
+      if (found) { openBookingModal(found); }
+    });
   };
 
   function genListingId(prop) {
@@ -305,16 +313,22 @@
     var propGuests = prop.maxGuests || '4';
     var propPrice = prop.price || 0;
 
+    var propImg = prop.image || (Array.isArray(prop.gallery) && prop.gallery[0]) ||
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=75';
+
     document.getElementById('bkPropInfo').innerHTML =
-      '<div class="bk-pi-row">'
-        + '<div><div class="bk-pi-title">' + esc(propTitle) + '</div>'
-        + '<div class="bk-pi-id">' + listingId + ' &middot; ' + esc(propLoc) + '</div></div>'
-        + '<div class="bk-pi-price">PKR ' + fmt(propPrice) + '<span style="font-size:.7rem;font-weight:400;color:var(--i4)"> / night</span></div>'
-      + '</div>'
-      + '<div class="bk-pi-detail">'
-        + '<span>' + esc(propType) + '</span>'
-        + '<span>' + propBeds + ' Bed' + (propBeds > 1 ? 's' : '') + '</span>'
-        + '<span>Up to ' + propGuests + ' guests</span>'
+      '<div class="bk-pi-imgwrap"><img class="bk-pi-img" src="' + esc(propImg) + '" alt="' + esc(propTitle) + '"></div>'
+      + '<div class="bk-pi-main">'
+        + '<div class="bk-pi-row">'
+          + '<div><div class="bk-pi-title">' + esc(propTitle) + '</div>'
+          + '<div class="bk-pi-id">' + listingId + ' &middot; ' + esc(propLoc) + '</div></div>'
+          + '<div class="bk-pi-price">PKR ' + fmt(propPrice) + '<span style="font-size:.7rem;font-weight:400;color:var(--i4)"> / night</span></div>'
+        + '</div>'
+        + '<div class="bk-pi-detail">'
+          + '<span>' + esc(propType) + '</span>'
+          + '<span>' + propBeds + ' Bed' + (propBeds > 1 ? 's' : '') + '</span>'
+          + '<span>Up to ' + propGuests + ' guests</span>'
+        + '</div>'
       + '</div>';
 
     var guestsEl = document.getElementById('bkGuests');
@@ -340,7 +354,7 @@
   };
 
   function resetBookingForm() {
-    ['bkName','bkPhone','bkCheckIn','bkCheckOut','bkRequests'].forEach(function(id) {
+    ['bkName','bkPhone','bkEmail','bkCheckIn','bkCheckOut','bkRequests'].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) { el.value = ''; el.classList.remove('err'); }
     });
@@ -352,6 +366,13 @@
     if (g) g.selectedIndex = Math.min(2, g.options.length - 1);
     document.getElementById('bkNights').style.display = 'none';
     document.getElementById('bkCost').style.display = 'none';
+    /* Restore the form view (in case a previous checkout showed the success state) */
+    var done = document.getElementById('bkDone');
+    if (done) done.hidden = true;
+    var fields = document.querySelector('#bkModal .bk-fields');
+    if (fields) fields.style.display = '';
+    var submitBtn = document.getElementById('bkSubmit');
+    if (submitBtn) submitBtn.style.display = '';
   }
 
   function val(id) {
@@ -382,6 +403,7 @@
       listingId: genListingId(prop),
       fullName: val('bkName'),
       phone: val('bkPhone'),
+      email: val('bkEmail'),
       checkIn: checkIn,
       checkOut: checkOut,
       nights: nights,
@@ -397,7 +419,8 @@
   function validateBookingForm(data) {
     var fields = [
       { id: 'bkName', val: data.fullName, label: 'Full Name' },
-      { id: 'bkPhone', val: data.phone, label: 'WhatsApp Number' },
+      { id: 'bkPhone', val: data.phone, label: 'Phone Number' },
+      { id: 'bkEmail', val: data.email, label: 'Email' },
       { id: 'bkCheckIn', val: data.checkIn, label: 'Check-in' },
       { id: 'bkCheckOut', val: data.checkOut, label: 'Check-out' },
       { id: 'bkGuests', val: data.guests, label: 'Guests' }
@@ -408,6 +431,11 @@
       var bad = !fields[i].val;
       setFieldErr(fields[i].id, bad);
       if (bad && !firstBad) { firstBad = fields[i].id; ok = false; }
+    }
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      setFieldErr('bkEmail', true);
+      if (!firstBad) firstBad = 'bkEmail';
+      ok = false;
     }
     if (data.checkIn && data.checkOut && data.checkIn >= data.checkOut) {
       setFieldErr('bkCheckOut', true);
@@ -515,19 +543,69 @@
     return L.join('\n');
   }
 
+  function formatBookingDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso + 'T00:00:00');
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function bkDetailRow(label, value) {
+    return '<div class="bk-done-row"><span>' + esc(label) + '</span><strong>' + value + '</strong></div>';
+  }
+
+  /* Fake/demo checkout: show the success state in-place. No WhatsApp, no
+     navigation, no payment gateway. A real API can be wired in later. */
+  function showBookingSuccess(data) {
+    var done = document.getElementById('bkDone');
+    if (!done) return;
+    var p = data.property || {};
+    var img = p.image || (Array.isArray(p.gallery) && p.gallery[0]) ||
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=75';
+    var loc = p.address || [p.area, p.city].filter(Boolean).join(', ') || 'Islamabad';
+
+    done.innerHTML =
+      '<div class="bk-done-ic" aria-hidden="true">&#10003;</div>'
+      + '<h3 class="bk-done-title">Checked Out &#10003;</h3>'
+      + '<p class="bk-done-msg">Your booking has been checked out successfully.</p>'
+      + '<div class="bk-prop-info">'
+        + '<div class="bk-pi-imgwrap"><img class="bk-pi-img" src="' + esc(img) + '" alt="' + esc(p.title || p.type || 'Property') + '"></div>'
+        + '<div class="bk-pi-main">'
+          + '<div class="bk-pi-title">' + esc(p.title || p.type || 'Property') + '</div>'
+          + '<div class="bk-pi-id">' + esc(loc) + '</div>'
+          + '<div class="bk-pi-price" style="margin-top:4px">PKR ' + fmt(data.pricePerNight || 0) + '<span style="font-size:.7rem;font-weight:400;color:var(--i4)"> / night</span></div>'
+        + '</div>'
+      + '</div>'
+      + '<div class="bk-done-sum">'
+        + bkDetailRow('Guest', esc(data.fullName))
+        + bkDetailRow('Phone', esc(data.phone))
+        + bkDetailRow('Email', esc(data.email))
+        + bkDetailRow('Check-in', esc(formatBookingDate(data.checkIn)))
+        + bkDetailRow('Check-out', esc(formatBookingDate(data.checkOut)))
+        + bkDetailRow('Nights', data.nights > 0 ? data.nights : '—')
+        + bkDetailRow('Guests', esc(data.guests))
+        + (data.requests ? bkDetailRow('Special requests', esc(data.requests)) : '')
+      + '</div>'
+      + '<button type="button" class="btn btn-p btn-xl" onclick="closeBkModal()" style="width:100%;justify-content:center;margin-top:18px">Done</button>';
+
+    var fields = document.querySelector('#bkModal .bk-fields');
+    if (fields) fields.style.display = 'none';
+    var cost = document.getElementById('bkCost');
+    if (cost) cost.style.display = 'none';
+    var btn = document.getElementById('bkSubmit');
+    if (btn) btn.style.display = 'none';
+    done.hidden = false;
+    var box = document.getElementById('bkModalBody');
+    if (box) box.scrollTop = 0;
+  }
+
   window.submitBooking = function() {
     var data = collectBookingData();
     if (!validateBookingForm(data)) {
       if (typeof toast === 'function') toast('Please fill all required fields', 'warn');
       return;
     }
-
-    /* Future: replace with submitBookingAPI(data) */
-    var message = buildBookingMessage(data);
-    if (typeof toast === 'function') toast('Your booking request is ready! Review & send in WhatsApp.', 'ok', 5000);
-    var waNum = window.KORDA_CONFIG ? window.KORDA_CONFIG.waNumber : '923155881733';
-    window.open('https://wa.me/' + waNum + '?text=' + encodeURIComponent(message), '_blank', 'noopener');
-    window.closeBkModal();
+    showBookingSuccess(data);
   };
 
   /* ── NIGHTS + COST LIVE CALCULATION ─────────────────────────────── */

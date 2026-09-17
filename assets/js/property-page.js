@@ -106,9 +106,10 @@
            '</ul>';
   }
 
-  /* ── TEMPLATE: BOOKING / PRICE BOX (WhatsApp flow) ───────────────────── */
+  /* ── TEMPLATE: BOOKING / PRICE BOX (on-page modal checkout) ──────────── */
 
   function renderBooking(prop) {
+    var slug = prop.slug || prop.id || slugFromPath();
     return '<div class="pd-price-box">' +
              '<div class="pd-price">PKR ' + fmt(prop.price) + ' <span>/ night</span></div>' +
              '<div class="pd-meta">' +
@@ -117,7 +118,7 @@
                '<div class="pd-meta-item"><div class="label">Max Guests</div><div class="value">' + esc(prop.maxGuests || 2) + '</div></div>' +
                '<div class="pd-meta-item"><div class="label">Type</div><div class="value">' + esc(prop.type || 'Stay') + '</div></div>' +
              '</div>' +
-             '<a href="/checkout?property=' + encodeURIComponent(prop.slug || prop.id || '') + '" class="btn btn-p" style="width:100%;justify-content:center;margin-top:16px">Book Now</a>' +
+             '<button type="button" class="btn btn-p" style="width:100%;justify-content:center;margin-top:16px" onclick="bookNow(\'' + esc(slug.replace(/'/g, "\\'")) + '\')">Book Now</button>' +
              '<p style="font-size:.75rem;color:var(--i5);text-align:center;margin-top:10px">CNIC-verified host | Secure payments | Pay in PKR via EasyPaisa</p>' +
            '</div>';
   }

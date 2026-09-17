@@ -208,8 +208,9 @@
             '<div class="bk-fields">' +
               '<div class="bk-col">' +
                 '<div class="bk-fg"><label class="bk-lbl" for="bkName">Full Name *</label><input type="text" class="bk-inp" id="bkName" placeholder="Muhammad Ali" autocomplete="name"></div>' +
-                '<div class="bk-fg"><label class="bk-lbl" for="bkPhone">WhatsApp Number *</label><input type="tel" class="bk-inp" id="bkPhone" placeholder="+92 3XX XXX XXXX" autocomplete="tel"></div>' +
+                '<div class="bk-fg"><label class="bk-lbl" for="bkPhone">Phone Number *</label><input type="tel" class="bk-inp" id="bkPhone" placeholder="+92 3XX XXX XXXX" autocomplete="tel"></div>' +
               '</div>' +
+              '<div class="bk-fg"><label class="bk-lbl" for="bkEmail">Email *</label><input type="email" class="bk-inp" id="bkEmail" placeholder="you@example.com" autocomplete="email"></div>' +
               '<div class="bk-dates">' +
                 '<div class="bk-fg"><label class="bk-lbl" for="bkCheckIn">Check-in *</label><input type="date" class="bk-inp" id="bkCheckIn"></div>' +
                 '<div class="bk-fg"><label class="bk-lbl" for="bkCheckOut">Check-out *</label><input type="date" class="bk-inp" id="bkCheckOut"></div>' +
@@ -222,7 +223,8 @@
               '<div class="bk-fg"><label class="bk-lbl" for="bkRequests">Special Requests</label><textarea class="bk-inp bk-ta" id="bkRequests" placeholder="e.g. late check-in, need parking &amp; WiFi, ground floor, extra mattress, airport pickup"></textarea></div>' +
             '</div>' +
             '<div class="bk-cost" id="bkCost"></div>' +
-            '<button class="btn btn-p btn-xl" id="bkSubmit" onclick="submitBooking()" style="width:100%;justify-content:center">&#128172; Send Booking Request</button>' +
+            '<div class="bk-done" id="bkDone" hidden></div>' +
+            '<button class="btn btn-p btn-xl" id="bkSubmit" onclick="submitBooking()" style="width:100%;justify-content:center">Checkout</button>' +
           '</div>' +
         '</div>' +
       '</div>';
