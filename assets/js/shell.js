@@ -161,7 +161,7 @@
             '</div>' +
             '<p class="kd-f-tag">Pakistan&rsquo;s verified home rental platform. CNIC-verified hosts &middot; PKR pricing &middot; WhatsApp booking.</p>' +
           '</div>' +
-          '<nav class="kd-f-links" aria-label="Footer">' +
+          '<nav class="kd-f-links" aria-label="Footer Navigation">' +
             '<a href="/explore/">Explore</a>' +
             '<a href="/how-it-works/">How it Works</a>' +
             '<a href="/host/">Host</a>' +
@@ -169,6 +169,26 @@
             '<a href="/safety/">Safety</a>' +
             '<a href="/help/">Help</a>' +
             '<a href="/contact/">Contact</a>' +
+          '</nav>' +
+          '<nav class="kd-f-links kd-f-areas" aria-label="Popular Areas">' +
+            '<a href="/area/f-7-islamabad">F-7 Islamabad</a>' +
+            '<a href="/area/f-6-islamabad">F-6 Islamabad</a>' +
+            '<a href="/area/f-8-islamabad">F-8 Islamabad</a>' +
+            '<a href="/area/f-11-islamabad">F-11 Islamabad</a>' +
+            '<a href="/area/g-8-islamabad">G-8 Islamabad</a>' +
+            '<a href="/area/g-11-islamabad">G-11 Islamabad</a>' +
+            '<a href="/area/e-11-islamabad">E-11 (Near NUST)</a>' +
+            '<a href="/area/blue-area-islamabad">Blue Area</a>' +
+            '<a href="/area/dha-islamabad">DHA Islamabad</a>' +
+            '<a href="/area/bahria-town-islamabad">Bahria Town</a>' +
+          '</nav>' +
+          '<nav class="kd-f-links kd-f-landing" aria-label="Key Pages">' +
+            '<a href="/islamabad/">Islamabad Short Stays</a>' +
+            '<a href="/rawalpindi/">Rawalpindi Short Stays</a>' +
+            '<a href="/short-term-rentals/">Short-Term Rentals</a>' +
+            '<a href="/furnished-apartments/">Furnished Apartments</a>' +
+            '<a href="/family-accommodation/">Family Accommodation</a>' +
+            '<a href="/host-your-property/">Host Your Property</a>' +
           '</nav>' +
           '<nav class="kd-f-links kd-f-legal" aria-label="Legal">' +
             '<a href="/privacy.html">Privacy</a>' +

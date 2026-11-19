@@ -1,12 +1,48 @@
 ﻿User-agent: *
 Allow: /
+
+# Disallow private/admin areas
 Disallow: /_admin_korda_secret/
 Disallow: /admin/
 Disallow: /api/
 Disallow: /archive/
+Disallow: /dashboard/
+Disallow: /signup/
+Disallow: /checkout.html
+Disallow: /host/list-property/
+Disallow: /content/
+Disallow: /scripts/
+
+# Allow important assets for rendering
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+Allow: /images/
+
+# Specific crawler permissions for AI search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
 
 # Crawl-delay for slower crawlers
 User-agent: Yandex
+Crawl-delay: 5
+
+User-agent: AhrefsBot
+Crawl-delay: 5
+
+User-agent: SemrushBot
 Crawl-delay: 5
 
 Sitemap: https://www.kordaa.com/sitemap.xml

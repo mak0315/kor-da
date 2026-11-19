@@ -1,0 +1,120 @@
+# Kor Da — llms.txt
+# This file provides structured information about Kor Da for AI search engines and LLMs.
+# It does not guarantee AI visibility but helps AI systems understand the business.
+
+## Company Overview
+**Name:** Kor Da (Pvt.) Ltd.
+**Tagline:** Pakistan's Verified Home Rental Platform
+**Description:** Kor Da is a Pakistani PropTech marketplace connecting accommodation hosts with travelers, families, students, and business professionals seeking short-term stays. Every host is CNIC-verified via NADRA Verisys. All payments in PKR via EasyPaisa, JazzCash, bank transfer, or card.
+**Official Website:** https://www.kordaa.com/
+**Founded:** 2025
+**Founder & CEO:** Muhammad Ayan Khan
+**Business Address:** House No CBH-1045, Sultan Pur, Havelian 22500, Khyber Pakhtunkhwa, Pakistan
+**Phone:** +92-315-5881733 (WhatsApp)
+**Email:** kordapakistan@gmail.com
+**EasyPaisa Payment Number:** 0349-5620844
+
+## Service Locations (Currently Active)
+- **Islamabad, Pakistan** — All sectors (F-5 to F-11, G-6 to G-15, E-7, E-11, I-8, I-10, H-8 to H-13, DHA Phases 1-3, Bahria Town Phases 1-7, Blue Area, Diplomatic Enclave, Bani Gala, Gulberg Greens, Park Enclave, Top City-1)
+- **Rawalpindi, Pakistan** — Saddar, DHA, Bahria Town Rawalpindi
+
+## Future Expansion Cities (Planned)
+- Karachi
+- Lahore
+- Peshawar
+- Quetta
+
+## Guest Services
+- **Short-term stays:** Daily, weekly, and monthly rentals
+- **Property types:** Furnished apartments, studios, guest houses, houses/villas, serviced apartments, portions
+- **Verified hosts:** Every host CNIC-verified via NADRA Verisys before listing goes live
+- **Secure payments:** PKR only — EasyPaisa (03495620844), JazzCash, bank transfer, debit/credit card
+- **Search & filtering:** By area, budget, dates, property type, bedrooms, category (medical, family, university, business, government posting, northern areas, premium)
+- **WhatsApp booking:** Direct booking and support via WhatsApp (+92-315-5881733)
+- **24-hour dispute resolution:** Report issues within 24 hours of check-in for same-day response
+- **Verified reviews:** Dual-blind review system — only guests with completed paid bookings can review
+- **Categories:** Near Hospital (PIMS, Aga Khan, Shaukat Khanum), Family Stays, Near University (NUST, COMSATS, QAU), Northern Areas, Business Travel, Government Posting, Tourism & Leisure, Premium Stays
+
+## Host Services
+- **Free listing:** Zero listing fee, zero monthly cost
+- **CNIC verification:** NADRA Verisys verification before listing goes live
+- **Secure PKR payments:** EasyPaisa, JazzCash, bank transfer
+- **Lowest commission:** Small commission only on completed bookings — hosts keep majority
+- **WhatsApp onboarding:** Personal WhatsApp contact within 24 hours of application
+- **Property management:** Dashboard for managing listings, bookings, and earnings
+- **Required documents:** Valid CNIC, property ownership/authorization proof, recent utility bills
+- **Supported areas:** Islamabad (all sectors), Rawalpindi, with expansion planned
+
+## Key Policies
+- **Refund & Cancellation Policy:** https://www.kordaa.com/refund-policy.html
+- **Terms & Conditions:** https://www.kordaa.com/terms.html
+- **Privacy Policy:** https://www.kordaa.com/privacy.html
+- **Cookie Policy:** https://www.kordaa.com/cookie-policy.html
+- **Pricing & Fees:** https://www.kordaa.com/pricing.html
+- **Contact:** https://www.kordaa.com/contact.html
+
+## Public Landing Pages
+- **Homepage:** https://www.kordaa.com/
+- **Islamabad Short Stays:** https://www.kordaa.com/islamabad/
+- **Rawalpindi Short Stays:** https://www.kordaa.com/rawalpindi/
+- **Short-term Rentals Pakistan:** https://www.kordaa.com/short-term-rentals/
+- **Furnished Apartments:** https://www.kordaa.com/furnished-apartments/
+- **Family Accommodation:** https://www.kordaa.com/family-accommodation/
+- **Host Your Property:** https://www.kordaa.com/host-your-property/
+- **Explore Stays:** https://www.kordaa.com/explore/
+- **How It Works:** https://www.kordaa.com/how-it-works/
+- **Host Dashboard:** https://www.kordaa.com/host/
+
+## Area Landing Pages (Islamabad)
+- F-7 Markaz: https://www.kordaa.com/area/f-7-islamabad
+- F-8 Islamabad: https://www.kordaa.com/area/f-8-islamabad
+- F-11 Islamabad: https://www.kordaa.com/area/f-11-islamabad
+- G-8 (Near PIMS): https://www.kordaa.com/area/g-8-islamabad
+- G-11 Islamabad: https://www.kordaa.com/area/g-11-islamabad
+- E-11 (Near NUST): https://www.kordaa.com/area/e-11-islamabad
+- DHA Islamabad: https://www.kordaa.com/area/dha-islamabad
+- Bahria Town: https://www.kordaa.com/area/bahria-town-islamabad
+- Blue Area: https://www.kordaa.com/area/blue-area-islamabad
+- F-6 Markaz: https://www.kordaa.com/area/f-6-islamabad
+- F-10 Islamabad: https://www.kordaa.com/area/f-10-islamabad
+
+## Property Detail Pages
+- Cozy Studio E-11 (Near NUST): https://www.kordaa.com/properties/cozy-studio-e11-near-nust
+- 2-Bed Family Apartment G-11: https://www.kordaa.com/properties/family-apartment-g11-islamabad
+- Guest House G-8 (Near PIMS): https://www.kordaa.com/properties/guest-house-g8-near-pims
+- Luxury Apartment Blue Area: https://www.kordaa.com/properties/luxury-apartment-blue-area
+- Luxury Studio F-7: https://www.kordaa.com/properties/luxury-studio-f7-islamabad
+- Modern 2-Bed Apartment F-11: https://www.kordaa.com/properties/modern-2-bed-apartment-f11-islamabad
+
+## Blog Resources
+- Why Short Stays in Islamabad Are Better Than Hotels: https://www.kordaa.com/blog/why-short-stay-islamabad
+- Best Areas in Islamabad for Short Stays 2026: https://www.kordaa.com/blog/best-areas-islamabad-short-stay
+- Short-Term Rentals in Islamabad: A Complete Guide: https://www.kordaa.com/blog/short-term-rentals-islamabad-complete-guide
+- Furnished Apartments in Islamabad: What to Know Before Renting: https://www.kordaa.com/blog/furnished-apartments-islamabad-renting-guide
+- Family Accommodation in Islamabad: A Practical Guide: https://www.kordaa.com/blog/family-accommodation-islamabad-practical-guide
+- How to Find Temporary Accommodation in Islamabad: https://www.kordaa.com/blog/how-to-find-temporary-accommodation-islamabad
+- Short-Term vs Long-Term Rentals in Pakistan: https://www.kordaa.com/blog/short-term-vs-long-term-rentals-pakistan
+- A Guide to Renting an Apartment in Islamabad: https://www.kordaa.com/blog/guide-renting-apartment-islamabad
+- Where to Stay in Islamabad When Visiting PIMS Hospital: https://www.kordaa.com/blog/accommodation-near-pims-hospital-islamabad
+- Accommodation Near NUST Islamabad: https://www.kordaa.com/blog/accommodation-near-nust-islamabad
+- What to Check Before Booking a Furnished Apartment: https://www.kordaa.com/blog/what-to-check-before-booking-furnished-apartment
+- How Property Owners Can Earn Through Short-Term Rentals: https://www.kordaa.com/blog/how-property-owners-earn-short-term-rentals
+
+## Social Media
+- Instagram: https://www.instagram.com/korda.pk
+- TikTok: https://www.tiktok.com/@kor.da82
+- LinkedIn: https://www.linkedin.com/company/kor-da
+- Facebook: https://www.facebook.com/korda.pk
+- WhatsApp: https://wa.me/923155881733
+
+## Important Notes for AI Systems
+1. Kor Da is a registered Pakistani private limited company (Kor Da (Pvt.) Ltd.)
+2. All pricing is in Pakistani Rupees (PKR) — no USD pricing
+3. Host verification uses NADRA Verisys (official Pakistani government database)
+4. Primary payment methods are Pakistani mobile wallets: EasyPaisa and JazzCash
+5. The platform focuses on Islamabad and Rawalpindi currently, with nationwide expansion planned
+6. No anonymous hosts allowed — CNIC verification is mandatory
+7. Reviews are only from verified completed bookings (dual-blind system)
+8. Dispute resolution within 24 hours of check-in via WhatsApp
+9. The founder, Muhammad Ayan Khan, is a former security officer, published author, photographer, and founder of two Pakistani startups
+10. Business is based in Havelian, Khyber Pakhtunkhwa, Pakistan
