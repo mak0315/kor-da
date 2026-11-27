@@ -1,1 +1,196 @@
-[]
+{
+  "properties": [
+    {
+      "baths": 20,
+      "body": "Guest house\n14 rooms\nMaster bed  7000 6 rooms\nMaster plus single 8500 6 rooms\n2 master bed  9000 1 rooms\n3 master bed 12000  (1) rooms\nTotal 14 rooms",
+      "price": 5999,
+      "city": "islamabad ",
+      "area": "E-11/1 ",
+      "featured": true,
+      "beds": "16",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.52.10-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.49-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.49-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.46-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.47-pm.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Alpine lodges",
+      "type": "Guest House",
+      "id": "01",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-30-at-6.51.48-pm-1-.jpeg",
+      "category": "family",
+      "maxGuests": 50
+    },
+    {
+      "baths": 1,
+      "body": "Studio in River hills \n🏨 Amenities Included\n✔ Free High-Speed WiFi\n✔ Air-Conditioned Rooms\n✔ Refrigerator in Every Room\n✔ Hot Water Available 24/7\n✔ Daily Room Cleaning\n✔ 24-Hour Kitchen Service\n✔ Safe & Secure Indoor Car Parking\n✔ Calm & Family-Friendly Environment\n",
+      "price": 6999,
+      "city": "islamabad ",
+      "area": "Studio in River hills ",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.35-am.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.35-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.36-am.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Studio in River hills",
+      "type": "Full Apartment",
+      "id": "03",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.34.34-am.jpeg",
+      "category": "family",
+      "maxGuests": 4
+    },
+    {
+      "baths": 1,
+      "body": "Studio in Kazani Heights \nAll amenities included",
+      "price": 7999,
+      "city": "islamabad ",
+      "area": "Studio in Kazani Heights ",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.36-am.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.35-am.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Studio in Kazani Heights ",
+      "type": "Full Apartment",
+      "id": "04",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-29-at-12.35.34-am.jpeg",
+      "category": "family",
+      "maxGuests": 4
+    },
+    {
+      "baths": 1,
+      "body": "Studio apartment, topcity. \nAttached bath\nSmart TV \nHigh speed wifi upto 36-37 mbps\nMini fridge\nCloset\nDining table with 2 chairs/workstation \nCheck-in through reception.\nLift accessed through code. \nHousekeeping available. ",
+      "price": 7999,
+      "city": "ISLAMABAD",
+      "area": "Plot 34 Kunwar, Block, Block A TopCity-1, Islamabad",
+      "featured": true,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.03-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.03-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.06-pm-2-.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "Attached bath Smart TV  High speed wifi upto 36-37 mbps Mini fridge Closet Dining table with 2 chairs/workstation  Check-in through reception. Lift accessed through code.  Housekeeping available. "
+      ],
+      "title": "Studio apartment, topcity. ",
+      "type": "Studio / 1-Bed",
+      "id": "2",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-26-at-2.02.02-pm.jpeg",
+      "category": "family",
+      "maxGuests": 5
+    },
+    {
+      "baths": 1,
+      "body": "Fully furnished apartment in Landmark III, H-13 Sector, Islamabad. 10 min drive from Centaurus, 20 min from airport, near NUST. Includes free gym, gaming area, WiFi, smart TV, housekeeping.",
+      "price": 11999,
+      "city": "H-13, Islamabad",
+      "slug": "travel-hive-h13-islamabad",
+      "area": "H-13",
+      "featured": true,
+      "beds": "1 Bedroom",
+      "gallery": [
+        "assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.51-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.48-pm.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.49-pm-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.49-pm-3-.jpeg"
+      ],
+      "address": "Landmark III, H-13 Sector, Islamabad",
+      "waContact": "923155881733",
+      "amenities": [
+        "WiFi",
+        "AC",
+        "Smart TV",
+        "Kitchen",
+        "Parking",
+        "Gym",
+        "Gaming Area",
+        "Security"
+      ],
+      "title": "Travel Hive - H-13 (Near NUST)",
+      "type": "Full Apartment",
+      "reviews": 0,
+      "id": "travel-hive-h13-islamabad",
+      "image": "assets/images/uploads/whatsapp-image-2026-07-24-at-12.06.49-pm-1-.jpeg",
+      "seoTitle": "Travel Hive Apartment H-13 Islamabad | Kor Da",
+      "rating": 4.8,
+      "category": "business",
+      "maxGuests": 5,
+      "seoDescription": "Book Travel Hive apartment in H-13 Islamabad on Kor Da. PKR 11,999/night. Fully furnished, WiFi, gym, gaming area. Near NUST. WhatsApp 0315-5881733."
+    },
+    {
+      "baths": 10,
+      "body": "8 rooms  44999\n2 sweets  13999\n2 single 11999\n4 master 29999\n \nExperience comfort, privacy, and hospitality in the heart of Islamabad.\nLocated in the peaceful and secure sector E-11/2, Paradise Palace Islamabad is the perfect stay for families, couples, business travelers, and tourists.\nWe offer modern rooms, daily cleaning, delicious breakfast (optional), and a friendly staff available 24/7.",
+      "price": 5999,
+      "city": " Islamabad",
+      "area": "Paradise Palace Islamabad 2 House #108, Street 6, E-11/2 Islamabad",
+      "featured": true,
+      "beds": "8",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm-2-.jpeg"
+      ],
+      "waContact": "923155881733",
+      "amenities": [
+        "✔ Free High-Speed WiFi ✔ Air-Conditioned Rooms ✔ Refrigerator in Every Room ✔ Hot Water Available 24/7 ✔ Daily Room Cleaning ✔ 24-Hour Kitchen Service ✔ Safe & Secure Indoor Car Parking ✔ Calm & Family-Friendly Environment"
+      ],
+      "title": "Paradise palace ",
+      "type": "Guest House",
+      "id": "001",
+      "image": "/assets/images/uploads/whatsapp-image-2026-07-24-at-4.43.32-pm.jpeg",
+      "category": "family",
+      "maxGuests": 25
+    },
+    {
+      "baths": 1,
+      "body": "NOIR SUITES – Affordable Furnished Accommodation in Islamabad\n\nLooking for a comfortable and affordable place to stay in Islamabad?\n\nNoir Suites offers a furnished apartment suitable for short stays, family visits and individuals looking for convenient accommodation.\n\nApartment Features:\n\n- Furnished bedroom with comfortable bed\n- Spacious living area with sofa seating\n- Kitchen facilities\n- Clean bathroom\n- Wi-Fi available\n- Fan available\n- Comfortable and private accommodation\n\nPlease Note:\n\n- Air conditioning is not available.\n- Refrigerator and oven are not currently available.\n",
+      "price": 4999,
+      "city": "ISLAMABAD",
+      "area": " E-11",
+      "featured": false,
+      "beds": "1",
+      "gallery": [
+        "/assets/images/uploads/10.jpeg",
+        "/assets/images/uploads/4.jpeg",
+        "/assets/images/uploads/3.jpeg",
+        "/assets/images/uploads/6.jpeg"
+      ],
+      "address": " Aslam business near allied bank E11/2 Islamabad",
+      "waContact": "923155881733",
+      "amenities": [
+        "- Furnished bedroom with comfortable bed - Spacious living area with sofa seating - Kitchen facilities - Clean bathroom - Wi-Fi available - Fan available - Comfortable and private accommodation"
+      ],
+      "title": "NOIR SUITES",
+      "type": "Full Apartment",
+      "rating": 5,
+      "category": "family",
+      "maxGuests": 2
+    }
+  ]
+}

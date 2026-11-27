@@ -1,11 +1,12 @@
 /**
  * KOR DA — SERVICE WORKER (sw.js)
- * Versioned cache: precache core shell, network-first for navigation,
- * stale-while-revalidate for same-origin assets. Admin/CMS paths are bypassed.
+ * Versioned cache: precache core shell, cache-first for navigation with background refresh,
+ * network-first for compiled JSON data, stale-while-revalidate for other same-origin assets.
+ * Admin/CMS paths are bypassed.
  */
 'use strict';
 
-var VERSION = 'korda-v6';
+var VERSION = 'korda-v7';
 
 var CORE = [
   '/',
@@ -49,6 +50,23 @@ self.addEventListener('fetch', function(e){
   var url = new URL(req.url);
 
   if(req.method !== 'GET' || url.origin !== self.location.origin || isAdmin(url)) return;
+
+  /* Compiled content JSON: network first so CMS/publish updates appear quickly.
+     Fall back to cache only when the network is unavailable. */
+  if (url.pathname.indexOf('/content/compiled/') === 0 && url.pathname.slice(-5) === '.json') {
+    e.respondWith(
+      fetch(req).then(function(res) {
+        if (res && res.status === 200 && res.type === 'basic') {
+          var copy = res.clone();
+          caches.open(VERSION).then(function(c) { c.put(req, copy); });
+        }
+        return res;
+      }).catch(function() {
+        return caches.match(req);
+      })
+    );
+    return;
+  }
 
   /* Navigations: cache first so the phone's launch screen ends the instant the
      page paints, then refresh the cached copy in the background. */

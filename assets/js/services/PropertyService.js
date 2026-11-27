@@ -1,9 +1,9 @@
 /**
  * KOR DA — PROPERTY SERVICE (PropertyService.js)
- * 
+ *
  * Abstraction layer for fetching and searching property listings.
  * Reads compiled Decap CMS data (/content/compiled/properties.json).
- * 
+ *
  * Migration Boundary: UI components call PropertyService exclusively.
  * To migrate to Supabase / GraphQL, update this file only!
  */
@@ -12,167 +12,131 @@
 
   var cache = null;
 
-  var DEFAULT_PROPERTIES = [
-    {
-      id: 'luxury-studio-f7-islamabad',
-      slug: 'luxury-studio-f7-islamabad',
-      title: 'Luxury Studio — F-7 Markaz',
-      type: 'Studio / 1-Bed',
-      city: 'F-7, Islamabad',
-      area: 'F-7',
-      address: 'F-7 Markaz, Islamabad',
-      price: 4500,
-      beds: 'Studio',
-      baths: 1,
-      maxGuests: 2,
-      category: 'business',
-      featured: true,
-      rating: 4.9,
-      reviews: 23,
-      amenities: ['WiFi','AC','Kitchen','TV','Geyser'],
-      description: 'Modern fully-furnished studio in the heart of F-7 Markaz. 5 min walk to Jinnah Super Market, restaurants and shopping.',
-      image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=75',
-      gallery: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=75'],
-      waContact: '923155881733'
-    },
-    {
-      id: 'family-apartment-g11-islamabad',
-      slug: 'family-apartment-g11-islamabad',
-      title: '2-Bed Family Apartment — G-11',
-      type: 'Full Apartment',
-      city: 'G-11, Islamabad',
-      area: 'G-11',
-      address: 'G-11/1, Islamabad',
-      price: 7000,
-      beds: '2 Bedrooms',
-      baths: 2,
-      maxGuests: 5,
-      category: 'family',
-      featured: false,
-      rating: 4.8,
-      reviews: 15,
-      amenities: ['WiFi','AC','Kitchen','Parking','UPS/Generator','Geyser','TV'],
-      description: 'Spacious 2-bedroom apartment ideal for families. Fully equipped kitchen, close to Metro station and G-11 Markaz.',
-      image: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=75',
-      gallery: ['https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=75'],
-      waContact: '923155881733'
-    },
-    {
-      id: 'modern-apartment-f11-islamabad',
-      slug: 'modern-apartment-f11-islamabad',
-      title: 'Modern 2-Bed Apartment — F-11',
-      type: 'Full Apartment',
-      city: 'F-11, Islamabad',
-      area: 'F-11',
-      address: 'F-11 Markaz, Islamabad',
-      price: 6500,
-      beds: '2 Bedrooms',
-      baths: 2,
-      maxGuests: 4,
-      category: 'business',
-      featured: true,
-      rating: 4.9,
-      reviews: 31,
-      amenities: ['WiFi','AC','Kitchen','Parking','UPS/Generator','TV','Balcony'],
-      description: 'Contemporary apartment in F-11 Markaz with scenic Margalla Hills view. Fast WiFi, dedicated workspace.',
-      image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=75',
-      gallery: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=75'],
-      waContact: '923155881733'
-    },
-    {
-      id: 'studio-e11-near-nust',
-      slug: 'studio-e11-near-nust',
-      title: 'Cozy Studio — E-11 (Near NUST)',
-      type: 'Studio / 1-Bed',
-      city: 'E-11, Islamabad',
-      area: 'E-11',
-      address: 'E-11/2, Islamabad',
-      price: 3800,
-      beds: 'Studio',
-      baths: 1,
-      maxGuests: 2,
-      category: 'budget',
-      featured: false,
-      rating: 4.7,
-      reviews: 18,
-      amenities: ['WiFi','AC','Kitchen','TV'],
-      description: 'Affordable studio apartment near NUST and FAST universities. Ideal for students, travelers, and short stays.',
-      image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=75',
-      gallery: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=75'],
-      waContact: '923155881733'
+  function isPublishable(p) {
+    if (!p || typeof p !== 'object') return false;
+    if (p.published === false || p.draft === true) return false;
+    var status = String(p.status || '').toLowerCase();
+    if (status === 'draft' || status === 'unpublished' || status === 'rejected' || status === 'archived') return false;
+    return true;
+  }
+
+  function normalizeProperty(p) {
+    if (!isPublishable(p)) return null;
+    if (!p.title) return null;
+
+    var out = {};
+    for (var k in p) {
+      if (Object.prototype.hasOwnProperty.call(p, k)) out[k] = p[k];
     }
-  ];
+
+    if (!out.id && !out.slug) {
+      out.id = String(out.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'prop-' + Math.random().toString(36).substr(2, 6);
+      out.slug = out.id;
+    }
+    if (!out.id) out.id = out.slug;
+    if (!out.slug) out.slug = out.id;
+
+    out.price = parseInt(out.price, 10);
+    if (!isFinite(out.price) || out.price < 0) out.price = 0;
+    out.baths = parseInt(out.baths, 10);
+    if (!isFinite(out.baths) || out.baths < 0) out.baths = 0;
+    out.maxGuests = parseInt(out.maxGuests, 10);
+    if (!isFinite(out.maxGuests) || out.maxGuests < 1) out.maxGuests = 1;
+    out.rating = parseFloat(out.rating);
+    if (!isFinite(out.rating) || out.rating < 0) out.rating = 0;
+    out.reviews = parseInt(out.reviews, 10);
+    if (!isFinite(out.reviews) || out.reviews < 0) out.reviews = 0;
+
+    out.amenities = Array.isArray(out.amenities) ? out.amenities.filter(function(a){ return a != null && String(a).trim(); }) : [];
+    out.gallery = Array.isArray(out.gallery) ? out.gallery.filter(function(g){ return g != null && String(g).trim(); }) : [];
+    out.landmarks = Array.isArray(out.landmarks) ? out.landmarks.filter(function(l){ return l != null && String(l).trim(); }) : [];
+
+    return out;
+  }
+
+  function parsePropertiesPayload(data) {
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.properties)) return data.properties;
+    return null;
+  }
+
+  function getAdminProperties() {
+    var adminProps = [];
+    try {
+      var stored = JSON.parse(localStorage.getItem('kd_admin_myproperties') || '[]');
+      if (!Array.isArray(stored)) return adminProps;
+      adminProps = stored.filter(function(p) { return p && p.status === 'active'; }).map(function(p) {
+        var photos = Array.isArray(p.photos) ? p.photos : [];
+        var gallery = photos.map(function(ph) { return ph && (ph.dataUrl || ph); }).filter(Boolean);
+        if (p.image && gallery.indexOf(p.image) === -1) gallery.unshift(p.image);
+        return {
+          id: p.id,
+          slug: p.id,
+          title: p.name,
+          name: p.name,
+          type: p.type,
+          city: p.area ? (p.area + ', ' + p.city) : p.city,
+          area: p.area || p.city,
+          address: (p.area ? p.area + ', ' : '') + (p.city || ''),
+          price: p.price,
+          beds: (p.bedrooms || 1) + ' Bedroom' + (p.bedrooms > 1 ? 's' : ''),
+          baths: p.bathrooms || 1,
+          maxGuests: p.guests || 2,
+          category: 'all',
+          featured: !!p.featured,
+          rating: 4.8,
+          reviews: 0,
+          amenities: ['WiFi', 'AC', 'Kitchen'],
+          description: p.description || '',
+          image: (photos.length > 0 ? photos[0].dataUrl : '') || p.image || '',
+          gallery: gallery,
+          waContact: p.whatsapp || '923155881733',
+          plan: p.plan,
+          source: 'admin'
+        };
+      });
+    } catch (e) {}
+    return adminProps;
+  }
 
   window.PropertyService = {
     getAll: async function() {
       if (cache) return cache;
+
       var jsonProps = [];
       try {
-        var res = await fetch('/content/compiled/properties.json');
+        var res = await fetch('/content/compiled/properties.json', { cache: 'no-store' });
         if (res.ok) {
           var data = await res.json();
-          if (Array.isArray(data)) {
-            jsonProps = data;
-          } else if (data && Array.isArray(data.properties)) {
-            jsonProps = data.properties;
+          var parsed = parsePropertiesPayload(data);
+          if (parsed) {
+            jsonProps = parsed;
+          } else {
+            console.warn('PropertyService: Unexpected properties.json structure; showing no compiled listings.');
           }
+        } else {
+          console.warn('PropertyService: properties.json request failed with status ' + res.status);
         }
       } catch (err) {
-        console.warn('PropertyService: JSON fetch failed, using fallback static data', err);
+        console.warn('PropertyService: Failed to load compiled properties.', err);
       }
 
-      var adminProps = [];
-      try {
-        var stored = JSON.parse(localStorage.getItem('kd_admin_myproperties') || '[]');
-        if (Array.isArray(stored)) {
-          adminProps = stored.filter(function(p) { return p.status === 'active'; }).map(function(p) {
-            var photos = p.photos || [];
-            var gallery = photos.map(function(ph) { return ph.dataUrl || ph; });
-            if (p.image && gallery.indexOf(p.image) === -1) gallery.unshift(p.image);
-            return {
-              id: p.id,
-              slug: p.id,
-              title: p.name,
-              name: p.name,
-              type: p.type,
-              city: p.area ? (p.area + ', ' + p.city) : p.city,
-              area: p.area || p.city,
-              address: (p.area ? p.area + ', ' : '') + p.city,
-              price: p.price,
-              beds: (p.bedrooms || 1) + ' Bedroom' + (p.bedrooms > 1 ? 's' : ''),
-              baths: p.bathrooms || 1,
-              maxGuests: p.guests || 2,
-              category: 'all',
-              featured: !!p.featured,
-              rating: 4.8,
-              reviews: 0,
-              amenities: ['WiFi','AC','Kitchen'],
-              description: p.description || '',
-              image: (photos.length > 0 ? photos[0].dataUrl : '') || p.image || '',
-              gallery: gallery,
-              waContact: p.whatsapp || '923155881733',
-              plan: p.plan,
-              source: 'admin'
-            };
-          });
-        }
-      } catch (e) {}
+      var raw = jsonProps.concat(getAdminProperties());
+      var seen = {};
+      var normalized = [];
+      for (var i = 0; i < raw.length; i++) {
+        var item = normalizeProperty(raw[i]);
+        if (!item) continue;
+        var key = String(item.slug || item.id || '').toLowerCase();
+        if (key && seen[key]) continue;
+        if (key) seen[key] = true;
+        normalized.push(item);
+      }
 
-      var raw = jsonProps.concat(adminProps);
-      cache = raw.filter(function(p) {
-        if (!p || typeof p !== 'object') return false;
-        if (!p.title) return false;
-        if (!p.id && !p.slug) {
-          p.id = (p.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'prop-' + Math.random().toString(36).substr(2,6);
-          p.slug = p.id;
-        }
-        p.price = parseInt(p.price) || 0;
-        p.baths = parseInt(p.baths) || 1;
-        p.maxGuests = parseInt(p.maxGuests) || 2;
-        p.amenities = Array.isArray(p.amenities) ? p.amenities : [];
-        p.gallery = Array.isArray(p.gallery) ? p.gallery : [];
-        return true;
-      });
+      cache = normalized;
+      if (cache.length === 0) {
+        console.info('PropertyService: No published properties available.');
+      }
       return cache;
     },
 
