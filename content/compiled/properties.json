@@ -191,6 +191,33 @@
       "rating": 5,
       "category": "family",
       "maxGuests": 2
+    },
+    {
+      "baths": 3,
+      "body": "Nook Stay F7 | Bloom Room\n\n* Spacious 700-square-yard house\n* 3 bedrooms\n* Drawing and dining area\n* Balcony\n* Huge parking space for up to 6 cars\n* Near Howdy and Alanto restaurants\n\nThe property is ideal for families, international visitors and business travellers looking for a comfortable stay.",
+      "price": 35999,
+      "city": "islamabad ",
+      "area": "F7",
+      "featured": false,
+      "beds": "3",
+      "gallery": [
+        "/assets/images/uploads/whatsapp-image-2026-11-22-at-9.34.55-am-2-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-11-22-at-9.34.55-am-1-.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-11-22-at-9.34.54-am.jpeg",
+        "/assets/images/uploads/whatsapp-image-2026-11-22-at-9.34.54-am-2-.jpeg",
+        "/assets/images/uploads/1.jpeg",
+        "/assets/images/uploads/2.jpeg"
+      ],
+      "address": "F7/3 islamabad",
+      "waContact": "923155881733",
+      "amenities": [
+        "* WiFi * Air Conditioning * Kitchen * Parking * TV * Washing Machine * Geyser * UPS / Generator * Security * Balcony * Garden * Iron / Steamer * Microwave * Refrigerator"
+      ],
+      "title": "Nookstay",
+      "type": "Guest House",
+      "image": "/assets/images/uploads/whatsapp-image-2026-11-22-at-9.34.55-am.jpeg",
+      "category": "family",
+      "maxGuests": 6
     }
   ]
 }
